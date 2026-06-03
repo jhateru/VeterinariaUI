@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.fxml.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      spacing="20" style="-fx-padding: 25;">
+    
+    <Label text="Resumen de Hoy: Martes 15 Oct 2024" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+    
+    <HBox spacing="20" alignment="CENTER_LEFT">
+        <fx:include source="MetricCard.fxml" />
+        <fx:include source="MetricCard.fxml" />
+        <fx:include source="MetricCard.fxml" />
+        <fx:include source="MetricCard.fxml" />
+    </HBox>
+    
+    <HBox spacing="20" VBox.vgrow="ALWAYS">
+        <!-- Agenda de Citas -->
+        <VBox spacing="15" HBox.hgrow="ALWAYS">
+            <Label text="Agenda de Citas (Hoy)" style="-fx-font-weight: bold;" />
+            <VBox spacing="10">
+                <fx:include source="AppointmentItem.fxml" />
+                <fx:include source="AppointmentItem.fxml" />
+                <fx:include source="AppointmentItem.fxml" />
+            </VBox>
+        </VBox>
+        
+        <!-- Sala de Espera -->
+        <VBox spacing="15" prefWidth="220">
+            <Label text="Pacientes en Sala de Espera" style="-fx-font-weight: bold;" />
+            <VBox spacing="10">
+                <fx:include source="WaitingRoomItem.fxml" />
+                <fx:include source="WaitingRoomItem.fxml" />
+                <fx:include source="WaitingRoomItem.fxml" />
+                <fx:include source="WaitingRoomItem.fxml" />
+            </VBox>
+        </VBox>
+        
+        <!-- Consultas Recientes -->
+        <VBox spacing="15" HBox.hgrow="ALWAYS">
+            <Label text="Últimas Consultas Registradas" style="-fx-font-weight: bold;" />
+            <VBox spacing="10">
+                <fx:include source="RecentConsultationItem.fxml" />
+                <fx:include source="RecentConsultationItem.fxml" />
+            </VBox>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="+ Nueva Cita" styleClass="btn-primary" />
+                <Button text="+ Nuevo Paciente" styleClass="btn-primary" />
+                <Button text="+ Nueva Venta" styleClass="btn-primary" />
+            </HBox>
+        </VBox>
+    </HBox>
+</VBox>

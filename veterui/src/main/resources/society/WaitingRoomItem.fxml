@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      styleClass="card" alignment="CENTER_LEFT" spacing="10">
+    <ImageView fx:id="petAvatar" fitHeight="30" fitWidth="30" />
+    <VBox alignment="CENTER_LEFT">
+        <Label fx:id="petName" style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Luna" />
+        <Label fx:id="speciesLabel" style="-fx-font-size: 11px;" text="Gato" />
+    </VBox>
+</HBox>

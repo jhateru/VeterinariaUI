@@ -1,0 +1,103 @@
+/* VetiCare Global Styles */
+
+.root {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-background-color: #F8FAFC;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    -fx-background-color: #1E293B;
+    -fx-padding: 20;
+}
+
+.sidebar-logo {
+    -fx-text-fill: #0EA5E9;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 30 0;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94A3B8;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+}
+
+.nav-button:hover {
+    -fx-background-color: #334155;
+    -fx-text-fill: #FFFFFF;
+}
+
+.nav-button-active {
+    -fx-background-color: #0EA5E9;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* TopBar Styles */
+.top-bar {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 10 20;
+}
+
+.search-field {
+    -fx-background-color: #F1F5F9;
+    -fx-background-radius: 20;
+    -fx-padding: 5 15;
+}
+
+/* Card Styles */
+.card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
+    -fx-padding: 15;
+}
+
+.metric-card {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+}
+
+.metric-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E293B;
+}
+
+.metric-label {
+    -fx-text-fill: #64748B;
+    -fx-font-size: 14px;
+}
+
+/* Status Badges */
+.badge {
+    -fx-padding: 4 12;
+    -fx-background-radius: 12;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.badge-waiting { -fx-background-color: #FDE047; -fx-text-fill: #854D0E; }
+.badge-attending { -fx-background-color: #4ADE80; -fx-text-fill: #166534; }
+.badge-pending { -fx-background-color: #FCA5A5; -fx-text-fill: #991B1B; }
+
+/* Buttons */
+.btn-primary {
+    -fx-background-color: #0EA5E9;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #0284C7;
+}

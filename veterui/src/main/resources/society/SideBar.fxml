@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      styleClass="sidebar" prefWidth="250" spacing="10">
+    <Label styleClass="sidebar-logo" text="🐾 Healthy Little\nPaws" />
+    
+    <VBox spacing="5">
+        <Button styleClass="nav-button nav-button-active" text="Resumen" maxWidth="Infinity" alignment="CENTER_LEFT" />
+        <Button styleClass="nav-button" text="Citas" maxWidth="Infinity" alignment="CENTER_LEFT" />
+        <Button styleClass="nav-button" text="Pacientes" maxWidth="Infinity" alignment="CENTER_LEFT" />
+        <Button styleClass="nav-button" text="Dueños" maxWidth="Infinity" alignment="CENTER_LEFT" />
+        <Button styleClass="nav-button" text="Historia Clínica" maxWidth="Infinity" alignment="CENTER_LEFT" />
+        <Button styleClass="nav-button" text="Facturación" maxWidth="Infinity" alignment="CENTER_LEFT" />
+        <Button styleClass="nav-button" text="Inventario" maxWidth="Infinity" alignment="CENTER_LEFT" />
+        <Button styleClass="nav-button" text="Reportes" maxWidth="Infinity" alignment="CENTER_LEFT" />
+        <Separator prefWidth="200" />
+        <Button styleClass="nav-button" text="Configuración" maxWidth="Infinity" alignment="CENTER_LEFT" />
+    </VBox>
+</VBox>

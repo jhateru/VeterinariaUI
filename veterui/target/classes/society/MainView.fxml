@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.fxml.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+            stylesheets="@Styles.css">
+    <left>
+        <fx:include source="SideBar.fxml" />
+    </left>
+    <top>
+        <fx:include source="TopBar.fxml" />
+    </top>
+    <center>
+        <StackPane fx:id="contentArea">
+            <fx:include source="DashboardResumen.fxml" />
+        </StackPane>
+    </center>
+</BorderPane>

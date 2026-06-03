@@ -1,0 +1,10 @@
+society\controller\reutilizables\WaitingRoomItemController.class
+society\controller\principales\SideBarController.class
+society\controller\principales\DashboardResumenController.class
+society\controller\reutilizables\RecentConsultationItemController.class
+module-info.class
+society\controller\reutilizables\MetricCardController.class
+society\App.class
+society\controller\reutilizables\AppointmentItemController.class
+society\controller\principales\TopBarController.class
+society\controller\principales\MainViewController.class

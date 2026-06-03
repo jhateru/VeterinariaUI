@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      styleClass="card" alignment="CENTER_LEFT" spacing="15">
+    <ImageView fx:id="petAvatar" fitHeight="40" fitWidth="40" />
+    <VBox HBox.hgrow="ALWAYS" spacing="2">
+        <HBox alignment="CENTER_LEFT">
+            <Label fx:id="petName" style="-fx-font-weight: bold;" text="Max" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="timeLabel" style="-fx-font-size: 12px;" text="10:00 AM" />
+        </HBox>
+        <Label fx:id="vetLabel" style="-fx-font-size: 12px;" text="Atendido por Dra. Pérez" />
+        <Label fx:id="diagLabel" style="-fx-font-size: 12px;" text="Diagnóstico: Control Anual" />
+    </VBox>
+</HBox>

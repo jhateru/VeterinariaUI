@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      styleClass="card metric-card" alignment="CENTER_LEFT" spacing="15">
+    <ImageView fx:id="iconView" fitHeight="40" fitWidth="40" />
+    <VBox spacing="5">
+        <Label fx:id="metricLabel" styleClass="metric-label" text="Citas de Hoy" />
+        <Label fx:id="metricValue" styleClass="metric-value" text="12" />
+    </VBox>
+</HBox>

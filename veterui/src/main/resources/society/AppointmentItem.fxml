@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      styleClass="card" alignment="CENTER_LEFT" spacing="15">
+    <ImageView fx:id="petAvatar" fitHeight="50" fitWidth="50" />
+    <VBox spacing="2" HBox.hgrow="ALWAYS">
+        <HBox spacing="5">
+            <Label fx:id="petName" style="-fx-font-weight: bold;" text="Luna" />
+            <Label fx:id="petIcon" text="🐱" />
+        </HBox>
+        <Label fx:id="ownerLabel" style="-fx-font-size: 12px;" text="Dueño: Pérez" />
+        <Label fx:id="statusLabel" style="-fx-font-size: 12px;" text="Estado: En espera" />
+    </VBox>
+    <Label fx:id="statusBadge" styleClass="badge badge-waiting" text="En espera" />
+</HBox>

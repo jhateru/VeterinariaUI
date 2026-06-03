@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      styleClass="top-bar" alignment="CENTER_LEFT" spacing="20">
+    <ComboBox fx:id="clinicSelector" promptText="Seleccionar Clínica" prefWidth="250">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Clínica Veterinaria 'Patas Felices'" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+    
+    <TextField fx:id="searchField" styleClass="search-field" promptText="Buscar paciente, dueño..." HBox.hgrow="ALWAYS" />
+    
+    <HBox alignment="CENTER_RIGHT" spacing="15">
+        <Button style="-fx-background-color: transparent;">
+            <graphic>
+                <ImageView fitHeight="20" fitWidth="20" />
+            </graphic>
+        </Button>
+        <Label text="3" style="-fx-background-color: red; -fx-text-fill: white; -fx-padding: 2 6; -fx-background-radius: 10; -fx-font-size: 10px;" />
+        
+        <VBox alignment="CENTER_RIGHT" spacing="2">
+            <Label text="Dra. Ana Pérez" style="-fx-font-weight: bold;" />
+            <Label text="Administradora" style="-fx-font-size: 11px; -fx-text-fill: #64748B;" />
+        </VBox>
+        <ImageView fitHeight="35" fitWidth="35" />
+    </HBox>
+</HBox>
