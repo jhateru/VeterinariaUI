@@ -5,7 +5,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
       styleClass="sidebar" prefWidth="250" spacing="10">
-    <Label styleClass="sidebar-logo" text="🐾 Healthy Little" + System.lineSeparator() + "Paws" />
+    <Label styleClass="sidebar-logo" text="🐾 Healthy Little\nPaws" />
     
     <VBox spacing="5">
         <Button styleClass="nav-button nav-button-active" text="Resumen" maxWidth="Infinity" alignment="CENTER_LEFT" />

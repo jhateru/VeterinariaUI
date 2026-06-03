@@ -19,8 +19,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("MainView"));
-        stage.setTitle("VeterinariaUI");
+        scene = new Scene(loadFXML("MainView"), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
