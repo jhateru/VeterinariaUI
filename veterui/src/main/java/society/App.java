@@ -1,12 +1,11 @@
 package society;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 /**
  * JavaFX App
@@ -19,7 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("MainView"), 640, 480);
+        scene = new Scene(loadFXML("MainView"));
         stage.setScene(scene);
         stage.show();
     }
@@ -31,7 +30,9 @@ public class App extends Application {
     private static Parent loadFXML(String fxml) throws IOException {
         var resource = App.class.getResource(FXML_ROOT + fxml + ".fxml");
         if (resource == null) {
-            throw new IOException("No se encontro el archivo FXML: " + FXML_ROOT + fxml + ".fxml");
+            throw new IOException(
+                "No se encontro el archivo FXML: " + FXML_ROOT + fxml + ".fxml"
+            );
         }
 
         FXMLLoader fxmlLoader = new FXMLLoader(resource);
@@ -41,5 +42,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

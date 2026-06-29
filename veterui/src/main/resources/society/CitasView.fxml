@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="society.controller.principales.CitasController"
+      spacing="0" style="-fx-background-color: #fbf9f8;">
+    
+    <!-- Top Filters -->
+    <HBox spacing="16" style="-fx-padding: 16 24; -fx-background-color: #fbf9f8; -fx-border-color: #e4e2e2; -fx-border-width: 0 0 1 0;" alignment="CENTER_LEFT">
+        <VBox spacing="4">
+            <Label text="VETERINARIO" style="-fx-font-size: 10px; -fx-text-fill: #6e797a; -fx-font-weight: bold;"/>
+            <ComboBox promptText="Todos los Doctores" styleClass="combo-box-filter"/>
+        </VBox>
+        <VBox spacing="4">
+            <Label text="ESTADO" style="-fx-font-size: 10px; -fx-text-fill: #6e797a; -fx-font-weight: bold;"/>
+            <ComboBox promptText="Todos los Estados" styleClass="combo-box-filter"/>
+        </VBox>
+        <VBox spacing="4">
+            <Label text="SERVICIO" style="-fx-font-size: 10px; -fx-text-fill: #6e797a; -fx-font-weight: bold;"/>
+            <ComboBox promptText="Todos los Servicios" styleClass="combo-box-filter"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <HBox alignment="CENTER" style="-fx-background-color: #f5f3f3; -fx-background-radius: 8;">
+            <Button fx:id="btnSemana" text="Semana" onAction="#onSemanaView" style="-fx-background-color: #ffffff; -fx-background-radius: 8; -fx-font-weight: bold; -fx-text-fill: #006067;" />
+            <Button fx:id="btnMes" text="Mes" onAction="#onMesView" style="-fx-background-color: transparent; -fx-text-fill: #6e797a;" />
+            <Button fx:id="btnDia" text="Día" onAction="#onDiaView" style="-fx-background-color: transparent; -fx-text-fill: #6e797a;" />
+        </HBox>
+    </HBox>
+
+    <!-- Main Content -->
+    <HBox VBox.vgrow="ALWAYS">
+        <!-- Calendar Section (Left 70%) -->
+        <ScrollPane fitToHeight="true" fitToWidth="true" vbarPolicy="NEVER" hbarPolicy="AS_NEEDED" HBox.hgrow="ALWAYS" style="-fx-background-color: transparent; -fx-padding: 0;">
+            <VBox minWidth="900" style="-fx-background-color: #ffffff;">
+                <!-- Header Days -->
+                <GridPane fx:id="headerGrid" styleClass="calendar-grid">
+                    <!-- Column constraints will be set programmatically -->
+                </GridPane>
+                
+                <!-- Calendar Grid Body -->
+                <ScrollPane fitToWidth="true" vbarPolicy="ALWAYS" hbarPolicy="NEVER" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+                    <GridPane fx:id="calendarGrid" styleClass="calendar-grid">
+                        <!-- Column constraints will be set programmatically -->
+                    </GridPane>
+                </ScrollPane>
+            </VBox>
+        </ScrollPane>
+        
+        <!-- Sidebar Right (30%) -->
+        <VBox prefWidth="350" style="-fx-background-color: #fbf9f8; -fx-border-color: #e4e2e2; -fx-border-width: 0 0 0 1;">
+            <VBox spacing="20" style="-fx-padding: 24;" VBox.vgrow="ALWAYS">
+                <!-- Stats -->
+                <VBox spacing="10">
+                    <Label fx:id="hoyLabel" text="Hoy" styleClass="headline-md" style="-fx-font-size: 20px;"/>
+                    <HBox alignment="CENTER" spacing="20" style="-fx-padding: 10 0 0 0;">
+                        <VBox alignment="CENTER">
+                            <Label fx:id="countCitas" text="0" styleClass="headline-md" style="-fx-text-fill: #006067;" />
+                            <Label text="CITAS" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                        </VBox>
+                        <Separator orientation="VERTICAL" />
+                        <VBox alignment="CENTER">
+                            <Label fx:id="countAtendidos" text="0" styleClass="headline-md" style="-fx-text-fill: #006067;" />
+                            <Label text="ATENDIDOS" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                        </VBox>
+                        <Separator orientation="VERTICAL" />
+                        <VBox alignment="CENTER">
+                            <Label fx:id="countPendientes" text="0" styleClass="headline-md" style="-fx-text-fill: #1b1c1c;" />
+                            <Label text="PEND." style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+                <Separator />
+                
+                <!-- Próximas Citas -->
+                <VBox spacing="12">
+                    <Label text="PRÓXIMAS CITAS" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                    <VBox fx:id="proximasCitasContainer" spacing="10">
+                        <!-- Filled by Controller -->
+                    </VBox>
+                </VBox>
+                
+                <!-- Removed Vistas Rápidas to allow full list of appointments -->
+            </VBox>
+            
+            <!-- Bottom Buttons -->
+            <VBox spacing="10" style="-fx-padding: 16 24; -fx-border-color: #e4e2e2; -fx-border-width: 1 0 0 0;">
+                <Button text="🖨 Imprimir Agenda Diaria" styleClass="btn-outline" maxWidth="Infinity" alignment="CENTER" />
+                <Button text="📅 Agendar Cita" styleClass="btn-primary" maxWidth="Infinity" alignment="CENTER" onAction="#onAgendarCita" />
+            </VBox>
+        </VBox>
+    </HBox>
+</VBox>

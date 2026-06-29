@@ -1,0 +1,160 @@
+.root-pane {
+    -fx-background-color: #ffffff;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-padding: 30;
+}
+
+.title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #002333;
+}
+
+.subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555555;
+    -fx-padding: 5 0 20 0;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #005a6b;
+    -fx-padding: 10 0 15 0;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10;
+    -fx-padding: 25;
+}
+
+.label-field {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555555;
+}
+
+.text-field-custom {
+    -fx-background-color: white;
+    -fx-border-color: #888888;
+    -fx-border-radius: 0;
+    -fx-padding: 8 10;
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+}
+
+.text-field-custom:focused {
+    -fx-border-color: #005a6b;
+}
+
+.combo-box-custom {
+    -fx-background-color: #f7f9fa;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 3;
+    -fx-text-fill: #333333;
+}
+
+.btn-primary {
+    -fx-background-color: #005a6b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+.btn-primary:hover {
+    -fx-background-color: #004552;
+}
+
+.btn-secondary {
+    -fx-background-color: white;
+    -fx-text-fill: #005a6b;
+    -fx-font-weight: bold;
+    -fx-border-color: #005a6b;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 9 19;
+    -fx-cursor: hand;
+}
+.btn-secondary:hover {
+    -fx-background-color: #f0f8f9;
+}
+
+.btn-danger-outline {
+    -fx-background-color: white;
+    -fx-text-fill: #d32f2f;
+    -fx-border-color: #d32f2f;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+.btn-danger-outline:hover {
+    -fx-background-color: #ffebee;
+}
+
+.btn-blue {
+    -fx-background-color: #2c5282;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+.btn-blue:hover {
+    -fx-background-color: #1a365d;
+}
+
+.sub-card {
+    -fx-background-color: #fcfcfc;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+}
+
+.sub-card-white {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.02), 5, 0, 0, 1);
+}
+
+.info-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #777777;
+}
+
+.info-text-bold {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.danger-text {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d32f2f;
+}
+
+/* Checkbox styling */
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #005a6b;
+    -fx-border-radius: 3;
+}
+.check-box:selected .box {
+    -fx-background-color: #005a6b;
+}
+.check-box:selected .mark {
+    -fx-background-color: white;
+}

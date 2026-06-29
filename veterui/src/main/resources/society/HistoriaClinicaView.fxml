@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="society.controller.principales.HistoriaClinicaController"
+      spacing="0" styleClass="main-container" stylesheets="@Styles.css">
+
+    <!-- COLUMNA IZQUIERDA: Pacientes Recientes -->
+    <VBox prefWidth="300" styleClass="left-column" spacing="15">
+        <padding><Insets top="20" right="10" bottom="20" left="20"/></padding>
+        <Label text="Pacientes Recientes" styleClass="section-title"/>
+        
+        <HBox spacing="10">
+            <Button text="TODOS" styleClass="filter-btn, filter-btn-active"/>
+            <Button text="EN CLÍNICA" styleClass="filter-btn"/>
+            <Button text="CRÍTICOS" styleClass="filter-btn"/>
+        </HBox>
+        
+        <ListView fx:id="pacientesListView" VBox.vgrow="ALWAYS" styleClass="pacientes-list"/>
+    </VBox>
+
+    <Separator orientation="VERTICAL"/>
+
+    <!-- COLUMNA CENTRAL: Perfil y Evoluciones -->
+    <VBox prefWidth="450" HBox.hgrow="ALWAYS" styleClass="center-column" spacing="20">
+        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+        
+        <!-- Tarjeta Perfil Paciente -->
+        <HBox styleClass="patient-profile-card" spacing="20">
+            <!-- Imagen simulada -->
+            <StackPane styleClass="patient-image-container">
+                <ImageView fx:id="patientImageView" fitWidth="100" fitHeight="100"/>
+            </StackPane>
+            
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label fx:id="nombreLabel" styleClass="patient-name-large"/>
+                    <Label fx:id="idLabel" styleClass="patient-id"/>
+                </HBox>
+                <Label fx:id="detallesLabel" styleClass="patient-details-text"/>
+                
+                <HBox spacing="15">
+                    <VBox styleClass="info-box" alignment="CENTER">
+                        <Label text="PESO ACTUAL" styleClass="info-box-title"/>
+                        <Label fx:id="pesoLabel" styleClass="info-box-value"/>
+                        <Label text="kg" styleClass="info-box-unit"/>
+                    </VBox>
+                    <VBox styleClass="info-box" alignment="CENTER">
+                        <Label text="GÉNERO" styleClass="info-box-title"/>
+                        <Label fx:id="generoLabel" styleClass="info-box-value"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </HBox>
+
+        <Separator/>
+
+        <!-- Wrapper for Evoluciones -->
+        <VBox fx:id="evolucionesWrapper" VBox.vgrow="ALWAYS" spacing="20">
+            <Label text="Evoluciones Médicas" styleClass="section-title-icon"/>
+            <ScrollPane fitToWidth="true" styleClass="transparent-scroll" VBox.vgrow="ALWAYS">
+                <VBox fx:id="evolucionesContainer" spacing="20" styleClass="timeline-container">
+                    <!-- Se llenará dinámicamente -->
+                </VBox>
+            </ScrollPane>
+        </VBox>
+        
+        <!-- Empty state message for Evoluciones -->
+        <VBox fx:id="emptyStateWrapper" VBox.vgrow="ALWAYS" alignment="CENTER" managed="false" visible="false">
+            <Label text="Este paciente no tiene historial clínico." style="-fx-text-fill: #6e797a; -fx-font-size: 16px;"/>
+        </VBox>
+    </VBox>
+
+    <Separator orientation="VERTICAL"/>
+
+    <!-- COLUMNA DERECHA: Monitoreo, Tratamientos y Citas -->
+    <VBox prefWidth="350" styleClass="right-column" spacing="20">
+        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+        
+        <!-- Wrapper for Right Column Content -->
+        <VBox fx:id="rightColumnContent" spacing="20" VBox.vgrow="ALWAYS">
+            <!-- Monitoreo de Peso -->
+            <HBox alignment="CENTER">
+                <Label text="MONITOREO DE PESO" styleClass="section-subtitle"/>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label text="6 MESES" styleClass="subtitle-tag"/>
+            </HBox>
+            <VBox styleClass="chart-card">
+                <BarChart fx:id="pesoChart" legendVisible="false" prefHeight="180">
+                    <xAxis><CategoryAxis/></xAxis>
+                    <yAxis><NumberAxis autoRanging="false" lowerBound="0" upperBound="40" tickUnit="10"/></yAxis>
+                </BarChart>
+            </VBox>
+
+            <!-- Tratamientos Activos -->
+            <Label text="TRATAMIENTOS ACTIVOS" styleClass="section-subtitle"/>
+            <VBox fx:id="tratamientosContainer" spacing="10">
+                <!-- Se llenará dinámicamente -->
+            </VBox>
+
+            <!-- Próximas Citas -->
+            <Label text="PRÓXIMAS CITAS" styleClass="section-subtitle"/>
+            <VBox fx:id="citasContainer" spacing="10">
+                <!-- Se llenará dinámicamente -->
+            </VBox>
+        </VBox>
+
+        <VBox spacing="10" VBox.vgrow="ALWAYS" alignment="BOTTOM_CENTER">
+            <Button text="Generar Receta" styleClass="action-btn-outline" maxWidth="Infinity"/>
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button fx:id="mainActionButton" text="Editar Historial Clínico" styleClass="btn-primary" maxWidth="Infinity" onAction="#handleMainAction"/>
+        </VBox>
+    </VBox>
+
+</HBox>

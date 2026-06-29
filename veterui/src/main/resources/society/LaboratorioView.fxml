@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="society.controller.principales.LaboratorioController"
+            style="-fx-background-color: #f7fbfb; -fx-padding: 20;">
+
+    <top>
+        <VBox spacing="20" style="-fx-padding: 0 0 20 0;">
+            <HBox alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Panel de Control" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                    <Label text="Monitoreo en tiempo real de análisis clínicos" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <HBox spacing="15">
+                    <Button text="🔧 Gestionar Equipos" style="-fx-background-color: transparent; -fx-border-color: #00796b; -fx-text-fill: #00796b; -fx-font-weight: bold; -fx-padding: 8 15; -fx-border-radius: 6; -fx-cursor: hand;"/>
+                    <Button text="+ Nueva Solicitud" onAction="#handleNuevaSolicitud" style="-fx-background-color: #005a5a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                </HBox>
+            </HBox>
+
+            <!-- Metrics Cards -->
+            <HBox spacing="20">
+                <HBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                    <Label text="⏳" style="-fx-font-size: 24px; -fx-background-color: #e0f2f1; -fx-padding: 10; -fx-background-radius: 30;"/>
+                    <VBox spacing="2" alignment="CENTER_LEFT">
+                        <Label text="MUESTRAS PENDIENTES" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                        <Label fx:id="muestrasPendientesLabel" text="12" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                        <Label fx:id="muestrasUrgentesLabel" text="! 3 urgentes" style="-fx-font-size: 11px; -fx-text-fill: #c0392b; -fx-font-weight: bold;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                    <Label text="✓" style="-fx-font-size: 24px; -fx-text-fill: white; -fx-background-color: #3498db; -fx-padding: 10; -fx-background-radius: 30;"/>
+                    <VBox spacing="2" alignment="CENTER_LEFT">
+                        <Label text="RESULTADOS LISTOS" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                        <Label fx:id="resultadosListosLabel" text="28" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                        <Label fx:id="resultadosHoyLabel" text="📈 +5 hoy" style="-fx-font-size: 11px; -fx-text-fill: #888;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                    <Label text="🔬" style="-fx-font-size: 24px; -fx-background-color: #f0f0f0; -fx-padding: 10; -fx-background-radius: 30;"/>
+                    <VBox spacing="2" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                        <Label text="EQUIPOS ACTIVOS" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                        <Label fx:id="equiposActivosLabel" text="6/7" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                        <ProgressBar fx:id="equiposProgress" progress="0.85" maxWidth="Infinity" style="-fx-accent: #00796b; -fx-padding: 5 0 0 0;"/>
+                    </VBox>
+                </HBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <HBox spacing="20">
+            <!-- Left Side: Solicitudes Activas -->
+            <VBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Solicitudes Activas" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <HBox spacing="5" style="-fx-background-color: #f5f5f5; -fx-padding: 3; -fx-background-radius: 4;">
+                        <Button text="Todas" style="-fx-background-color: white; -fx-text-fill: #333; -fx-font-size: 11px; -fx-background-radius: 4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 2, 0, 0, 1);"/>
+                        <Button text="Urgentes" style="-fx-background-color: transparent; -fx-text-fill: #888; -fx-font-size: 11px;"/>
+                    </HBox>
+                </HBox>
+
+                <!-- Table Header -->
+                <HBox spacing="10" style="-fx-padding: 10; -fx-border-color: transparent transparent #eee transparent;">
+                    <Label text="MASCOTA / DUEÑO" prefWidth="120" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    <Label text="TIPO DE TEST" prefWidth="120" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    <Label text="PRIORIDAD" prefWidth="100" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    <Label text="ESTADO" prefWidth="120" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                </HBox>
+
+                <ListView fx:id="solicitudesListView" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+            </VBox>
+
+            <!-- Right Side: Resultados Recientes -->
+            <VBox spacing="15" prefWidth="320" minWidth="300">
+                <!-- Resultados list -->
+                <VBox spacing="15" VBox.vgrow="ALWAYS" style="-fx-background-color: #f7fbfb; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Resultados Recientes" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="Ver Todo" style="-fx-text-fill: #005a5a; -fx-font-weight: bold; -fx-font-size: 11px; -fx-cursor: hand;"/>
+                    </HBox>
+                    <ListView fx:id="resultadosListView" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+                </VBox>
+
+                <!-- Footer Banner -->
+                <VBox alignment="CENTER_LEFT" style="-fx-background-color: #005a5a; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Label text="Mantenimiento de Equipos" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14px;"/>
+                    <Label text="Analizador bioquímico programado para calibración hoy a las 18:00h" wrapText="true" style="-fx-text-fill: #cce0e0; -fx-font-size: 11px;"/>
+                </VBox>
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>

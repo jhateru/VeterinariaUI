@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="society.controller.principales.PersonalController" styleClass="root-pane" stylesheets="@personal.css">
+    
+    <!-- HEADER -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets bottom="20"/>
+            </padding>
+            <Label text="Gestión de\nPersonal" styleClass="title" minWidth="200"/>
+            <TextField fx:id="searchField" promptText="Buscar empleados por nombre, cargo o ID..." styleClass="search-field" HBox.hgrow="ALWAYS" maxWidth="400"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="🔔" styleClass="btn-secondary"/>
+            <Button text="➕ Nuevo Empleado" styleClass="btn-primary"/>
+        </HBox>
+    </top>
+
+    <!-- CONTENT -->
+    <center>
+        <HBox spacing="20">
+            
+            <!-- LEFT COLUMN -->
+            <VBox spacing="20" HBox.hgrow="ALWAYS">
+                <!-- KPI CARDS -->
+                <HBox spacing="20">
+                    <!-- Total Personal -->
+                    <VBox styleClass="summary-card" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <StackPane styleClass="card-icon-container">
+                                <Label text="👥" />
+                            </StackPane>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label text="+2 este mes" styleClass="badge-green"/>
+                        </HBox>
+                        <Label text="TOTAL PERSONAL" styleClass="card-title">
+                            <VBox.margin>
+                                <Insets top="15"/>
+                            </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblTotalPersonal" text="24" styleClass="card-number"/>
+                    </VBox>
+
+                    <!-- En Turno Ahora -->
+                    <VBox styleClass="summary-card" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <StackPane styleClass="card-icon-container">
+                                <Label text="💼" />
+                            </StackPane>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label text="+6" styleClass="badge-gray"/>
+                        </HBox>
+                        <Label text="EN TURNO AHORA" styleClass="card-title">
+                            <VBox.margin>
+                                <Insets top="15"/>
+                            </VBox.margin>
+                        </Label>
+                        <Label fx:id="lblEnTurno" text="8" styleClass="card-number"/>
+                        <Label text="🕒 Turno Mañana: 08:00 - 14:00" styleClass="card-subtitle">
+                            <VBox.margin>
+                                <Insets top="5"/>
+                            </VBox.margin>
+                        </Label>
+                    </VBox>
+
+                    <!-- Próxima Reunión -->
+                    <VBox styleClass="summary-card-green" HBox.hgrow="ALWAYS">
+                        <StackPane alignment="CENTER_LEFT">
+                            <Label text="📅" style="-fx-text-fill: white; -fx-font-size: 20px;"/>
+                        </StackPane>
+                        <Label text="PRÓXIMA REUNIÓN" styleClass="card-title-white">
+                            <VBox.margin>
+                                <Insets top="15"/>
+                            </VBox.margin>
+                        </Label>
+                        <Label text="Staff General" styleClass="card-number-white"/>
+                        <Label text="⏰ 15:30 PM Today" styleClass="card-subtitle-white">
+                            <VBox.margin>
+                                <Insets top="10"/>
+                            </VBox.margin>
+                        </Label>
+                    </VBox>
+                </HBox>
+
+                <!-- TABLE -->
+                <VBox styleClass="summary-card" VBox.vgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Directorio de Empleados" styleClass="subtitle"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="≡ Filtrar" styleClass="btn-secondary"/>
+                        <Button text="⬇ Exportar" styleClass="btn-secondary">
+                            <HBox.margin>
+                                <Insets left="10"/>
+                            </HBox.margin>
+                        </Button>
+                    </HBox>
+                    <TableView fx:id="tablaPersonal" styleClass="table-view" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colNombreCargo" text="NOMBRE &amp; CARGO" prefWidth="250"/>
+                            <TableColumn fx:id="colDepartamento" text="DEPARTAMENTO" prefWidth="150"/>
+                            <TableColumn fx:id="colEstado" text="ESTADO" prefWidth="120"/>
+                            <TableColumn fx:id="colContacto" text="CONTACTO" prefWidth="200"/>
+                        </columns>
+                        <VBox.margin>
+                            <Insets top="15"/>
+                        </VBox.margin>
+                    </TableView>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <padding>
+                            <Insets top="15"/>
+                        </padding>
+                        <Label text="Mostrando 1-4 de 24 empleados" styleClass="cell-subtitle"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="&lt;   1   2   3   &gt;" styleClass="cell-subtitle" style="-fx-cursor: hand;"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <!-- RIGHT COLUMN -->
+            <VBox spacing="20" prefWidth="300">
+                <padding>
+                    <Insets left="20"/>
+                </padding>
+                <style>
+                    -fx-border-color: transparent transparent transparent #e0e0e0;
+                    -fx-border-width: 1;
+                </style>
+                
+                <!-- Turnos Hoy -->
+                <VBox>
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Turnos Hoy" styleClass="subtitle"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="LIVE" styleClass="badge-green"/>
+                    </HBox>
+                    
+                    <VBox styleClass="schedule-list-item">
+                        <Label text="08:00 - 14:00" styleClass="schedule-time"/>
+                        <Label text="Turno Mañana" styleClass="schedule-name"/>
+                        <Label text="8 Veterinarios en turno" styleClass="schedule-desc"/>
+                    </VBox>
+                    <VBox styleClass="schedule-list-item">
+                        <Label text="14:00 - 20:00" styleClass="schedule-time"/>
+                        <Label text="Turno Tarde" styleClass="schedule-name"/>
+                        <Label text="6 Programados" styleClass="schedule-desc"/>
+                    </VBox>
+                    <VBox styleClass="schedule-list-item" style="-fx-border-color: transparent;">
+                        <Label text="20:00 - 08:00" styleClass="schedule-time"/>
+                        <Label text="Turno Noche / Urgencias" styleClass="schedule-name"/>
+                        <Label text="2 Programados" styleClass="schedule-desc"/>
+                    </VBox>
+                </VBox>
+                
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <!-- Seguridad y Accesos -->
+                <VBox styleClass="summary-card">
+                    <Label text="Seguridad y Accesos" styleClass="cell-name"/>
+                    <Label text="Configura quién puede ver historiales médicos o editar inventario." styleClass="cell-subtitle" wrapText="true">
+                        <VBox.margin>
+                            <Insets top="5" bottom="15"/>
+                        </VBox.margin>
+                    </Label>
+                    <Button text="🔒 Roles y Permisos" styleClass="btn-blue" maxWidth="Infinity"/>
+                </VBox>
+            </VBox>
+
+        </HBox>
+    </center>
+
+</BorderPane>

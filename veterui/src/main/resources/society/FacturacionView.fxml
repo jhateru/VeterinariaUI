@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Circle?>
+
+<HBox style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="society.controller.principales.FacturacionController">
+    
+    <!-- LEFT PANE: Catálogo -->
+    <VBox spacing="20" style="-fx-padding: 30;" HBox.hgrow="ALWAYS">
+        
+        <!-- Header & Filters -->
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Label text="Catálogo" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0f4c5c;" />
+            <Region HBox.hgrow="ALWAYS" />
+            
+            <HBox spacing="10" alignment="CENTER">
+                <ToggleButton fx:id="btnTodo" text="Todos" onAction="#onFilterChange" selected="true" styleClass="filter-toggle" style="-fx-background-color: #006067; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 6 15; -fx-font-weight: bold; -fx-cursor: hand;" />
+                <ToggleButton fx:id="btnMedico" text="Médico" onAction="#onFilterChange" styleClass="filter-toggle" style="-fx-background-color: #f1f3f4; -fx-text-fill: #6e797a; -fx-background-radius: 20; -fx-padding: 6 15; -fx-font-weight: bold; -fx-cursor: hand;" />
+                <ToggleButton fx:id="btnEstetica" text="Estética" onAction="#onFilterChange" styleClass="filter-toggle" style="-fx-background-color: #f1f3f4; -fx-text-fill: #6e797a; -fx-background-radius: 20; -fx-padding: 6 15; -fx-font-weight: bold; -fx-cursor: hand;" />
+                <ToggleButton fx:id="btnAlimentos" text="Alimentos" onAction="#onFilterChange" styleClass="filter-toggle" style="-fx-background-color: #f1f3f4; -fx-text-fill: #6e797a; -fx-background-radius: 20; -fx-padding: 6 15; -fx-font-weight: bold; -fx-cursor: hand;" />
+            </HBox>
+        </HBox>
+        
+        <!-- Products Grid -->
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+            <FlowPane fx:id="catalogoGrid" hgap="20" vgap="20">
+                <!-- Se llenará dinámicamente -->
+            </FlowPane>
+        </ScrollPane>
+    </VBox>
+    
+    <!-- RIGHT PANE: Detalle de Venta -->
+    <VBox prefWidth="380" minWidth="380" maxWidth="380" style="-fx-background-color: #f5f6f7; -fx-border-color: #e4e2e2; -fx-border-width: 0 0 0 1;">
+        
+        <!-- Right Pane Header -->
+        <HBox alignment="CENTER_LEFT" style="-fx-padding: 30 25 15 25;">
+            <Label text="Detalle de Venta" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblIdVenta" text="ID: #POS-98231" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #d32f2f;" />
+        </HBox>
+        
+        <!-- Cliente Card -->
+        <VBox style="-fx-padding: 0 25 20 25;">
+            <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 15;">
+                <ImageView fx:id="imgMascota" fitWidth="40" fitHeight="40">
+                    <clip>
+                        <Circle centerX="20" centerY="20" radius="20"/>
+                    </clip>
+                </ImageView>
+                <VBox spacing="2" HBox.hgrow="ALWAYS">
+                    <Label fx:id="lblNombreMascota" text="Max" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                    <Label fx:id="lblInfoMascota" text="Golden Retriever • Dueño: Carlos R." style="-fx-font-size: 11px; -fx-text-fill: #6e797a;" wrapText="true"/>
+                </VBox>
+                <Button style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 5;">
+                    <graphic>
+                        <SVGPath content="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z" fill="#006067" scaleX="0.7" scaleY="0.7" />
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+        
+        <!-- Cart Items List -->
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+            <VBox fx:id="carritoContainer" spacing="15" style="-fx-padding: 0 25 15 25;">
+                <!-- Dinámico -->
+            </VBox>
+        </ScrollPane>
+        
+        <!-- Footer / Totals -->
+        <VBox style="-fx-background-color: #e6e8e8; -fx-padding: 25; -fx-border-color: #d1d4d4; -fx-border-width: 1 0 0 0;" spacing="15">
+            <!-- Descuento y Cupón -->
+            <HBox spacing="10">
+                <Button text="Descuento %" style="-fx-background-color: white; -fx-border-color: #d1d4d4; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c; -fx-cursor: hand;" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                <Button text="🎁 Cupón" style="-fx-background-color: white; -fx-border-color: #d1d4d4; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c; -fx-cursor: hand;" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+            </HBox>
+            
+            <VBox spacing="10" style="-fx-padding: 10 0 10 0; -fx-border-color: #d1d4d4; -fx-border-width: 0 0 1 0;">
+                <HBox>
+                    <Label text="Subtotal" style="-fx-text-fill: #6e797a; -fx-font-size: 13px;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label fx:id="lblSubtotal" text="0.00" style="-fx-text-fill: #1b1c1c; -fx-font-size: 13px; -fx-font-weight: bold;" />
+                </HBox>
+                <HBox>
+                    <Label text="Descuentos" style="-fx-text-fill: #6e797a; -fx-font-size: 13px;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label fx:id="lblDescuentos" text="0.00" style="-fx-text-fill: #d32f2f; -fx-font-size: 13px; -fx-font-weight: bold;" />
+                </HBox>
+                <HBox>
+                    <Label text="IVA (15%)" style="-fx-text-fill: #6e797a; -fx-font-size: 13px;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label fx:id="lblIva" text="0.00" style="-fx-text-fill: #1b1c1c; -fx-font-size: 13px; -fx-font-weight: bold;" />
+                </HBox>
+            </VBox>
+            
+            <HBox alignment="CENTER_LEFT" style="-fx-padding: 5 0 10 0;">
+                <Label text="Total" style="-fx-text-fill: #1b1c1c; -fx-font-size: 22px; -fx-font-weight: bold;" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="lblTotal" text="0.00" style="-fx-text-fill: #006067; -fx-font-size: 26px; -fx-font-weight: bold;" />
+            </HBox>
+            
+            <HBox spacing="10">
+                <Button text="Guardar\nProforma" textAlignment="CENTER" onAction="#onGuardarProforma" style="-fx-background-color: white; -fx-border-color: #006067; -fx-border-radius: 8; -fx-background-radius: 8; -fx-text-fill: #006067; -fx-font-weight: bold; -fx-font-size: 13px; -fx-cursor: hand;" prefHeight="50" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                <Button text="Procesar\nPago     &gt;" textAlignment="CENTER" onAction="#onProcesarPago" style="-fx-background-color: #006067; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-background-radius: 8; -fx-cursor: hand;" prefHeight="50" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+            </HBox>
+        </VBox>
+    </VBox>
+
+</HBox>

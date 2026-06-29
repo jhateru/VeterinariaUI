@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane stylesheets="@servicios.css" styleClass="root-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="society.controller.principales.ServiciosController">
+    <top>
+        <VBox spacing="10">
+            <HBox alignment="CENTER_LEFT">
+                <Label text="Administracion &gt; " styleClass="breadcrumb"/>
+                <Label text="Catalogo de Servicios" styleClass="breadcrumb-active"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Catalogo de Servicios" styleClass="title"/>
+                    <Label text="Gestiona los precios, duraciones y disponibilidad de tus servicios clinicos." styleClass="subtitle"/>
+                </VBox>
+                <Button text="+ Nuevo Servicio" styleClass="btn-primary"/>
+            </HBox>
+            <HBox spacing="20" style="-fx-padding: 20 0 20 0;">
+                <HBox styleClass="summary-card" alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
+                    <VBox styleClass="summary-icon-box-1" alignment="CENTER">
+                        <Label text="[+]" style="-fx-font-size: 20px;"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Servicios Activos" styleClass="summary-title"/>
+                        <Label fx:id="lblServiciosActivos" text="0" styleClass="summary-value"/>
+                    </VBox>
+                </HBox>
+                <HBox styleClass="summary-card" alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
+                    <VBox styleClass="summary-icon-box-2" alignment="CENTER">
+                        <Label text="[&#36;]" style="-fx-font-size: 20px;"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Ingresos MTD" styleClass="summary-title"/>
+                        <Label text="\$12,450.00" styleClass="summary-value-blue"/>
+                    </VBox>
+                </HBox>
+                <HBox styleClass="summary-card" alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
+                    <VBox styleClass="summary-icon-box-3" alignment="CENTER">
+                        <Label text="[*]" style="-fx-font-size: 20px;"/>
+                    </VBox>
+                    <VBox>
+                        <Label text="Categoria Popular" styleClass="summary-title"/>
+                        <Label text="Vacunacion" styleClass="summary-value"/>
+                    </VBox>
+                </HBox>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <VBox styleClass="table-container" spacing="15">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <TextField promptText="Buscar por nombre o descripcion..." styleClass="search-bar" HBox.hgrow="ALWAYS"/>
+                <ComboBox promptText="Todas las Categorias" styleClass="search-bar"/>
+                <Button text="Filtros" styleClass="btn-secondary"/>
+                <Button text="Exportar" styleClass="btn-secondary"/>
+            </HBox>
+            
+            <TableView fx:id="tablaServicios" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colServicio" text="SERVICIO" prefWidth="250">
+                        <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colCategoria" text="CATEGORIA" prefWidth="120">
+                        <cellValueFactory><PropertyValueFactory property="categoria" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colDuracion" text="DURACION" prefWidth="100">
+                        <cellValueFactory><PropertyValueFactory property="duracionEstimadaMinutos" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colPrecio" text="PRECIO BASE" prefWidth="120">
+                        <cellValueFactory><PropertyValueFactory property="precioBase" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colEstado" text="ESTADO" prefWidth="150">
+                        <cellValueFactory><PropertyValueFactory property="estado" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colAcciones" text="ACCIONES" prefWidth="100"/>
+                </columns>
+            </TableView>
+            
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label fx:id="lblMostrando" text="Mostrando 0 servicios" styleClass="breadcrumb" HBox.hgrow="ALWAYS"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <HBox spacing="5" alignment="CENTER">
+                    <Button text="&lt;" styleClass="btn-secondary" style="-fx-padding: 5 10 5 10;"/>
+                    <Button text="1" styleClass="btn-primary" style="-fx-padding: 5 10 5 10;"/>
+                    <Button text="2" styleClass="btn-secondary" style="-fx-padding: 5 10 5 10;"/>
+                    <Button text="3" styleClass="btn-secondary" style="-fx-padding: 5 10 5 10;"/>
+                    <Button text="&gt;" styleClass="btn-secondary" style="-fx-padding: 5 10 5 10;"/>
+                </HBox>
+            </HBox>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox spacing="20" style="-fx-padding: 20 0 0 0;">
+            <VBox styleClass="bottom-card-1" HBox.hgrow="ALWAYS" spacing="10">
+                <Label text="Analisis de Rentabilidad" styleClass="bottom-card-1-title"/>
+                <Label text="Visualiza cuales servicios estan generando&#10;mayor margen de ganancia este trimestre." styleClass="bottom-card-1-text"/>
+                <Button text="Ver Reporte -&gt;" styleClass="btn-card-1"/>
+            </VBox>
+            <VBox styleClass="bottom-card-2" HBox.hgrow="ALWAYS" spacing="10">
+                <Label text="Paquetes de Salud" styleClass="bottom-card-2-title"/>
+                <Label text="Configura combos de servicios preventivos&#10;para ofrecer planes de bienestar anuales." styleClass="bottom-card-2-text"/>
+                <Button text="Configurar Planes -&gt;" styleClass="btn-card-2"/>
+            </VBox>
+        </HBox>
+    </bottom>
+</BorderPane>
