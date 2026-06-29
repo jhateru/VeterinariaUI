@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="society.controller.principales.ProveedoresController"
+            style="-fx-background-color: #f7fbfb; -fx-padding: 20;">
+
+    <top>
+        <VBox spacing="20" style="-fx-padding: 0 0 20 0;">
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Gestión de Proveedores" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0c2333;"/>
+                    <Label text="Centraliza y optimiza el abastecimiento de tu clínica veterinaria." style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Nuevo Proveedor" onAction="#handleNuevoProveedor" style="-fx-background-color: #005a5a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+            </HBox>
+
+            <!-- Metrics Cards Row -->
+            <HBox spacing="20">
+                <!-- Card 1: Total -->
+                <HBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.02), 5, 0, 0, 2);">
+                    <VBox spacing="2" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                        <Label text="TOTAL PROVEEDORES" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                        <Label fx:id="totalProveedoresLabel" text="48" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0c2333;"/>
+                        <Label fx:id="totalSubLabel" text="+2 este mes" style="-fx-font-size: 11px; -fx-text-fill: #00796b; -fx-font-weight: bold;"/>
+                    </VBox>
+                    <Label text="🏭" style="-fx-font-size: 20px; -fx-background-color: #e0f2f1; -fx-padding: 10; -fx-background-radius: 30;"/>
+                </HBox>
+
+                <!-- Card 2: In Transit -->
+                <HBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.02), 5, 0, 0, 2);">
+                    <VBox spacing="2" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                        <Label text="ÓRDENES EN TRÁNSITO" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                        <Label fx:id="ordenesTransitoLabel" text="12" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0c2333;"/>
+                        <Label fx:id="ordenesSubLabel" text="4 llegan hoy" style="-fx-font-size: 11px; -fx-text-fill: #3f51b5; -fx-font-weight: bold;"/>
+                    </VBox>
+                    <Label text="🚚" style="-fx-font-size: 20px; -fx-background-color: #e8eaf6; -fx-padding: 10; -fx-background-radius: 30;"/>
+                </HBox>
+
+                <!-- Card 3: Monthly Spend -->
+                <HBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.02), 5, 0, 0, 2);">
+                    <VBox spacing="2" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                        <Label text="INVERSIÓN MENSUAL" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                        <Label fx:id="inversionLabel" text="\$14,250.00" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0c2333;"/>
+                        <Label fx:id="inversionSubLabel" text="-5% vs mes anterior" style="-fx-font-size: 11px; -fx-text-fill: #795548;"/>
+                    </VBox>
+                    <Label text="💵" style="-fx-font-size: 20px; -fx-background-color: #efebe9; -fx-padding: 10; -fx-background-radius: 30;"/>
+                </HBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.02), 5, 0, 0, 2);">
+            <!-- Filters & Sorting Row -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <ComboBox fx:id="categoriaCombo" prefWidth="180" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-padding: 2;"/>
+                <ComboBox fx:id="estadoCombo" prefWidth="150" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-padding: 2;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="≡ Ordenar por:" style="-fx-text-fill: #666; -fx-font-size: 12px;"/>
+                    <Label text="Última Compra" style="-fx-text-fill: #0c2333; -fx-font-weight: bold; -fx-font-size: 12px; -fx-cursor: hand;"/>
+                </HBox>
+            </HBox>
+
+            <!-- Table Headers -->
+            <HBox spacing="20" style="-fx-padding: 10 15; -fx-background-color: #f9fafb; -fx-border-color: transparent transparent #e5e7eb transparent;">
+                <Label text="PROVEEDOR" prefWidth="250" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4b5563;"/>
+                <Label text="CATEGORÍA" prefWidth="120" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4b5563;"/>
+                <Label text="CONTACTO" prefWidth="150" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4b5563;"/>
+                <Label text="ESTADO" prefWidth="100" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4b5563;"/>
+                <Label text="ÚLTIMA ORDEN" prefWidth="100" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4b5563;"/>
+                <Label text="ACCIONES" prefWidth="100" alignment="CENTER" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4b5563;"/>
+            </HBox>
+
+            <!-- Suppliers ListView -->
+            <ListView fx:id="proveedoresListView" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+
+            <!-- Pagination Footer -->
+            <HBox alignment="CENTER_LEFT" style="-fx-padding: 10 0 0 0; -fx-border-color: #e5e7eb transparent transparent transparent;">
+                <Label fx:id="paginacionInfoLabel" text="Mostrando 1-4 de 48 proveedores" style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <HBox spacing="4" alignment="CENTER">
+                    <Button text="‹" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 4; -fx-padding: 5 10; -fx-text-fill: #6b7280; -fx-cursor: hand;"/>
+                    <Button text="1" style="-fx-background-color: #005a5a; -fx-text-fill: white; -fx-background-radius: 4; -fx-padding: 5 10; -fx-font-weight: bold;"/>
+                    <Button text="2" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 4; -fx-padding: 5 10; -fx-text-fill: #4b5563; -fx-cursor: hand;"/>
+                    <Button text="3" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 4; -fx-padding: 5 10; -fx-text-fill: #4b5563; -fx-cursor: hand;"/>
+                    <Button text="›" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 4; -fx-padding: 5 10; -fx-text-fill: #6b7280; -fx-cursor: hand;"/>
+                </HBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

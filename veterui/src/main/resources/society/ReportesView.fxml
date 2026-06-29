@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #f7f9fa;" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="society.controller.principales.ReportesController">
+    <VBox spacing="25" style="-fx-padding: 30; -fx-background-color: #f7f9fa;">
+        
+        <!-- Cabecera -->
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <VBox HBox.hgrow="ALWAYS">
+                <Label text="Módulo de Reportes y Analítica" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #006067;" />
+            </VBox>
+            
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <ComboBox fx:id="filtroTiempo" promptText="Últimos 30 días" style="-fx-background-color: #f1f3f4; -fx-text-fill: #1b1c1c; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 2; -fx-cursor: hand;" />
+                <Button text="📥 Exportar Todo" style="-fx-background-color: #006067; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 8 16; -fx-cursor: hand;" />
+            </HBox>
+        </HBox>
+        
+        <!-- Tarjetas de Resumen -->
+        <HBox spacing="15">
+            <!-- Ingresos Totales -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                <Label text="INGRESOS TOTALES" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                <HBox alignment="BASELINE_LEFT" spacing="10" style="-fx-padding: 10 0 5 0;">
+                    <Label fx:id="ingresosLabel" text="\$24,500" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                    <Label text="+12% ↗" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;" />
+                </HBox>
+                <Region style="-fx-background-color: #006067; -fx-pref-height: 4; -fx-max-width: 150;" />
+            </VBox>
+            
+            <!-- Nuevos Pacientes -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                <Label text="NUEVOS PACIENTES" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                <HBox alignment="BASELINE_LEFT" spacing="10" style="-fx-padding: 10 0 5 0;">
+                    <Label fx:id="nuevosPacientesLabel" text="124" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                    <Label text="+5% ↗" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;" />
+                </HBox>
+                <Region style="-fx-background-color: #4a90e2; -fx-pref-height: 4; -fx-max-width: 150;" />
+            </VBox>
+            
+            <!-- Consultas Completadas -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                <Label text="CONSULTAS COMPLETADAS" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                <HBox alignment="BASELINE_LEFT" spacing="10" style="-fx-padding: 10 0 5 0;">
+                    <Label fx:id="consultasLabel" text="842" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                    <Label text="Meta: 900" style="-fx-font-size: 13px; -fx-text-fill: #6e797a;" />
+                </HBox>
+                <Region style="-fx-background-color: #8c7362; -fx-pref-height: 4; -fx-max-width: 150;" />
+            </VBox>
+            
+            <!-- Tasa de Ocupación -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                <Label text="TASA DE OCUPACIÓN" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                <HBox alignment="BASELINE_LEFT" spacing="10" style="-fx-padding: 10 0 5 0;">
+                    <Label fx:id="tasaOcupacionLabel" text="78%" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                    <Label text="Óptima" style="-fx-font-size: 13px; -fx-text-fill: #1967d2;" />
+                </HBox>
+                <Region style="-fx-background-color: #006067; -fx-pref-height: 4; -fx-max-width: 150;" />
+            </VBox>
+        </HBox>
+        
+        <!-- Medio: Gráficos -->
+        <HBox spacing="15">
+            
+            <!-- Tendencias de Salud y Citas -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="20">
+                    <Label text="Tendencias de Salud y Citas" style="-fx-font-size: 18px; -fx-text-fill: #1b1c1c; -fx-font-weight: bold;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <HBox alignment="CENTER" spacing="10">
+                        <Circle fill="#006067" radius="5" />
+                        <Label text="Citas" style="-fx-font-size: 12px; -fx-text-fill: #6e797a;" />
+                        <Circle fill="#a3c2ff" radius="5" />
+                        <Label text="Historias Médicas" style="-fx-font-size: 12px; -fx-text-fill: #6e797a;" />
+                    </HBox>
+                </HBox>
+                
+                <LineChart fx:id="tendenciasChart" legendVisible="false" createSymbols="false" prefHeight="250">
+                    <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT" tickLabelsVisible="false" minorTickVisible="false" />
+                    </yAxis>
+                </LineChart>
+            </VBox>
+            
+            <!-- Distribución por Especie -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" minWidth="300" maxWidth="300">
+                <Label text="Distribución por Especie" style="-fx-font-size: 18px; -fx-text-fill: #1b1c1c; -fx-font-weight: bold; -fx-padding: 0 0 10 0;" />
+                
+                <StackPane prefHeight="200">
+                    <PieChart fx:id="especiesChart" legendVisible="false" />
+                    <VBox alignment="CENTER">
+                        <Label text="1.2k" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                        <Label text="Pacientes Totales" style="-fx-font-size: 10px; -fx-text-fill: #6e797a;" />
+                    </VBox>
+                </StackPane>
+                
+                <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10 0 0 0;">
+                    <VBox alignment="CENTER">
+                        <Region style="-fx-background-color: #006067; -fx-pref-height: 4; -fx-pref-width: 40; -fx-margin: 0 0 5 0;" />
+                        <Label text="Caninos" style="-fx-font-size: 11px; -fx-text-fill: #1b1c1c;" />
+                        <Label text="58%" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                    </VBox>
+                    <VBox alignment="CENTER">
+                        <Region style="-fx-background-color: #4a90e2; -fx-pref-height: 4; -fx-pref-width: 40; -fx-margin: 0 0 5 0;" />
+                        <Label text="Felinos" style="-fx-font-size: 11px; -fx-text-fill: #1b1c1c;" />
+                        <Label text="32%" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                    </VBox>
+                    <VBox alignment="CENTER">
+                        <Region style="-fx-background-color: #8c7362; -fx-pref-height: 4; -fx-pref-width: 40; -fx-margin: 0 0 5 0;" />
+                        <Label text="Exóticos" style="-fx-font-size: 11px; -fx-text-fill: #1b1c1c;" />
+                        <Label text="10%" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </HBox>
+        
+        <!-- Inferior: Listas -->
+        <HBox spacing="15">
+            <!-- Servicios más Demandados -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" minWidth="350" maxWidth="350">
+                <Label text="Servicios más Demandados" style="-fx-font-size: 18px; -fx-text-fill: #1b1c1c; -fx-font-weight: bold; -fx-padding: 0 0 15 0;" />
+                
+                <VBox spacing="10">
+                    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #f7f9fa; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 12 15; -fx-cursor: hand;">
+                        <Label text="01" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #a5b1b2;" />
+                        <VBox>
+                            <Label text="Vacunación" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                            <Label text="342 sesiones este mes" style="-fx-font-size: 11px; -fx-text-fill: #6e797a;" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label text="&gt;" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #006067;" />
+                    </HBox>
+                    
+                    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #f7f9fa; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 12 15; -fx-cursor: hand;">
+                        <Label text="02" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #a5b1b2;" />
+                        <VBox>
+                            <Label text="Desparasitación" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                            <Label text="285 sesiones este mes" style="-fx-font-size: 11px; -fx-text-fill: #6e797a;" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label text="&gt;" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #006067;" />
+                    </HBox>
+                    
+                    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #f7f9fa; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 12 15; -fx-cursor: hand;">
+                        <Label text="03" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #a5b1b2;" />
+                        <VBox>
+                            <Label text="Cirugía General" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                            <Label text="156 sesiones este mes" style="-fx-font-size: 11px; -fx-text-fill: #6e797a;" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label text="&gt;" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #006067;" />
+                    </HBox>
+                    
+                    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #f7f9fa; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 12 15; -fx-cursor: hand;">
+                        <Label text="04" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #a5b1b2;" />
+                        <VBox>
+                            <Label text="Laboratorio" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                            <Label text="98 sesiones este mes" style="-fx-font-size: 11px; -fx-text-fill: #6e797a;" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label text="&gt;" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #006067;" />
+                    </HBox>
+                </VBox>
+            </VBox>
+            
+            <!-- Desempeño Médico -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8;" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" style="-fx-padding: 20;">
+                    <Label text="Desempeño Médico" style="-fx-font-size: 18px; -fx-text-fill: #1b1c1c; -fx-font-weight: bold;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="Ver todo" style="-fx-text-fill: #006067; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" />
+                </HBox>
+                
+                <HBox alignment="CENTER_LEFT" style="-fx-padding: 10 20; -fx-border-color: #e4e2e2; -fx-border-width: 1 0 1 0;">
+                    <Label text="VETERINARIO" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a; -fx-pref-width: 200;" />
+                    <Label text="CONSULTAS" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a; -fx-pref-width: 100;" />
+                    <Label text="CALIFICACIÓN" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a; -fx-pref-width: 120;" />
+                    <Label text="CARGA" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a; -fx-pref-width: 100;" alignment="CENTER_RIGHT" />
+                </HBox>
+                
+                <VBox fx:id="desempenoContainer" />
+            </VBox>
+        </HBox>
+        
+    </VBox>
+</ScrollPane>

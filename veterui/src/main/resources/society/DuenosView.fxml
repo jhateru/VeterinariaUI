@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.SVGPath?>
+
+<VBox spacing="20" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="society.controller.principales.DuenosController">
+
+    <!-- Header Section -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox>
+            <Label text="Directorio de Dueños" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Inicio" style="-fx-text-fill: #6e797a; -fx-font-size: 12px;" />
+                <Label text="&gt;" style="-fx-text-fill: #6e797a; -fx-font-size: 12px;" />
+                <Label text="Dueños" style="-fx-text-fill: #006067; -fx-font-size: 12px; -fx-font-weight: bold;" />
+            </HBox>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="+ Nuevo Dueño" onAction="#onNuevoDueno" style="-fx-background-color: #006067; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
+    </HBox>
+
+    <!-- Filters Section -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button fx:id="btnTodos" text="Todos (0)" onAction="#onFilterTodos" style="-fx-background-color: #008080; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 6 15; -fx-font-weight: bold; -fx-cursor: hand;"/>
+        <Button fx:id="btnFrecuentes" text="Frecuentes" onAction="#onFilterFrecuentes" style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 6 15; -fx-text-fill: #6e797a; -fx-cursor: hand;"/>
+        <Button fx:id="btnNuevos" text="Nuevos (Mes)" onAction="#onFilterNuevos" style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 6 15; -fx-text-fill: #6e797a; -fx-cursor: hand;"/>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Filtros Avanzados" style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 6 15; -fx-text-fill: #6e797a; -fx-cursor: hand;">
+            <graphic>
+                <SVGPath content="M3 5h18v2H3V5zm4 6h10v2H7v-2zm3 6h4v2h-4v-2z" fill="#6e797a" scaleX="0.8" scaleY="0.8"/>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <!-- Content Section -->
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+        <FlowPane fx:id="duenosContainer" hgap="20" vgap="20" style="-fx-padding: 5;">
+            <!-- Tarjetas de dueños generadas dinámicamente -->
+        </FlowPane>
+    </ScrollPane>
+
+</VBox>

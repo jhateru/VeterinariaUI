@@ -1,103 +1,488 @@
-/* VetiCare Global Styles */
+/* Clinical Calm - Global Styles */
 
 .root {
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-background-color: #F8FAFC;
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+    -fx-background-color: #fbf9f8; /* Surface Background */
 }
 
 /* Sidebar Styles */
 .sidebar {
-    -fx-background-color: #1E293B;
-    -fx-padding: 20;
+    -fx-background-color: #ffffff; /* Surface Container Lowest */
+    -fx-border-color: #e4e2e2; /* Surface Variant / Ghost border */
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 16;
 }
 
 .sidebar-logo {
-    -fx-text-fill: #0EA5E9;
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-text-fill: #006067; /* Primary */
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-padding: 0 0 30 0;
+    -fx-padding: 0 0 24 0;
+}
+
+.sidebar-category {
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6e797a; /* Outline color for muted category labels */
+    -fx-font-size: 11px;
+    -fx-padding: 12 0 4 10;
+    -fx-cursor: hand;
 }
 
 .nav-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #94A3B8;
+    -fx-text-fill: #3e494a; /* On-surface-variant */
     -fx-alignment: CENTER_LEFT;
-    -fx-padding: 10 15;
+    -fx-padding: 10 16;
     -fx-cursor: hand;
     -fx-background-radius: 8;
+    -fx-font-size: 14px;
 }
 
 .nav-button:hover {
-    -fx-background-color: #334155;
-    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #f5f3f3; /* Surface Container Low */
+    -fx-text-fill: #1b1c1c; /* On-surface */
 }
 
 .nav-button-active {
-    -fx-background-color: #0EA5E9;
-    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #007b83; /* Primary Container */
+    -fx-text-fill: #d0fbff; /* On Primary Container */
 }
 
 /* TopBar Styles */
 .top-bar {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #E2E8F0;
+    -fx-background-color: #ffffff; /* Surface lowest */
+    -fx-border-color: #e4e2e2; /* Surface Variant */
     -fx-border-width: 0 0 1 0;
-    -fx-padding: 10 20;
+    -fx-padding: 12 24;
 }
 
 .search-field {
-    -fx-background-color: #F1F5F9;
-    -fx-background-radius: 20;
-    -fx-padding: 5 15;
+    -fx-background-color: #f5f3f3; /* Surface Container Low */
+    -fx-border-color: #e4e2e2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+    -fx-text-fill: #1b1c1c;
+}
+
+.search-field:focused {
+    -fx-border-color: #315ea2; /* Secondary - Medical Blue */
+    -fx-border-width: 2px;
 }
 
 /* Card Styles */
 .card {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 12;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);
-    -fx-padding: 15;
+    -fx-background-color: #ffffff; /* Pure white cards */
+    -fx-border-color: #e4e2e2; /* Ghost border */
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 16;
 }
 
 .metric-card {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #E2E8F0;
-    -fx-border-radius: 12;
-    -fx-background-radius: 12;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e4e2e2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
 }
 
 .metric-value {
-    -fx-font-size: 24px;
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-size: 30px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1E293B;
+    -fx-text-fill: #1b1c1c; /* On-surface */
 }
 
 .metric-label {
-    -fx-text-fill: #64748B;
+    -fx-text-fill: #3e494a; /* On-surface variant */
     -fx-font-size: 14px;
 }
 
 /* Status Badges */
 .badge {
     -fx-padding: 4 12;
-    -fx-background-radius: 12;
+    -fx-background-radius: 4; /* Smaller radius for components */
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
-.badge-waiting { -fx-background-color: #FDE047; -fx-text-fill: #854D0E; }
-.badge-attending { -fx-background-color: #4ADE80; -fx-text-fill: #166534; }
-.badge-pending { -fx-background-color: #FCA5A5; -fx-text-fill: #991B1B; }
+/* We adapt emergency colors but keeping the badge style flat */
+.badge-waiting { -fx-background-color: #fff1df; -fx-text-fill: #786d5d; } /* Using Tertiary (Sand) */
+.badge-attending { -fx-background-color: #d0fbff; -fx-text-fill: #002022; } /* Primary container */
+.badge-pending { -fx-background-color: #ffdad6; -fx-text-fill: #93000a; } /* Error container */
 
 /* Buttons */
 .btn-primary {
-    -fx-background-color: #0EA5E9;
-    -fx-text-fill: white;
+    -fx-background-color: #006067; /* Primary Soft Teal */
+    -fx-text-fill: #ffffff;
     -fx-background-radius: 8;
-    -fx-padding: 8 15;
+    -fx-padding: 8 16;
     -fx-cursor: hand;
+    -fx-font-weight: bold;
 }
 
 .btn-primary:hover {
-    -fx-background-color: #0284C7;
+    -fx-background-color: #007b83; /* Primary container / hover */
 }
+
+/* Headings */
+.headline-lg {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b1c1c;
+}
+
+.headline-md {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b1c1c;
+}
+
+/* RecepcionView Specific */
+.card-urgent {
+    -fx-background-color: #ffdad6;
+    -fx-border-color: #ffb4ab;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 16;
+}
+
+.text-urgent {
+    -fx-text-fill: #93000a;
+    -fx-font-weight: bold;
+}
+
+.btn-outline {
+    -fx-background-color: transparent;
+    -fx-border-color: #006067;
+    -fx-border-radius: 8;
+    -fx-text-fill: #006067;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-border-width: 1px;
+}
+
+.btn-outline:hover {
+    -fx-background-color: #f5f3f3;
+}
+
+.chip {
+    -fx-background-color: #e4e2e2;
+    -fx-background-radius: 12;
+    -fx-padding: 2 8;
+    -fx-text-fill: #3e494a;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.link {
+    -fx-text-fill: #006067;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+/* Calendar Styles */
+.calendar-grid {
+    -fx-background-color: #e4e2e2; /* Grid lines */
+}
+
+.calendar-cell {
+    -fx-background-color: #ffffff;
+}
+
+.calendar-header {
+    -fx-background-color: #ffffff;
+    -fx-padding: 8;
+    -fx-alignment: center;
+}
+
+.calendar-time {
+    -fx-background-color: #fbf9f8;
+    -fx-padding: 8;
+    -fx-text-fill: #6e797a;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-alignment: center-right;
+}
+
+.event-card {
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 4 8;
+    -fx-cursor: hand;
+    -fx-border-width: 0 0 0 4;
+}
+
+.event-blue {
+    -fx-background-color: #e9f0fc;
+    -fx-border-color: #174ea6;
+}
+
+.event-blue-text {
+    -fx-text-fill: #174ea6;
+}
+
+.event-orange {
+    -fx-background-color: #faebd7;
+    -fx-border-color: #8b4513;
+}
+
+.event-orange-text {
+    -fx-text-fill: #8b4513;
+}
+
+.event-red {
+    -fx-background-color: #ffe4e1;
+    -fx-border-color: #dc143c;
+}
+
+.event-red-text {
+    -fx-text-fill: #dc143c;
+}
+
+.current-time-line {
+    -fx-background-color: #dc143c;
+}
+
+.combo-box-filter {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc9ca;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-padding: 2 12;
+    -fx-text-fill: #6e797a;
+}
+
+/* HistoriaClinica Specific Styles */
+.main-container {
+    -fx-background-color: #ffffff;
+}
+.left-column {
+    -fx-background-color: #ffffff;
+}
+.center-column {
+    -fx-background-color: #ffffff;
+}
+.right-column {
+    -fx-background-color: #fbf9f8;
+}
+.section-title {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-size: 20px;
+    -fx-text-fill: #1b1c1c;
+    -fx-font-weight: bold;
+}
+.section-title-icon {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-size: 18px;
+    -fx-text-fill: #006067;
+    -fx-font-weight: bold;
+}
+.section-subtitle {
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #6e797a;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 1px;
+}
+.subtitle-tag {
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+    -fx-font-size: 10px;
+    -fx-text-fill: #6e797a;
+    -fx-font-weight: bold;
+}
+.filter-btn {
+    -fx-background-color: #e4e2e2;
+    -fx-text-fill: #3e494a;
+    -fx-background-radius: 16;
+    -fx-padding: 4 12;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.filter-btn-active {
+    -fx-background-color: #006067;
+    -fx-text-fill: #ffffff;
+}
+.pacientes-list {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.pacientes-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.patient-list-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e4e2e2;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 15;
+}
+.patient-list-card-active {
+    -fx-background-color: #e9f0fc;
+    -fx-border-color: #006067;
+    -fx-border-width: 0 0 0 4;
+}
+.patient-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #1b1c1c;
+}
+.patient-desc {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6e797a;
+}
+.patient-profile-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e4e2e2;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+}
+.patient-image-container {
+    -fx-background-color: #e4e2e2;
+    -fx-background-radius: 12;
+}
+.patient-name-large {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #006067;
+}
+.patient-id {
+    -fx-font-size: 20px;
+    -fx-text-fill: #6e797a;
+}
+.patient-details-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #3e494a;
+}
+.info-box {
+    -fx-background-color: #f5f3f3;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+}
+.info-box-title {
+    -fx-font-size: 10px;
+    -fx-text-fill: #6e797a;
+    -fx-font-weight: bold;
+}
+.info-box-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #006067;
+}
+.info-box-unit {
+    -fx-font-size: 12px;
+    -fx-text-fill: #006067;
+}
+.transparent-scroll {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.transparent-scroll .viewport {
+    -fx-background-color: transparent;
+}
+.timeline-container {
+    -fx-padding: 10;
+}
+.timeline-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc9ca;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 15;
+}
+.timeline-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #006067;
+}
+.timeline-date {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6e797a;
+}
+.timeline-desc {
+    -fx-font-size: 14px;
+    -fx-text-fill: #3e494a;
+    -fx-wrap-text: true;
+}
+.chart-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc9ca;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 10;
+}
+.treatment-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc9ca;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+.treatment-name {
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b1c1c;
+}
+.treatment-desc {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6e797a;
+}
+.action-btn-outline {
+    -fx-background-color: transparent;
+    -fx-border-color: #006067;
+    -fx-border-radius: 8;
+    -fx-text-fill: #006067;
+    -fx-font-weight: bold;
+    -fx-padding: 8 0;
+    -fx-cursor: hand;
+}
+.action-btn-outline:hover {
+    -fx-background-color: #e9f0fc;
+}
+.fab-red-btn {
+    -fx-background-color: #b3261e;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 30;
+    -fx-min-width: 60;
+    -fx-min-height: 60;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 3);
+}
+.fab-red-btn:hover {
+    -fx-background-color: #dc362e;
+}
+
+/* INVENTARIO STYLES */
+.main-scroll { -fx-background-color: transparent; }
+.inventario-root { -fx-background-color: #f8f9fa; }
+.page-title { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #115e59; }
+.page-subtitle { -fx-font-size: 14px; -fx-text-fill: #6b7280; }
+.btn-primary { -fx-background-color: #0f766e; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16; -fx-background-radius: 4; }
+.btn-secondary { -fx-background-color: transparent; -fx-text-fill: #0f766e; -fx-border-color: #0f766e; -fx-border-radius: 4; -fx-font-weight: bold; -fx-padding: 7 15; }
+.summary-card { -fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2); }
+.summary-card-danger { -fx-border-color: #ef4444; -fx-border-width: 0 0 0 4; -fx-border-radius: 10; }
+.summary-title { -fx-font-size: 12px; -fx-text-fill: #9ca3af; -fx-font-weight: bold; }
+.summary-value { -fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1f2937; }
+.summary-subtitle { -fx-font-size: 12px; -fx-text-fill: #9ca3af; }
+.text-danger { -fx-text-fill: #ef4444; }
+.section-card { -fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2); }
+.section-title { -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1f2937; }
+.btn-filter { -fx-background-color: #f3f4f6; -fx-text-fill: #4b5563; -fx-padding: 5 10; -fx-background-radius: 15; }
+.btn-link { -fx-background-color: transparent; -fx-text-fill: #0f766e; -fx-font-weight: bold; -fx-cursor: hand; }
+.equipo-card { -fx-padding: 10; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-border-width: 1; }
+.equipo-nombre { -fx-font-weight: bold; -fx-text-fill: #374151; }
+.equipo-stock { -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #115e59; }
+.text-muted { -fx-text-fill: #6b7280; -fx-font-size: 11px; }
+.alertas-container { -fx-background-color: #fef2f2; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #fca5a5; -fx-border-radius: 8; }
+.alerta-titulo { -fx-font-weight: bold; -fx-text-fill: #991b1b; }
+.alerta-item { -fx-text-fill: #b91c1c; -fx-font-size: 12px; }

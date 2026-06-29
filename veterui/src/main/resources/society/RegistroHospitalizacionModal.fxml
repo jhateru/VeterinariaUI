@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="society.controller.reutilizables.RegistroHospitalizacionController"
+            style="-fx-background-color: #f7fbfb; -fx-padding: 20;">
+    
+    <!-- Top Header -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 0 0 15 0;">
+            <Label text="Registro de Ingreso a Hospitalización" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #005a5a;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <!-- Simulating icons with labels -->
+            <Label text="🔔" style="-fx-font-size: 16px;"/>
+            <Label text="❓" style="-fx-font-size: 16px;"/>
+        </HBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <HBox spacing="20">
+            <!-- Left Side -->
+            <VBox spacing="15" HBox.hgrow="ALWAYS">
+                
+                <!-- Búsqueda de Paciente -->
+                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                    <Label text="👤 Búsqueda de Paciente" style="-fx-font-weight: bold; -fx-text-fill: #005a5a;"/>
+                    <TextField fx:id="searchPacienteField" promptText="Buscar por nombre del paciente o dueño (e.g., Max)..." style="-fx-background-color: #f0f4f4; -fx-border-color: transparent; -fx-padding: 8; -fx-background-radius: 4;"/>
+                    
+                    <HBox fx:id="pacienteCard" spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #eef5f5; -fx-padding: 10; -fx-background-radius: 6; -fx-border-color: #cce0e0; -fx-border-radius: 6;">
+                        <ImageView fx:id="pacienteImageView" fitWidth="50" fitHeight="50" preserveRatio="true"/>
+                        <VBox spacing="2">
+                            <Label fx:id="nombrePacienteLabel" text="Max" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #005a5a;"/>
+                            <Label fx:id="detallesPacienteLabel" text="Golden Retriever • Macho • 4 años" style="-fx-font-size: 11px; -fx-text-fill: #666;"/>
+                            <Label fx:id="propietarioLabel" text="Propietario: Roberto Gómez" style="-fx-font-size: 11px; -fx-text-fill: #666; -fx-font-style: italic;"/>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="PENDIENTE DE REGISTRO" style="-fx-background-color: transparent; -fx-border-color: #f39c12; -fx-text-fill: #f39c12; -fx-padding: 4 8; -fx-background-radius: 12; -fx-border-radius: 12; -fx-font-size: 10px; -fx-font-weight: bold;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Detalles del Ingreso -->
+                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                    <Label text="📄 Detalles del Ingreso" style="-fx-font-weight: bold; -fx-text-fill: #005a5a;"/>
+                    <HBox spacing="15">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="MOTIVO DE INGRESO" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                            <ComboBox fx:id="motivoIngresoCombo" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-border-color: #ccc; -fx-border-radius: 4;"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="ÁREA / CANIL ASIGNADO" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                            <ComboBox fx:id="areaCanilCombo" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-border-color: #ccc; -fx-border-radius: 4;"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="15">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="ESTADO MÉDICO INICIAL" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                            <HBox spacing="5">
+                                <ToggleButton fx:id="btnCritico" text="CRÍTICO" style="-fx-background-color: white; -fx-border-color: #ffcccc; -fx-text-fill: #e74c3c; -fx-font-size: 11px;"/>
+                                <ToggleButton fx:id="btnEstable" text="ESTABLE" selected="true" style="-fx-background-color: #e0f2f1; -fx-border-color: #009688; -fx-text-fill: #00796b; -fx-font-size: 11px;"/>
+                                <ToggleButton fx:id="btnReservado" text="RESERVADO" style="-fx-background-color: white; -fx-border-color: #ffe0b2; -fx-text-fill: #f57c00; -fx-font-size: 11px;"/>
+                            </HBox>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="FRECUENCIA DE MONITOREO" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                            <ComboBox fx:id="frecuenciaMonitoreoCombo" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-border-color: #ccc; -fx-border-radius: 4;"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- Instrucciones Clínicas -->
+                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                    <Label text="📋 Instrucciones Clínicas (Enfermería)" style="-fx-font-weight: bold; -fx-text-fill: #005a5a;"/>
+                    <VBox spacing="5">
+                        <Label text="DIETA ESPECIAL" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                        <TextArea fx:id="dietaArea" promptText="Describa requerimientos nutricionales..." prefRowCount="2" wrapText="true"/>
+                    </VBox>
+                    <HBox spacing="15">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="CRONOGRAMA DE MEDICACIÓN" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                            <TextArea fx:id="medicacionArea" promptText="Fármacos, dosis y vía..." prefRowCount="2" wrapText="true"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="ALERTAS / SIGNOS DE VIGILANCIA" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                            <TextArea fx:id="alertasArea" promptText="Síntomas que requieren aviso inmediato..." prefRowCount="2" wrapText="true"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+            </VBox>
+
+            <!-- Right Side -->
+            <VBox spacing="15" minWidth="250">
+                <!-- Constantes Vitales -->
+                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #005a5a; -fx-border-width: 2; -fx-border-radius: 8;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="Constantes Vitales" style="-fx-font-weight: bold; -fx-text-fill: #005a5a;"/>
+                        <Label text="AL INGRESO" style="-fx-background-color: #e0e0e0; -fx-padding: 2 6; -fx-background-radius: 4; -fx-font-size: 10px;"/>
+                    </HBox>
+                    
+                    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10; -fx-border-color: #f0f0f0; -fx-border-radius: 6;">
+                        <Label text="🌡" style="-fx-font-size: 18px;"/>
+                        <Label text="Temperatura" style="-fx-font-size: 12px;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <VBox alignment="CENTER_RIGHT">
+                            <TextField fx:id="tempField" text="38.5" alignment="CENTER_RIGHT" prefWidth="50" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+                            <Label text="NORMAL" style="-fx-font-size: 9px; -fx-text-fill: #2ecc71;"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10; -fx-border-color: #f0f0f0; -fx-border-radius: 6;">
+                        <Label text="❤️" style="-fx-font-size: 18px;"/>
+                        <Label text="Frec. Cardíaca" style="-fx-font-size: 12px;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <VBox alignment="CENTER_RIGHT">
+                            <TextField fx:id="fcField" text="92" alignment="CENTER_RIGHT" prefWidth="40" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+                            <Label text="RÍTMICO" style="-fx-font-size: 9px; -fx-text-fill: #2ecc71;"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10; -fx-border-color: #f0f0f0; -fx-border-radius: 6;">
+                        <Label text="💨" style="-fx-font-size: 18px;"/>
+                        <Label text="Frec. Respiratoria" style="-fx-font-size: 12px;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <VBox alignment="CENTER_RIGHT">
+                            <TextField fx:id="frField" text="24" alignment="CENTER_RIGHT" prefWidth="40" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+                            <Label text="TAQUIPNEA" style="-fx-font-size: 9px; -fx-text-fill: #f39c12;"/>
+                        </VBox>
+                    </HBox>
+
+                    <Label text="Última actualización: Hace 5 minutos" alignment="CENTER" maxWidth="Infinity" style="-fx-border-color: #ccc; -fx-border-style: dashed; -fx-padding: 8; -fx-text-fill: #888; -fx-font-size: 11px; -fx-border-radius: 4;"/>
+                </VBox>
+
+                <!-- Actions -->
+                <Button text="👤 Confirmar Ingreso" onAction="#handleConfirmar" maxWidth="Infinity" style="-fx-background-color: #005a5a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10; -fx-background-radius: 4; -fx-cursor: hand;"/>
+                <Button text="Cancelar" onAction="#handleCancelar" maxWidth="Infinity" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-text-fill: #333; -fx-padding: 10; -fx-background-radius: 4; -fx-cursor: hand;"/>
+
+                <!-- Info -->
+                <HBox spacing="10" style="-fx-background-color: #eef5ff; -fx-padding: 10; -fx-border-color: #b3d4ff; -fx-border-radius: 4; -fx-background-radius: 4;">
+                    <Label text="ℹ️" style="-fx-text-fill: #0056b3;"/>
+                    <Label text="Asegúrese de imprimir el brazalete de identificación del paciente tras confirmar el ingreso." wrapText="true" style="-fx-font-size: 11px; -fx-text-fill: #0056b3;"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>

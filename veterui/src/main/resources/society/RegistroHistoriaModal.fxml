@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Rectangle?>
+
+<ScrollPane fitToWidth="true" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="society.controller.principales.RegistroHistoriaController">
+    <VBox spacing="20" style="-fx-background-color: white; -fx-padding: 30;">
+        
+        <!-- Cabecera -->
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-border-color: transparent transparent #e0e0e0 transparent; -fx-border-width: 1px; -fx-padding: 0 0 20 0;">
+            <ImageView fx:id="patientImageView" fitHeight="60" fitWidth="60">
+                <clip>
+                    <Rectangle width="60" height="60" arcWidth="20" arcHeight="20"/>
+                </clip>
+            </ImageView>
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label fx:id="nameLabel" style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #00768e;"/>
+                    <Label fx:id="statusLabel" style="-fx-background-color: #74b9ff; -fx-text-fill: white; -fx-padding: 2 8; -fx-background-radius: 4; -fx-font-size: 10px;" text="EN CLÍNICA"/>
+                </HBox>
+                <Label fx:id="breedAgeLabel" style="-fx-text-fill: #6e797a; -fx-font-size: 12px;"/>
+                <HBox spacing="15">
+                    <Label fx:id="weightLabel" style="-fx-text-fill: #6e797a; -fx-font-size: 11px;" text="⚖ 0.0 kg"/>
+                    <Label fx:id="tempLabel" style="-fx-text-fill: #6e797a; -fx-font-size: 11px;" text="🌡 38.6°C"/>
+                </HBox>
+            </VBox>
+            
+            <Button text="Descartar" onAction="#handleDescartar" style="-fx-background-color: white; -fx-border-color: #00768e; -fx-border-radius: 6; -fx-text-fill: #00768e; -fx-font-weight: bold; -fx-padding: 8 20;"/>
+            <Button text="Guardar Registro" onAction="#handleGuardar" style="-fx-background-color: #00768e; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 8 20;"/>
+        </HBox>
+
+        <!-- Información General -->
+        <VBox spacing="15" style="-fx-border-color: #e0e0e0; -fx-border-radius: 8; -fx-padding: 20;">
+            <Label text="ⓘ Información General" style="-fx-font-size: 16px; -fx-text-fill: #004d61;"/>
+            <Separator/>
+            <HBox spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="NOMBRE DE CONSULTA" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                    <TextField fx:id="nombreConsultaField" promptText="Ej: Chequeo Anual" style="-fx-background-color: transparent; -fx-border-color: transparent transparent #cccccc transparent;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="TIPO DE CONSULTA" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                    <ComboBox fx:id="tipoConsultaCombo" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-border-color: transparent transparent #cccccc transparent;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="FECHA Y HORA" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                    <TextField fx:id="fechaHoraField" style="-fx-background-color: transparent; -fx-border-color: transparent transparent #cccccc transparent;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="VETERINARIO RESPONSABLE" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                    <TextField fx:id="veterinarioField" style="-fx-background-color: transparent; -fx-border-color: transparent transparent #cccccc transparent;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Observaciones -->
+        <HBox spacing="20">
+            <!-- Subjetivas -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS" style="-fx-border-color: #e0e0e0; -fx-border-radius: 8; -fx-padding: 20; -fx-border-width: 1 1 1 4; -fx-border-left-color: #00768e;">
+                <Label text="⚲ Observaciones Subjetivas" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #00768e;"/>
+                <Label text="Motivo de consulta y reporte del propietario." style="-fx-font-size: 11px; -fx-text-fill: #95a5a6;"/>
+                <TextArea fx:id="obsSubjetivasArea" prefRowCount="4" promptText="Ej: El dueño reporta letargia..." style="-fx-control-inner-background: #ffffff;"/>
+            </VBox>
+            <!-- Objetivas -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS" style="-fx-border-color: #e0e0e0; -fx-border-radius: 8; -fx-padding: 20; -fx-border-width: 1 1 1 4; -fx-border-left-color: #3498db;">
+                <Label text="🩺 Hallazgos Objetivos" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #3498db;"/>
+                <Label text="Resultados del examen físico y constantes vitales." style="-fx-font-size: 11px; -fx-text-fill: #95a5a6;"/>
+                <TextArea fx:id="obsObjetivasArea" prefRowCount="4" promptText="Ej: Mucosas rosadas..." style="-fx-control-inner-background: #ffffff;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Diagnóstico -->
+        <VBox spacing="15" style="-fx-border-color: #e0e0e0; -fx-border-radius: 8; -fx-padding: 20; -fx-background-color: #fafafa;">
+            <Label text="📋 Diagnóstico Presuntivo" style="-fx-font-size: 16px; -fx-text-fill: #4a4a4a;"/>
+            <VBox spacing="5">
+                <Label text="BUSCAR EN ICD-VET / DESCRIPCIÓN DEL DIAGNÓSTICO" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                <TextField fx:id="diagnosticoField" promptText="🔍 Empiece a escribir para buscar código o patología..." style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 6; -fx-padding: 8;"/>
+            </VBox>
+        </VBox>
+
+        <!-- Tratamiento -->
+        <VBox spacing="15" style="-fx-border-color: #e0e0e0; -fx-border-radius: 8; -fx-padding: 20;">
+            <Label text="💊 Plan de Tratamiento" style="-fx-font-size: 16px; -fx-text-fill: #004d61;"/>
+            <Separator/>
+            <HBox spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="MEDICACIÓN PRESCRITA" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                    <TextField fx:id="medicacionField" promptText="Nombre del fármaco y presentación" style="-fx-background-color: transparent; -fx-border-color: transparent transparent #cccccc transparent;"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="INSTRUCCIONES DE DOSIFICACIÓN" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                    <TextField fx:id="dosisField" promptText="Frecuencia y duración (Ej: C/12h por 5 días)" style="-fx-background-color: transparent; -fx-border-color: transparent transparent #cccccc transparent;"/>
+                </VBox>
+            </HBox>
+            <VBox spacing="5" VBox.vgrow="ALWAYS">
+                <Label text="PRÓXIMOS PASOS / RECOMENDACIONES" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                <TextArea fx:id="recomendacionesArea" prefRowCount="3" promptText="Cuidados en casa, dieta especial..." style="-fx-control-inner-background: #ffffff;"/>
+            </VBox>
+            <HBox spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="FECHA DE CONTROL" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #6e797a;"/>
+                    <DatePicker fx:id="fechaControlPicker" promptText="dd / mm / aaaa" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-border-color: transparent transparent #cccccc transparent;"/>
+                </VBox>
+                <VBox style="-fx-background-color: #fce8d5; -fx-padding: 10; -fx-background-radius: 6;" HBox.hgrow="ALWAYS">
+                    <Label text="⚠ NOTA:" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #c0392b;"/>
+                    <Label text="Se enviará recordatorio automático al dueño 24h antes." wrapText="true" style="-fx-font-size: 10px; -fx-text-fill: #555;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Anexos -->
+        <VBox spacing="15" style="-fx-border-color: #cccccc; -fx-border-style: dashed; -fx-border-radius: 8; -fx-padding: 40 20; -fx-background-color: #fafafa; -fx-alignment: center;">
+            <HBox alignment="CENTER_LEFT" maxWidth="Infinity">
+                <Label text="📎 Anexos y Resultados" style="-fx-font-size: 16px; -fx-text-fill: #4a4a4a;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Formatos: PDF, JPG, DICOM (Max 50MB)" style="-fx-font-size: 11px; -fx-text-fill: #95a5a6;"/>
+            </HBox>
+            <VBox alignment="CENTER" spacing="10">
+                <Circle radius="20" fill="#eaeaea"/>
+                <Label text="Arrastre archivos aquí o haga clic para subir" style="-fx-font-weight: bold; -fx-text-fill: #4a4a4a;"/>
+                <Label text="Resultados de Laboratorio, Imagenología o Consentimientos." style="-fx-font-size: 12px; -fx-text-fill: #95a5a6;"/>
+            </VBox>
+        </VBox>
+        
+    </VBox>
+</ScrollPane>

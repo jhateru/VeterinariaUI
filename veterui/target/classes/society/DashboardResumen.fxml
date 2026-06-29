@@ -4,9 +4,9 @@
 <?import javafx.fxml.*?>
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
-      spacing="20" style="-fx-padding: 25;">
+      spacing="24" style="-fx-padding: 24;">
     
-    <Label text="Resumen de Hoy: Martes 15 Oct 2024" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+    <Label text="Resumen de Hoy: Martes 15 Oct 2024" styleClass="headline-md" />
     
     <HBox spacing="20" alignment="CENTER_LEFT">
         <fx:include source="MetricCard.fxml" />

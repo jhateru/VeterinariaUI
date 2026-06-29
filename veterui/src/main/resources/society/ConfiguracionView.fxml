@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="society.controller.principales.ConfiguracionController" fitToWidth="true" styleClass="root-pane" stylesheets="@configuracion.css">
+    <VBox spacing="20" style="-fx-background-color: white; -fx-padding: 30;">
+        <!-- HEADER -->
+        <VBox>
+            <Label text="Configuración" styleClass="title"/>
+            <Label text="Administre los detalles de su clínica, seguridad y preferencias del sistema." styleClass="subtitle"/>
+        </VBox>
+
+        <!-- TOP ROW: Perfil & Seguridad -->
+        <HBox spacing="20">
+            <!-- Perfil de la Clínica -->
+            <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="15" prefWidth="600">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="🏥" styleClass="section-title" style="-fx-font-size: 20px;"/>
+                    <Label text="Perfil de la Clínica" styleClass="section-title"/>
+                </HBox>
+
+                <HBox spacing="15">
+                    <VBox HBox.hgrow="ALWAYS" spacing="5">
+                        <Label text="NOMBRE DE LA CLÍNICA" styleClass="label-field"/>
+                        <TextField fx:id="txtNombreClinica" styleClass="text-field-custom"/>
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS" spacing="5">
+                        <Label text="ID FISCAL (NIT/RUT)" styleClass="label-field"/>
+                        <TextField fx:id="txtIdFiscal" styleClass="text-field-custom"/>
+                    </VBox>
+                </HBox>
+
+                <VBox spacing="5">
+                    <Label text="DIRECCIÓN" styleClass="label-field"/>
+                    <TextField fx:id="txtDireccion" styleClass="text-field-custom"/>
+                </VBox>
+
+                <HBox spacing="15">
+                    <VBox HBox.hgrow="ALWAYS" spacing="5">
+                        <Label text="TELÉFONO DE CONTACTO" styleClass="label-field"/>
+                        <TextField fx:id="txtTelefono" styleClass="text-field-custom"/>
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS" spacing="5">
+                        <Label text="CORREO ELECTRÓNICO" styleClass="label-field"/>
+                        <TextField fx:id="txtCorreo" styleClass="text-field-custom"/>
+                    </VBox>
+                </HBox>
+
+                <HBox alignment="CENTER_RIGHT" spacing="15">
+                    <padding>
+                        <Insets top="10"/>
+                    </padding>
+                    <Button text="Cancelar" styleClass="btn-secondary"/>
+                    <Button text="Guardar Cambios" styleClass="btn-primary" onAction="#guardarCambios"/>
+                </HBox>
+            </VBox>
+
+            <!-- Seguridad -->
+            <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="15" prefWidth="350">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="🛡" styleClass="section-title" style="-fx-font-size: 20px;"/>
+                    <Label text="Seguridad" styleClass="section-title"/>
+                </HBox>
+
+                <VBox styleClass="sub-card" spacing="10">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Contraseña" styleClass="info-text-bold"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="Último cambio: Hace 3 meses" styleClass="info-text" wrapText="true" prefWidth="100"/>
+                    </HBox>
+                    <Button text="Cambiar Contraseña" styleClass="btn-blue" maxWidth="Infinity"/>
+                </VBox>
+
+                <VBox styleClass="sub-card" spacing="10">
+                    <HBox alignment="CENTER_LEFT">
+                        <VBox>
+                            <Label text="Autenticación 2FA" styleClass="info-text-bold"/>
+                            <Label text="Doble factor de seguridad activo" styleClass="info-text" wrapText="true" prefWidth="150"/>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <CheckBox fx:id="chk2FA" style="-fx-scale-x: 1.5; -fx-scale-y: 1.5;"/>
+                    </HBox>
+                    <Label text="Agrega una capa extra de protección a tu cuenta mediante una aplicación de autenticación." styleClass="info-text" wrapText="true"/>
+                </VBox>
+            </VBox>
+        </HBox>
+
+        <!-- BOTTOM ROW: Preferencias & Datos -->
+        <HBox spacing="20">
+            <!-- Preferencias del Sistema -->
+            <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="15" prefWidth="600">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="🎛" styleClass="section-title" style="-fx-font-size: 20px;"/>
+                    <Label text="Preferencias del Sistema" styleClass="section-title"/>
+                </HBox>
+
+                <HBox spacing="30">
+                    <VBox HBox.hgrow="ALWAYS" spacing="15">
+                        <VBox spacing="5">
+                            <Label text="IDIOMA DEL SISTEMA" styleClass="label-field"/>
+                            <ComboBox fx:id="cmbIdioma" styleClass="combo-box-custom" maxWidth="Infinity"/>
+                        </VBox>
+                        <VBox spacing="5">
+                            <Label text="MONEDA LOCAL" styleClass="label-field"/>
+                            <ComboBox fx:id="cmbMoneda" styleClass="combo-box-custom" maxWidth="Infinity"/>
+                        </VBox>
+                    </VBox>
+
+                    <VBox HBox.hgrow="ALWAYS" spacing="10">
+                        <Label text="NOTIFICACIONES POR CORREO" styleClass="label-field"/>
+                        
+                        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="sub-card">
+                            <CheckBox fx:id="chkNotifCitas"/>
+                            <VBox>
+                                <Label text="Recordatorios de citas" styleClass="info-text-bold"/>
+                                <Label text="Enviar correos a dueños 24h antes" styleClass="info-text"/>
+                            </VBox>
+                        </HBox>
+                        
+                        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="sub-card">
+                            <CheckBox fx:id="chkNotifLab"/>
+                            <VBox>
+                                <Label text="Resultados de laboratorio" styleClass="info-text-bold"/>
+                                <Label text="Notificar cuando estén disponibles" styleClass="info-text"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" spacing="15" styleClass="sub-card">
+                            <CheckBox fx:id="chkNotifResumen"/>
+                            <VBox>
+                                <Label text="Resumen semanal" styleClass="info-text-bold"/>
+                                <Label text="Estadísticas de la clínica" styleClass="info-text"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Gestión de Datos -->
+            <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="15" prefWidth="350">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="🗄" styleClass="section-title" style="-fx-font-size: 20px;"/>
+                    <Label text="Gestión de Datos" styleClass="section-title"/>
+                </HBox>
+                <Label text="Administre la integridad y portabilidad de su información clínica." styleClass="info-text" wrapText="true"/>
+
+                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="sub-card-white">
+                    <Label text="☁" style="-fx-font-size: 24px; -fx-text-fill: #005a6b;"/>
+                    <VBox>
+                        <Label text="Respaldo de Base de Datos" styleClass="info-text-bold"/>
+                        <Label text="Último respaldo: Hoy, 03:15 AM" styleClass="info-text"/>
+                    </VBox>
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="15" styleClass="sub-card-white">
+                    <Label text="📄" style="-fx-font-size: 24px; -fx-text-fill: #005a6b;"/>
+                    <VBox>
+                        <Label text="Exportar Historias Clínicas" styleClass="info-text-bold"/>
+                        <Label text="Formatos: PDF, CSV, XML" styleClass="info-text"/>
+                    </VBox>
+                </HBox>
+                
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Zona de Peligro" styleClass="danger-text"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="⚠" styleClass="danger-text"/>
+                </HBox>
+                <Button text="Purga de Registros Antiguos" styleClass="btn-danger-outline" maxWidth="Infinity"/>
+            </VBox>
+        </HBox>
+    </VBox>
+</ScrollPane>

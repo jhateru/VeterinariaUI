@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #f7f9fa;" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="society.controller.principales.InventarioController">
+    <VBox spacing="25" style="-fx-padding: 30; -fx-background-color: #f7f9fa;">
+        
+        <!-- Cabecera -->
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <VBox HBox.hgrow="ALWAYS">
+                <Label text="Inventario y Farmacia" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #006067;" />
+                <Label text="Control centralizado de suministros m&#233;dicos y quir&#250;rgicos." style="-fx-font-size: 13px; -fx-text-fill: #6e797a;" />
+            </VBox>
+            
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <Button text="&#9660; RECIBIR SUMINISTRO" style="-fx-background-color: #006067; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 8 16; -fx-cursor: hand;" />
+                <Button text="&#9881; AJUSTAR STOCK" style="-fx-background-color: transparent; -fx-border-color: #006067; -fx-text-fill: #006067; -fx-font-weight: bold; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 8 16; -fx-cursor: hand;" />
+                <Button text="&#128722; NUEVA ORDEN" style="-fx-background-color: transparent; -fx-border-color: #006067; -fx-text-fill: #006067; -fx-font-weight: bold; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 8 16; -fx-cursor: hand;" />
+            </HBox>
+        </HBox>
+        
+        <!-- Tarjetas de Resumen -->
+        <HBox spacing="15">
+            <!-- Total Items -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="TOTAL ITEMS" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="&#128203;" style="-fx-font-size: 18px;" />
+                </HBox>
+                <Label fx:id="totalItemsLabel" text="248" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c; -fx-padding: 10 0 5 0;" />
+                <Label text="+ 12 este mes" style="-fx-font-size: 11px; -fx-text-fill: #6e797a;" />
+            </VBox>
+            
+            <!-- Stock Bajo -->
+            <HBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8;" HBox.hgrow="ALWAYS">
+                <Region style="-fx-background-color: #d32f2f; -fx-pref-width: 4; -fx-background-radius: 8 0 0 8;" />
+                <VBox style="-fx-padding: 20;" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="STOCK BAJO" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label text="&#9888;" style="-fx-font-size: 18px; -fx-text-fill: #d32f2f;" />
+                    </HBox>
+                    <Label fx:id="stockBajoLabel" text="12" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #d32f2f; -fx-padding: 10 0 5 0;" />
+                    <Label text="Requieren reabastecimiento" style="-fx-font-size: 11px; -fx-text-fill: #6e797a;" />
+                </VBox>
+            </HBox>
+            
+            <!-- Próximos a vencer -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="PR&#211;XIMOS A VENCER" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="&#128197;" style="-fx-font-size: 18px;" />
+                </HBox>
+                <HBox alignment="BASELINE_LEFT" spacing="5" style="-fx-padding: 10 0 5 0;">
+                    <Label fx:id="proximosVencerLabel" text="8" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #4a90e2;" />
+                    <Label text="Lotes" style="-fx-font-size: 14px; -fx-text-fill: #6e797a;" />
+                </HBox>
+                <Label text="En los pr&#243;ximos 30 d&#237;as" style="-fx-font-size: 11px; -fx-text-fill: #6e797a;" />
+            </VBox>
+            
+            <!-- Inversión Mensual -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="INVERSI&#211;N MENSUAL" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="&#128176;" style="-fx-font-size: 18px;" />
+                </HBox>
+                <Label fx:id="inversionLabel" text="15,420.00" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c; -fx-padding: 10 0 5 0;" />
+                <Label text="Efectivo invertido en stock" style="-fx-font-size: 11px; -fx-text-fill: #6e797a;" />
+            </VBox>
+        </HBox>
+
+        <!-- Main Content -->
+        <HBox spacing="20">
+            
+            <!-- Izquierda: Farmacia y Medicamentos -->
+            <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8;" HBox.hgrow="ALWAYS">
+                <!-- Header -->
+                <HBox alignment="CENTER_LEFT" style="-fx-padding: 20;">
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label text="&#10010;" style="-fx-font-size: 16px; -fx-text-fill: #006067;" />
+                        <Label text="Farmacia y Medicamentos" style="-fx-font-size: 18px; -fx-text-fill: #1b1c1c; -fx-font-weight: bold;" />
+                    </HBox>
+                    <Region HBox.hgrow="ALWAYS" />
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button text="Todas las Categor&#237;as" style="-fx-background-color: #f1f3f4; -fx-text-fill: #6e797a; -fx-background-radius: 6; -fx-padding: 5 10; -fx-font-size: 12px; -fx-cursor: hand;" />
+                        <Button text="&#9776;" style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 5 10; -fx-cursor: hand;" />
+                    </HBox>
+                </HBox>
+                
+                <!-- Tabla Header -->
+                <HBox alignment="CENTER_LEFT" style="-fx-padding: 10 20; -fx-background-color: #fcfcfc; -fx-border-color: #e4e2e2; -fx-border-width: 1 0 1 0;">
+                    <Label text="PRODUCTO" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a; -fx-pref-width: 160;" />
+                    <Label text="STOCK" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a; -fx-pref-width: 80;" />
+                    <Label text="UNIDAD" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a; -fx-pref-width: 120;" />
+                    <Label text="ESTADO" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a; -fx-pref-width: 120;" />
+                    <Label text="FEFO (VENCE)" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6e797a; -fx-pref-width: 100;" />
+                </HBox>
+                
+                <!-- Tabla Contenido -->
+                <VBox fx:id="medicamentosContainer" />
+                
+                <!-- Footer -->
+                <HBox alignment="CENTER" style="-fx-padding: 15; -fx-border-color: #e4e2e2; -fx-border-width: 1 0 0 0;">
+                    <Label text="Ver todos los medicamentos (112)" style="-fx-text-fill: #006067; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" />
+                </HBox>
+            </VBox>
+            
+            <!-- Derecha: Equipo Quirúrgico y Alertas -->
+            <VBox spacing="20" minWidth="320" maxWidth="320">
+                
+                <!-- Equipo Quirúrgico -->
+                <VBox style="-fx-background-color: white; -fx-border-color: #e4e2e2; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 20;">
+                        <Label text="&#128188;" style="-fx-font-size: 18px; -fx-text-fill: #4a90e2;" />
+                        <Label text="Equipo Quir&#250;rgico" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1b1c1c;" />
+                    </HBox>
+                    
+                    <VBox fx:id="equipoContainer" spacing="10" style="-fx-padding: 0 20 20 20;" />
+                    
+                    <HBox alignment="CENTER" style="-fx-padding: 15; -fx-border-color: #e4e2e2; -fx-border-width: 1 0 0 0;">
+                        <Label text="Gestionar Accesorios" style="-fx-text-fill: #4a90e2; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" />
+                    </HBox>
+                </VBox>
+                
+                <!-- Alertas Críticas -->
+                <VBox style="-fx-background-color: #fdf5f5; -fx-border-color: #facdcd; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;" spacing="15">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="&#128276;" style="-fx-font-size: 18px; -fx-text-fill: #d32f2f;" />
+                        <Label text="Alertas Cr&#237;ticas" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #d32f2f;" />
+                    </HBox>
+                    <VBox fx:id="alertasContainer" spacing="15" />
+                </VBox>
+                
+            </VBox>
+        </HBox>
+        
+        <!-- Footer -->
+        <HBox alignment="CENTER_LEFT" style="-fx-padding: 10 0 0 0;">
+            <Label text="Actividad Reciente" style="-fx-font-size: 16px; -fx-text-fill: #1b1c1c; -fx-font-weight: bold;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="Ver Historial" style="-fx-text-fill: #006067; -fx-font-size: 13px; -fx-cursor: hand;" />
+        </HBox>
+        
+    </VBox>
+</ScrollPane>

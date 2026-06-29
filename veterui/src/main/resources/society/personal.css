@@ -1,0 +1,249 @@
+.root-pane {
+    -fx-background-color: #f7f9fa;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-padding: 30;
+}
+
+.title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #005a6b;
+}
+
+.subtitle {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555555;
+    -fx-padding: 10 0 10 0;
+}
+
+.search-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 8 15;
+    -fx-pref-width: 350;
+    -fx-text-fill: #555555;
+}
+
+.btn-primary {
+    -fx-background-color: #005a6b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #004552;
+}
+
+.btn-secondary {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-border-color: #d0d0d0;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.summary-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);
+}
+
+.summary-card-green {
+    -fx-background-color: #005a6b;
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+.card-title {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #888888;
+}
+
+.card-title-white {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d0e5e9;
+}
+
+.card-number {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #005a6b;
+}
+
+.card-number-white {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.card-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666666;
+}
+
+.card-subtitle-white {
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
+.card-icon-container {
+    -fx-background-color: #e6f2f4;
+    -fx-background-radius: 5;
+    -fx-padding: 8;
+}
+
+.badge-green {
+    -fx-background-color: #e0f2f1;
+    -fx-text-fill: #00695c;
+    -fx-padding: 3 8;
+    -fx-background-radius: 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.badge-gray {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #555555;
+    -fx-padding: 3 8;
+    -fx-background-radius: 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.status-en-turno {
+    -fx-fill: #4caf50;
+}
+.status-libre {
+    -fx-fill: #ff9800;
+}
+.status-vacaciones {
+    -fx-fill: #f44336;
+}
+
+/* Table styles */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 0;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: white;
+    -fx-background-radius: 10 10 0 0;
+    -fx-padding: 0 0 5 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #777777;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-padding: 10 5 10 5;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #f0f0f0 transparent;
+    -fx-padding: 10 0;
+}
+
+.table-row-cell:empty {
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #f5f9fa;
+}
+
+.cell-name {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+}
+.cell-subtitle {
+    -fx-text-fill: #888888;
+    -fx-font-size: 11px;
+}
+.cell-text {
+    -fx-text-fill: #555555;
+    -fx-font-size: 12px;
+}
+
+.department-badge {
+    -fx-background-color: #f3e5f5;
+    -fx-text-fill: #7b1fa2;
+    -fx-padding: 3 8;
+    -fx-background-radius: 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+.department-badge-admin {
+    -fx-background-color: #e3f2fd;
+    -fx-text-fill: #1976d2;
+}
+.department-badge-lab {
+    -fx-background-color: #fff3e0;
+    -fx-text-fill: #e65100;
+}
+.department-badge-clinica {
+    -fx-background-color: #efebe9;
+    -fx-text-fill: #5d4037;
+}
+
+.schedule-list-item {
+    -fx-padding: 10 0;
+    -fx-border-color: transparent transparent #f0f0f0 transparent;
+}
+.schedule-time {
+    -fx-text-fill: #005a6b;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+.schedule-name {
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+.schedule-desc {
+    -fx-text-fill: #888888;
+    -fx-font-size: 11px;
+}
+
+.btn-blue {
+    -fx-background-color: #2c5282;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+}
+.btn-blue:hover {
+    -fx-background-color: #1a365d;
+}

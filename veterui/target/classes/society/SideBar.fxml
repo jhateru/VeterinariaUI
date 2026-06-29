@@ -4,19 +4,32 @@
 <?import javafx.scene.image.*?>
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="society.controller.principales.SideBarController"
       styleClass="sidebar" prefWidth="250" spacing="10">
     <Label styleClass="sidebar-logo" text="🐾 Healthy Little\nPaws" />
     
     <VBox spacing="5">
-        <Button styleClass="nav-button nav-button-active" text="Resumen" maxWidth="Infinity" alignment="CENTER_LEFT" />
-        <Button styleClass="nav-button" text="Citas" maxWidth="Infinity" alignment="CENTER_LEFT" />
-        <Button styleClass="nav-button" text="Pacientes" maxWidth="Infinity" alignment="CENTER_LEFT" />
-        <Button styleClass="nav-button" text="Dueños" maxWidth="Infinity" alignment="CENTER_LEFT" />
-        <Button styleClass="nav-button" text="Historia Clínica" maxWidth="Infinity" alignment="CENTER_LEFT" />
-        <Button styleClass="nav-button" text="Facturación" maxWidth="Infinity" alignment="CENTER_LEFT" />
-        <Button styleClass="nav-button" text="Inventario" maxWidth="Infinity" alignment="CENTER_LEFT" />
-        <Button styleClass="nav-button" text="Reportes" maxWidth="Infinity" alignment="CENTER_LEFT" />
-        <Separator prefWidth="200" />
-        <Button styleClass="nav-button" text="Configuración" maxWidth="Infinity" alignment="CENTER_LEFT" />
+        <Button styleClass="nav-button nav-button-active" text="Resumen" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onDashboardClick" />
+        
+        <Label text="RECEPCIÓN" styleClass="sidebar-category" onMouseClicked="#onRecepcionClick" />
+        <Button styleClass="nav-button" text="Citas" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onCitasClick" />
+        <Button styleClass="nav-button" text="Dueños" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onDuenosClick" />
+        <Button styleClass="nav-button" text="Pacientes" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onPacientesClick" />
+        
+        <Label text="ÁREA MÉDICA" styleClass="sidebar-category" onMouseClicked="#onAreaMedicaClick" />
+        <Button styleClass="nav-button" text="Historias Clínicas" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onHistoriaClinicaClick" />
+        <Button styleClass="nav-button" text="Hospitalización" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onHospitalizacionClick" />
+        <Button styleClass="nav-button" text="Laboratorio" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onLaboratorioClick" />
+        
+        <Label text="ADMINISTRACIÓN" styleClass="sidebar-category" onMouseClicked="#onAdministracionClick" />
+        <Button styleClass="nav-button" text="Punto de Venta" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onFacturacionClick" />
+        <Button styleClass="nav-button" text="Inventario" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onInventarioClick" />
+        <Button styleClass="nav-button" text="Servicios" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onServiciosClick" />
+        <Button styleClass="nav-button" text="Proveedores" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onProveedoresClick" />
+        <Button styleClass="nav-button" text="Personal" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onPersonalClick" />
+        
+        <Separator prefWidth="200" style="-fx-padding: 10 0;" />
+        <Button styleClass="nav-button" text="Reportes" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onReportesClick" />
+        <Button styleClass="nav-button" text="Configuración" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onConfiguracionClick" />
     </VBox>
 </VBox>

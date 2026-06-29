@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="society.controller.principales.HospitalizacionController"
+            style="-fx-background-color: #f7fbfb; -fx-padding: 20;">
+    
+    <!-- Top Header & Metrics -->
+    <top>
+        <VBox spacing="20" style="-fx-padding: 0 0 20 0;">
+            <HBox alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Hospitalización" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #005a5a;"/>
+                    <Label text="Real-time monitoring of in-patient veterinary care." style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <HBox spacing="10">
+                    <Button text="🏥 Manage Discharge" style="-fx-background-color: white; -fx-border-color: #005a5a; -fx-text-fill: #005a5a; -fx-font-weight: bold; -fx-padding: 8 15; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand;"/>
+                    <Button text="📋 New Admission" onAction="#handleNewAdmission" style="-fx-background-color: #005a5a; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15; -fx-background-radius: 4; -fx-cursor: hand;"/>
+                </HBox>
+            </HBox>
+
+            <!-- 4 Metrics Cards -->
+            <HBox spacing="15">
+                <VBox spacing="10" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="🛏" style="-fx-font-size: 18px; -fx-background-color: #e0f2f1; -fx-padding: 5; -fx-background-radius: 4;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="OCCUPANCY" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <Label fx:id="occupancyLabel" text="12 / 20" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                    <ProgressBar fx:id="occupancyProgress" progress="0.6" maxWidth="Infinity" style="-fx-accent: #005a5a;"/>
+                    <Label text="60% Capacity utilized" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                </VBox>
+
+                <VBox spacing="10" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="⚠️" style="-fx-font-size: 18px; -fx-background-color: #ffcccc; -fx-padding: 5; -fx-background-radius: 4;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="CRITICAL" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <Label fx:id="criticalLabel" text="03" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #c0392b;"/>
+                    <Label text="Requires immediate attention" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                </VBox>
+
+                <VBox spacing="10" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="☑️" style="-fx-font-size: 18px; -fx-background-color: #e6f2ff; -fx-padding: 5; -fx-background-radius: 4;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="DISCHARGES" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <Label fx:id="dischargesLabel" text="05" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                    <Label text="Scheduled for today" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                </VBox>
+
+                <VBox spacing="10" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="🩺" style="-fx-font-size: 18px; -fx-background-color: #fff0e6; -fx-padding: 5; -fx-background-radius: 4;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="STAFF ON DUTY" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <Label fx:id="staffLabel" text="08" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                    <Label text="4 Vets, 4 Technicians" style="-fx-font-size: 10px; -fx-text-fill: #888;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Main Content -->
+    <center>
+        <HBox spacing="20">
+            
+            <!-- Left Column: Alerts & Chart -->
+            <VBox spacing="15" prefWidth="300" minWidth="250">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="📢 Priority Alerts" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #005a5a;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="LIVE" style="-fx-background-color: #ffcccc; -fx-text-fill: #c0392b; -fx-padding: 2 6; -fx-background-radius: 4; -fx-font-size: 10px; -fx-font-weight: bold;"/>
+                </HBox>
+
+                <VBox fx:id="alertsContainer" spacing="10">
+                    <!-- Dynamic Alerts will go here, static placeholders for UI representation -->
+                    <HBox spacing="10" style="-fx-background-color: #fff5f5; -fx-padding: 10; -fx-border-color: #c0392b; -fx-border-width: 0 0 0 3; -fx-background-radius: 0 4 4 0;">
+                        <ImageView fitWidth="40" fitHeight="40" preserveRatio="true">
+                            <image><Image url="@images/dog.png"/></image>
+                        </ImageView>
+                        <VBox spacing="2">
+                            <Label text="Thor • 15 mins ago" style="-fx-font-weight: bold; -fx-text-fill: #c0392b; -fx-font-size: 12px;"/>
+                            <Label text="High Temperature (40.2°C) recorded. Check IV drip." wrapText="true" style="-fx-text-fill: #c0392b; -fx-font-size: 11px;"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox spacing="10" style="-fx-background-color: #f0f8ff; -fx-padding: 10; -fx-border-color: #3498db; -fx-border-width: 0 0 0 3; -fx-background-radius: 0 4 4 0;">
+                        <ImageView fitWidth="40" fitHeight="40" preserveRatio="true">
+                            <image><Image url="@images/cat.png"/></image>
+                        </ImageView>
+                        <VBox spacing="2">
+                            <Label text="Milo • 45 mins ago" style="-fx-font-weight: bold; -fx-text-fill: #333; -fx-font-size: 12px;"/>
+                            <Label text="Post-Op Recovery: Vitals stabilized. Patient is now conscious." wrapText="true" style="-fx-text-fill: #666; -fx-font-size: 11px;"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+                
+                <Button text="View All Activity Logs" maxWidth="Infinity" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-text-fill: #005a5a; -fx-font-weight: bold; -fx-padding: 8; -fx-border-radius: 4;"/>
+
+                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                    <Label text="Floor Occupancy Trend" style="-fx-font-weight: bold; -fx-text-fill: #333;"/>
+                    <BarChart fx:id="occupancyChart" legendVisible="false" prefHeight="150">
+                        <xAxis><CategoryAxis/></xAxis>
+                        <yAxis><NumberAxis visible="false"/></yAxis>
+                    </BarChart>
+                </VBox>
+            </VBox>
+
+            <!-- Right Column: Active Admissions -->
+            <VBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e0ebeb; -fx-border-radius: 8;">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Active Admissions" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <ComboBox promptText="All Sections" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 4;"/>
+                </HBox>
+
+                <!-- Table Header -->
+                <HBox spacing="10" style="-fx-padding: 10 5; -fx-border-color: transparent transparent #eee transparent;">
+                    <Label text="PATIENT" prefWidth="150" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    <Label text="REASON / CAGE" prefWidth="150" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    <Label text="ADMISSION DATE" prefWidth="120" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    <Label text="STATUS" prefWidth="100" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                    <Label text="ACTIONS" alignment="CENTER_RIGHT" prefWidth="50" style="-fx-font-size: 10px; -fx-text-fill: #888; -fx-font-weight: bold;"/>
+                </HBox>
+
+                <!-- List View for Admissions -->
+                <ListView fx:id="admissionsListView" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+                
+                <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10 0 0 0; -fx-border-color: #eee transparent transparent transparent;">
+                    <Label fx:id="showingLabel" text="Showing 0 of 0 current patients" style="-fx-text-fill: #888; -fx-font-size: 11px;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Previous" style="-fx-background-color: #eee; -fx-padding: 5 10;"/>
+                    <Button text="Next" style="-fx-background-color: #eee; -fx-padding: 5 10;"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>
