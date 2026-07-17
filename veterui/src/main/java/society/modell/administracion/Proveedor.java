@@ -1,4 +1,5 @@
 package society.modell.administracion;
+import society.modell.Entity;
 
 public class Proveedor {
     private int id;
@@ -32,3 +33,5 @@ public class Proveedor {
     public String getDireccion() { return direccion; }
     public void setDireccion(String direccion) { this.direccion = direccion; }
 }
+
+

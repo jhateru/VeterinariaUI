@@ -1,42 +1,34 @@
 package society.dao;
 
+import java.util.List;
+import com.google.gson.reflect.TypeToken;
+
 import society.modell.inventario.Inventario;
 
-public class InventarioDao extends CsvDao<Inventario> {
+public class InventarioDao extends JsonDao<Inventario> {
 
     public InventarioDao() {
-        super("inventario.csv");
+        super("inventario.json", new TypeToken<List<Inventario>>(){}.getType());
     }
 
-    @Override
-    protected Inventario fromCsv(String csvLine) {
-        String[] parts = csvLine.split(",");
-        if (parts.length >= 8) {
-            return new Inventario(
-                parts[0], 
-                parts[1], 
-                parts[2], 
-                Integer.parseInt(parts[3]), 
-                parts[4], 
-                parts[5], 
-                parts[6], 
-                parts[7]
-            );
+    public void create(Inventario inv) {
+        save(inv);
+    }
+
+    public void update(Inventario inv) {
+        List<Inventario> all = getAll();
+        for (int i = 0; i < all.size(); i++) {
+            if (all.get(i).getId().equals(inv.getId())) {
+                all.set(i, inv);
+                break;
+            }
         }
-        return null;
+        saveAll(all);
     }
 
-    @Override
-    protected String toCsv(Inventario entity) {
-        return String.join(",",
-            entity.getId(),
-            entity.getProducto(),
-            entity.getDescripcion(),
-            String.valueOf(entity.getStock()),
-            entity.getUnidad(),
-            entity.getEstado(),
-            entity.getFefo(),
-            entity.getCategoria()
-        );
+    public void delete(String id) {
+        List<Inventario> all = getAll();
+        all.removeIf(i -> i.getId().equals(id));
+        saveAll(all);
     }
 }

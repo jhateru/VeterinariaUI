@@ -1,4 +1,5 @@
 package society.modell.administracion;
+import society.modell.Entity;
 
 import society.modell.recepcion.Dueno;
 import java.time.LocalDateTime;
@@ -40,3 +41,5 @@ public class Factura {
     public List<DetalleFactura> getDetalles() { return detalles; }
     public void setDetalles(List<DetalleFactura> detalles) { this.detalles = detalles; }
 }
+
+

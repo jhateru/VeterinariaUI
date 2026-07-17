@@ -1,4 +1,5 @@
 package society.modell.administracion;
+import society.modell.Entity;
 
 public abstract class Persona {
     protected int id;
@@ -36,3 +37,5 @@ public abstract class Persona {
     public String getDireccion() { return direccion; }
     public void setDireccion(String direccion) { this.direccion = direccion; }
 }
+
+

@@ -1,41 +1,34 @@
 package society.dao;
 
+import java.util.List;
+import com.google.gson.reflect.TypeToken;
+
 import society.modell.administracion.Servicio;
 
-public class ServicioDao extends CsvDao<Servicio> {
+public class ServicioDao extends JsonDao<Servicio> {
     
     public ServicioDao() {
-        super("servicios.csv");
+        super("servicios.json", new TypeToken<List<Servicio>>(){}.getType());
     }
 
-    @Override
-    protected Servicio fromCsv(String csvLine) {
-        String[] parts = csvLine.split(",");
-        if (parts.length >= 7) {
-            try {
-                int id = Integer.parseInt(parts[0]);
-                String nombre = parts[1];
-                String descripcion = parts[2];
-                String categoria = parts[3];
-                double precioBase = Double.parseDouble(parts[4]);
-                int duracionEstimadaMinutos = Integer.parseInt(parts[5]);
-                String estado = parts[6];
-                return new Servicio(id, nombre, descripcion, categoria, precioBase, duracionEstimadaMinutos, estado);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
+    public void create(Servicio s) {
+        save(s);
+    }
+
+    public void update(Servicio s) {
+        List<Servicio> all = getAll();
+        for (int i = 0; i < all.size(); i++) {
+            if (all.get(i).getId() == s.getId()) {
+                all.set(i, s);
+                break;
             }
         }
-        return null;
+        saveAll(all);
     }
 
-    @Override
-    protected String toCsv(Servicio entity) {
-        return entity.getId() + "," +
-               entity.getNombre() + "," +
-               entity.getDescripcion() + "," +
-               entity.getCategoria() + "," +
-               entity.getPrecioBase() + "," +
-               entity.getDuracionEstimadaMinutos() + "," +
-               entity.getEstado();
+    public void delete(int id) {
+        List<Servicio> all = getAll();
+        all.removeIf(s -> s.getId() == id);
+        saveAll(all);
     }
 }

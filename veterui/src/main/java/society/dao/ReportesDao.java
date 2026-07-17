@@ -1,33 +1,16 @@
 package society.dao;
 
+import java.util.List;
+import com.google.gson.reflect.TypeToken;
+
 import society.modell.reportes.Reportes;
 
-public class ReportesDao extends CsvDao<Reportes> {
+public class ReportesDao extends JsonDao<Reportes> {
     public ReportesDao() {
-        super("reportes.csv");
+        super("reportes.json", new TypeToken<List<Reportes>>(){}.getType());
     }
 
-    @Override
-    protected Reportes fromCsv(String csvLine) {
-        String[] data = csvLine.split(",");
-        if (data.length < 5) return null;
-        return new Reportes(
-                data[0],
-                data[1],
-                Integer.parseInt(data[2]),
-                Double.parseDouble(data[3]),
-                data[4]
-        );
-    }
+    
 
-    @Override
-    protected String toCsv(Reportes r) {
-        return String.join(",",
-                r.getId(),
-                r.getVeterinarioNombre(),
-                String.valueOf(r.getConsultas()),
-                String.valueOf(r.getCalificacion()),
-                r.getCarga()
-        );
-    }
+    
 }

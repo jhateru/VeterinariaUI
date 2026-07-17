@@ -1,4 +1,5 @@
 package society.modell.reportes;
+import society.modell.Entity;
 
 public class Reportes {
     private String id;
@@ -58,3 +59,5 @@ public class Reportes {
         this.carga = carga;
     }
 }
+
+

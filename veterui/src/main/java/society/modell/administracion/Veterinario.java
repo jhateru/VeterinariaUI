@@ -1,4 +1,5 @@
 package society.modell.administracion;
+import society.modell.Entity;
 
 import java.time.LocalDate;
 
@@ -19,3 +20,5 @@ public class Veterinario extends Empleado {
     public String getNumeroColegiatura() { return numeroColegiatura; }
     public void setNumeroColegiatura(String numeroColegiatura) { this.numeroColegiatura = numeroColegiatura; }
 }
+
+

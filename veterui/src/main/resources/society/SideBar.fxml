@@ -22,7 +22,7 @@
         <Button styleClass="nav-button" text="Laboratorio" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onLaboratorioClick" />
         
         <Label text="ADMINISTRACIÓN" styleClass="sidebar-category" onMouseClicked="#onAdministracionClick" />
-        <Button styleClass="nav-button" text="Punto de Venta" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onFacturacionClick" />
+        <Button styleClass="nav-button" text="Facturación" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onFacturacionClick" />
         <Button styleClass="nav-button" text="Inventario" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onInventarioClick" />
         <Button styleClass="nav-button" text="Servicios" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onServiciosClick" />
         <Button styleClass="nav-button" text="Proveedores" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#onProveedoresClick" />

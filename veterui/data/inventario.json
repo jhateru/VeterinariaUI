@@ -1,0 +1,38 @@
+[
+  {
+    "id": "INV-002",
+    "producto": "Jeringas 5ml",
+    "descripcion": "Caja x100 unidades desechables",
+    "stock": 8,
+    "unidad": "Cajas",
+    "estado": "Bajo",
+    "fefo": "2028-11-01",
+    "categoria": "Suministro Médico",
+    "puntoReorden": 0,
+    "precio": 0.0
+  },
+  {
+    "id": "INV-003",
+    "producto": "Vacuna Antirrábica",
+    "descripcion": "Dosis individual",
+    "stock": 3,
+    "unidad": "Dosis",
+    "estado": "Crítico",
+    "fefo": "2026-08-20",
+    "categoria": "Vacuna",
+    "puntoReorden": 0,
+    "precio": 0.0
+  },
+  {
+    "id": "INV-004",
+    "producto": "Bisturí #15",
+    "descripcion": "Hojas de acero inoxidable",
+    "stock": 120,
+    "unidad": "Unidades",
+    "estado": "Óptimo",
+    "fefo": "2030-01-01",
+    "categoria": "Quirúrgico",
+    "puntoReorden": 0,
+    "precio": 0.0
+  }
+]

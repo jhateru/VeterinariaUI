@@ -1,42 +1,30 @@
 package society.dao;
 
+import java.util.List;
+import com.google.gson.reflect.TypeToken;
+
 import society.modell.recepcion.Cita;
 import java.time.LocalDateTime;
 
-public class CitaDao extends CsvDao<Cita> {
+public class CitaDao extends JsonDao<Cita> {
 
     public CitaDao() {
-        super("citas.csv");
+        super("citas.json", new TypeToken<List<Cita>>(){}.getType());
     }
-
-    @Override
-    protected Cita fromCsv(String csvLine) {
-        if (csvLine == null || csvLine.trim().isEmpty()) return null;
-        String[] parts = csvLine.split(",");
-        if (parts.length < 6) return null;
-        
-        try {
-            int id = Integer.parseInt(parts[0]);
-            LocalDateTime fechaHora = LocalDateTime.parse(parts[1]);
-            Cita.EstadoCita estado = Cita.EstadoCita.valueOf(parts[2]);
-            String paciente = parts[3];
-            String veterinario = parts[4];
-            String motivo = parts[5];
-            
-            return new Cita(id, fechaHora, estado, paciente, veterinario, motivo);
-        } catch (Exception e) {
-            System.err.println("Error parsing cita CSV line: " + csvLine);
-            return null;
+    public void update(Cita entity) {
+        List<Cita> entities = getAll();
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i).getId() == entity.getId()) {
+                entities.set(i, entity);
+                break;
+            }
         }
+        saveAll(entities);
     }
 
-    @Override
-    protected String toCsv(Cita entity) {
-        return entity.getId() + "," +
-               entity.getFechaHora().toString() + "," +
-               entity.getEstado().name() + "," +
-               (entity.getPacienteNombre() != null ? entity.getPacienteNombre() : "") + "," +
-               (entity.getVeterinarioNombre() != null ? entity.getVeterinarioNombre() : "") + "," +
-               (entity.getMotivo() != null ? entity.getMotivo() : "");
+    public void delete(int id) {
+        List<Cita> entities = getAll();
+        entities.removeIf(e -> e.getId() == id);
+        saveAll(entities);
     }
 }

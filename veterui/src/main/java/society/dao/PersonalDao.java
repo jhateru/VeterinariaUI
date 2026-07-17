@@ -1,41 +1,30 @@
 package society.dao;
 
+import java.util.List;
+import com.google.gson.reflect.TypeToken;
+
 import society.modell.administracion.Personal;
 
-public class PersonalDao extends CsvDao<Personal> {
+public class PersonalDao extends JsonDao<Personal> {
 
     public PersonalDao() {
-        super("personal.csv");
+        super("personal.json", new TypeToken<List<Personal>>(){}.getType());
     }
 
-    @Override
-    protected Personal fromCsv(String csvLine) {
-        String[] parts = csvLine.split(",");
-        if (parts.length >= 7) {
-            try {
-                int id = Integer.parseInt(parts[0]);
-                String nombre = parts[1];
-                String cargo = parts[2];
-                String departamento = parts[3];
-                String estado = parts[4];
-                String email = parts[5];
-                String telefono = parts[6];
-                return new Personal(id, nombre, cargo, departamento, estado, email, telefono);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
+    public void update(Personal entity) {
+        List<Personal> entities = getAll();
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i).getId() == entity.getId()) {
+                entities.set(i, entity);
+                break;
             }
         }
-        return null;
+        saveAll(entities);
     }
 
-    @Override
-    protected String toCsv(Personal entity) {
-        return entity.getId() + "," +
-               entity.getNombre() + "," +
-               entity.getCargo() + "," +
-               entity.getDepartamento() + "," +
-               entity.getEstado() + "," +
-               entity.getEmail() + "," +
-               entity.getTelefono();
+    public void delete(int id) {
+        List<Personal> entities = getAll();
+        entities.removeIf(e -> e.getId() == id);
+        saveAll(entities);
     }
 }

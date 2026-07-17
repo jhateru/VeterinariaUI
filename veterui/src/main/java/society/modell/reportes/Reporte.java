@@ -1,4 +1,5 @@
 package society.modell.reportes;
+import society.modell.Entity;
 
 import java.time.LocalDateTime;
 
@@ -26,3 +27,5 @@ public class Reporte {
     public String getParametros() { return parametros; }
     public void setParametros(String parametros) { this.parametros = parametros; }
 }
+
+

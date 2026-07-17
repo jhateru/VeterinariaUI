@@ -1,0 +1,134 @@
+[
+  {
+    "id": "POS-75070",
+    "fechaHora": "09/07/2026 13:59",
+    "clienteInfo": "Max, Golden Retriever, Dueño: Carlos R.",
+    "detalles": [
+      {
+        "item": {
+          "id": "S001",
+          "titulo": "Consulta General",
+          "descripcion": "Evaluación veterinaria complet...",
+          "precio": 35.0,
+          "categoria": "Médico",
+          "iconoSVG": "🩺",
+          "colorFondoSVG": "#008080",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 5,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "E001",
+          "titulo": "Limpieza Dental",
+          "descripcion": "Profilaxis ultrasónica profunda...",
+          "precio": 120.0,
+          "categoria": "Estética",
+          "iconoSVG": "🪥",
+          "colorFondoSVG": "#b49678",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 8,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "S002",
+          "titulo": "Vacunación Anual",
+          "descripcion": "Incluye Triple Felina o Sextuple...",
+          "precio": 45.0,
+          "categoria": "Médico",
+          "iconoSVG": "💉",
+          "colorFondoSVG": "#8aaceb",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 1,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "S003",
+          "titulo": "Desparasitación",
+          "descripcion": "Tableta palatable para control...",
+          "precio": 18.0,
+          "categoria": "Médico",
+          "iconoSVG": "🐛",
+          "colorFondoSVG": "#8aaceb",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 4,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "E002",
+          "titulo": "Grooming Completo",
+          "descripcion": "Baño, corte de pelo, uñas y...",
+          "precio": 28.0,
+          "categoria": "Estética",
+          "iconoSVG": "✂️",
+          "colorFondoSVG": "#b49678",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 3,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "A001",
+          "titulo": "Alimento Royal Canin",
+          "descripcion": "Saco de 12kg para adultos...",
+          "precio": 82.5,
+          "categoria": "Alimentos",
+          "iconoSVG": "🥫",
+          "colorFondoSVG": "#008080",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 6,
+        "descuentoFijo": 0.0
+      }
+    ],
+    "descuentoPorcentaje": 10.0,
+    "ivaPorcentaje": 15.0,
+    "estado": "PAGADA"
+  },
+  {
+    "id": "POS-62606",
+    "fechaHora": "09/07/2026 20:45",
+    "clienteInfo": "Max, Golden Retriever, Dueño: Carlos R.",
+    "detalles": [
+      {
+        "item": {
+          "id": "S001",
+          "titulo": "Consulta General",
+          "descripcion": "Evaluación veterinaria complet...",
+          "precio": 35.0,
+          "categoria": "Médico",
+          "iconoSVG": "🩺",
+          "colorFondoSVG": "#008080",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 1,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "S003",
+          "titulo": "Desparasitación",
+          "descripcion": "Tableta palatable para control...",
+          "precio": 18.0,
+          "categoria": "Médico",
+          "iconoSVG": "🐛",
+          "colorFondoSVG": "#8aaceb",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 1,
+        "descuentoFijo": 0.0
+      }
+    ],
+    "descuentoPorcentaje": 10.0,
+    "ivaPorcentaje": 15.0,
+    "estado": "PAGADA"
+  }
+]

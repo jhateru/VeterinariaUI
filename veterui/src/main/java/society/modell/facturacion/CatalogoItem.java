@@ -1,4 +1,5 @@
 package society.modell.facturacion;
+import society.modell.Entity;
 
 public class CatalogoItem {
     private String id;
@@ -30,3 +31,5 @@ public class CatalogoItem {
     public String getColorFondoSVG() { return colorFondoSVG; }
     public String getColorIconoSVG() { return colorIconoSVG; }
 }
+
+

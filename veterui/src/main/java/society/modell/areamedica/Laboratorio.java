@@ -1,4 +1,5 @@
 package society.modell.areamedica;
+import society.modell.Entity;
 
 import society.modell.recepcion.Paciente;
 import java.time.LocalDateTime;
@@ -53,3 +54,5 @@ public class Laboratorio {
     public String getTiempoFinalizadoStr() { return tiempoFinalizadoStr; }
     public void setTiempoFinalizadoStr(String tiempoFinalizadoStr) { this.tiempoFinalizadoStr = tiempoFinalizadoStr; }
 }
+
+

@@ -1,4 +1,5 @@
 package society.modell.areamedica;
+import society.modell.Entity;
 
 import society.modell.recepcion.Paciente;
 import java.time.LocalDate;
@@ -44,3 +45,5 @@ public class HistoriaClinica {
     public String getTratamientos() { return tratamientos; }
     public void setTratamientos(String tratamientos) { this.tratamientos = tratamientos; }
 }
+
+

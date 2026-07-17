@@ -1,4 +1,5 @@
 package society.modell.administracion;
+import society.modell.Entity;
 
 public class DetalleFactura {
     private int id;
@@ -28,3 +29,5 @@ public class DetalleFactura {
     public double getSubtotal() { return subtotal; }
     public void setSubtotal(double subtotal) { this.subtotal = subtotal; }
 }
+
+

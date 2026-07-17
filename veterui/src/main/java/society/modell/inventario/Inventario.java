@@ -9,10 +9,15 @@ public class Inventario {
     private String estado;
     private String fefo;
     private String categoria;
+    
+    // Nuevos campos
+    private String lote;
+    private int puntoReorden;
+    private double precio;
 
     public Inventario() {}
 
-    public Inventario(String id, String producto, String descripcion, int stock, String unidad, String estado, String fefo, String categoria) {
+    public Inventario(String id, String producto, String descripcion, int stock, String unidad, String estado, String fefo, String categoria, String lote, int puntoReorden, double precio) {
         this.id = id;
         this.producto = producto;
         this.descripcion = descripcion;
@@ -21,6 +26,14 @@ public class Inventario {
         this.estado = estado;
         this.fefo = fefo;
         this.categoria = categoria;
+        this.lote = lote;
+        this.puntoReorden = puntoReorden;
+        this.precio = precio;
+    }
+
+    // Constructor legacy
+    public Inventario(String id, String producto, String descripcion, int stock, String unidad, String estado, String fefo, String categoria) {
+        this(id, producto, descripcion, stock, unidad, estado, fefo, categoria, "N/A", 10, 0.0);
     }
 
     public String getId() { return id; }
@@ -46,4 +59,13 @@ public class Inventario {
 
     public String getCategoria() { return categoria; }
     public void setCategoria(String categoria) { this.categoria = categoria; }
+
+    public String getLote() { return lote; }
+    public void setLote(String lote) { this.lote = lote; }
+
+    public int getPuntoReorden() { return puntoReorden; }
+    public void setPuntoReorden(int puntoReorden) { this.puntoReorden = puntoReorden; }
+
+    public double getPrecio() { return precio; }
+    public void setPrecio(double precio) { this.precio = precio; }
 }

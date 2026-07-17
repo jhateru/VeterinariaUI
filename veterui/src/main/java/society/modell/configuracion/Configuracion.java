@@ -1,4 +1,5 @@
 package society.modell.configuracion;
+import society.modell.Entity;
 
 public class Configuracion {
     private int id;
@@ -56,3 +57,5 @@ public class Configuracion {
     public boolean isNotifResumenSemanal() { return notifResumenSemanal; }
     public void setNotifResumenSemanal(boolean notifResumenSemanal) { this.notifResumenSemanal = notifResumenSemanal; }
 }
+
+

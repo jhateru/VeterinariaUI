@@ -1,4 +1,5 @@
 package society.modell.administracion;
+import society.modell.Entity;
 
 public class Proveedores {
     private int id;
@@ -47,3 +48,5 @@ public class Proveedores {
     public String getUltimaOrdenFecha() { return ultimaOrdenFecha; }
     public void setUltimaOrdenFecha(String ultimaOrdenFecha) { this.ultimaOrdenFecha = ultimaOrdenFecha; }
 }
+
+

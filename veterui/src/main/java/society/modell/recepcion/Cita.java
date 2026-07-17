@@ -1,4 +1,5 @@
 package society.modell.recepcion;
+import society.modell.Entity;
 
 import java.time.LocalDateTime;
 
@@ -48,3 +49,5 @@ public class Cita {
     public Paciente getPaciente() { return paciente; }
     public void setPaciente(Paciente paciente) { this.paciente = paciente; }
 }
+
+

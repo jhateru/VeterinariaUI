@@ -1,4 +1,5 @@
 package society.modell.facturacion;
+import society.modell.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,3 +62,5 @@ public class Facturacion {
         return (getSubtotal() - getDescuentoTotal()) + getIvaTotal();
     }
 }
+
+

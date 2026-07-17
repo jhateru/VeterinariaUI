@@ -1,0 +1,38 @@
+[
+  {
+    "nombre": "Luna",
+    "especie": "PERRO",
+    "raza": "Golden Retriever",
+    "sexo": "Hembra",
+    "edadAproximada": "4 a\u00f1os",
+    "estado": "EN_CLINICA",
+    "nombreDueno": "Carlos Ruiz",
+    "telefonoDueno": "+34 655 012 345",
+    "ultimaVisita": "Hoy, 10:30",
+    "id": 1001
+  },
+  {
+    "nombre": "Simba",
+    "especie": "GATO",
+    "raza": "Siam\u00e9s",
+    "sexo": "Macho",
+    "edadAproximada": "2 a\u00f1os",
+    "estado": "ALTA",
+    "nombreDueno": "Mar\u00eda G\u00f3mez",
+    "telefonoDueno": "+34 677 889 001",
+    "ultimaVisita": "15/06/2026, 16:45",
+    "id": 1002
+  },
+  {
+    "nombre": "Paco",
+    "especie": "EXOTICO",
+    "raza": "Loro",
+    "sexo": "Macho",
+    "edadAproximada": "1 a\u00f1o",
+    "estado": "SEGUIMIENTO",
+    "nombreDueno": "Juan P\u00e9rez",
+    "telefonoDueno": "+34 600 111 222",
+    "ultimaVisita": "08/07/2026, 09:15",
+    "id": 1003
+  }
+]

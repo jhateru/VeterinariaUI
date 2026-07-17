@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "idProveedorStr": "PRV-001",
+    "nombre": "PharmaVet Solutions",
+    "categoria": "Medicamentos",
+    "contactoNombre": "ventas@pharmavet.com",
+    "contactoTelefono": "+1 555-0123",
+    "estado": "Activo",
+    "ultimaOrdenFecha": "24 Oct, 2023"
+  },
+  {
+    "id": 42,
+    "idProveedorStr": "PRV-042",
+    "nombre": "BioPet Supplies",
+    "categoria": "Equipamiento",
+    "contactoNombre": "soporte@biopet.io",
+    "contactoTelefono": "+1 555-8890",
+    "estado": "En Revisión",
+    "ultimaOrdenFecha": "15 Sep, 2023"
+  },
+  {
+    "id": 15,
+    "idProveedorStr": "PRV-015",
+    "nombre": "VetNutri Distribuidora",
+    "categoria": "Alimentos",
+    "contactoNombre": "pedidos@vetnutri.com",
+    "contactoTelefono": "+1 555-4321",
+    "estado": "Activo",
+    "ultimaOrdenFecha": "02 Nov, 2023"
+  }
+]

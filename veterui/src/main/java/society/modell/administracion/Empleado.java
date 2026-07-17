@@ -1,4 +1,5 @@
 package society.modell.administracion;
+import society.modell.Entity;
 
 import java.time.LocalDate;
 
@@ -23,3 +24,5 @@ public class Empleado extends Persona {
     public LocalDate getFechaContratacion() { return fechaContratacion; }
     public void setFechaContratacion(LocalDate fechaContratacion) { this.fechaContratacion = fechaContratacion; }
 }
+
+

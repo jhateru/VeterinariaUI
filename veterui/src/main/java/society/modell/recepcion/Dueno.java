@@ -1,4 +1,5 @@
 package society.modell.recepcion;
+import society.modell.Entity;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -58,3 +59,5 @@ public class Dueno {
     public List<Paciente> getMascotas() { return mascotas; }
     public void setMascotas(List<Paciente> mascotas) { this.mascotas = mascotas; }
 }
+
+

@@ -1,4 +1,5 @@
 package society.modell.administracion;
+import society.modell.Entity;
 
 public class Servicio {
     private int id;
@@ -36,3 +37,5 @@ public class Servicio {
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
 }
+
+

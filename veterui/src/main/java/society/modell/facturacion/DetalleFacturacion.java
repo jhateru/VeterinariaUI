@@ -1,4 +1,5 @@
 package society.modell.facturacion;
+import society.modell.Entity;
 
 public class DetalleFacturacion {
     private CatalogoItem item;
@@ -21,3 +22,5 @@ public class DetalleFacturacion {
         return (item.getPrecio() * cantidad) - descuentoFijo;
     }
 }
+
+

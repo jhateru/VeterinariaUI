@@ -1,4 +1,5 @@
 package society.modell.recepcion;
+import society.modell.Entity;
 
 import java.time.LocalDate;
 
@@ -96,3 +97,5 @@ public class Paciente {
     public EstadoPaciente getEstado() { return estado; }
     public void setEstado(EstadoPaciente estado) { this.estado = estado; }
 }
+
+

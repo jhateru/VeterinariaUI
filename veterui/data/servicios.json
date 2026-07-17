@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1001,
+    "nombre": "Consulta General",
+    "descripcion": "Revisión física completa, toma de signos vitales y evaluación inicial del paciente.",
+    "categoria": "Consulta",
+    "precioBase": 35.0,
+    "duracionEstimadaMinutos": 30,
+    "estado": "Activo"
+  },
+  {
+    "id": 1002,
+    "nombre": "Vacuna Antirrábica",
+    "descripcion": "Aplicación de vacuna contra la rabia para perros y gatos. Incluye certificado.",
+    "categoria": "Vacunación",
+    "precioBase": 20.0,
+    "duracionEstimadaMinutos": 15,
+    "estado": "Activo"
+  },
+  {
+    "id": 1003,
+    "nombre": "Limpieza Dental (Profilaxis)",
+    "descripcion": "Eliminación de sarro y placa bacteriana bajo sedación superficial.",
+    "categoria": "Estética",
+    "precioBase": 85.0,
+    "duracionEstimadaMinutos": 60,
+    "estado": "Activo"
+  },
+  {
+    "id": 1004,
+    "nombre": "Ecografía Abdominal",
+    "descripcion": "Estudio por imágenes del abdomen para detectar anomalías en órganos internos.",
+    "categoria": "Examen",
+    "precioBase": 120.0,
+    "duracionEstimadaMinutos": 45,
+    "estado": "Activo"
+  },
+  {
+    "id": 1005,
+    "nombre": "Castración (Gato Macho)",
+    "descripcion": "Procedimiento quirúrgico de orquiectomía bajo anestesia general.",
+    "categoria": "Cirugía",
+    "precioBase": 150.0,
+    "duracionEstimadaMinutos": 90,
+    "estado": "Activo"
+  },
+  {
+    "id": 1006,
+    "nombre": "Corte de Pelo y Baño",
+    "descripcion": "Servicio de peluquería que incluye baño medicado, corte de uñas y limpieza de oídos.",
+    "categoria": "Estética",
+    "precioBase": 45.0,
+    "duracionEstimadaMinutos": 120,
+    "estado": "Activo"
+  },
+  {
+    "id": 1007,
+    "nombre": "Consulta Especialidad (Cardiología)",
+    "descripcion": "Evaluación detallada por un cardiólogo veterinario.",
+    "categoria": "Consulta",
+    "precioBase": 75.0,
+    "duracionEstimadaMinutos": 45,
+    "estado": "Activo"
+  },
+  {
+    "id": 1008,
+    "nombre": "Prueba Rápida Parvovirus",
+    "descripcion": "Test rápido de antígenos para detección de parvovirus canino.",
+    "categoria": "Examen",
+    "precioBase": 30.0,
+    "duracionEstimadaMinutos": 15,
+    "estado": "Activo"
+  },
+  {
+    "id": 1009,
+    "nombre": "Terapia de Oxígeno",
+    "descripcion": "Administración de oxígeno suplementario en jaula especializada (por hora).",
+    "categoria": "Otro",
+    "precioBase": 25.0,
+    "duracionEstimadaMinutos": 60,
+    "estado": "Inactivo"
+  }
+]

@@ -8,6 +8,8 @@
 *.ear
 *.tar.gz
 *.rar
+*.pub
+
 
 # ==========================================
 # 2. Maven (La fábrica de compilación)

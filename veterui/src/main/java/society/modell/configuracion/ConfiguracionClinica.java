@@ -1,4 +1,5 @@
 package society.modell.configuracion;
+import society.modell.Entity;
 
 public class ConfiguracionClinica {
     private String nombreClinica;
@@ -32,3 +33,5 @@ public class ConfiguracionClinica {
     public String getHorarioAtencion() { return horarioAtencion; }
     public void setHorarioAtencion(String horarioAtencion) { this.horarioAtencion = horarioAtencion; }
 }
+
+

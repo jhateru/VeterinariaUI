@@ -1,0 +1,157 @@
+{
+  "duenos": [
+    {
+      "id": 1,
+      "nombre": "Carlos Ruiz",
+      "telefono": "+34 655 012 345",
+      "email": "carlos.ruiz@mail.com"
+    },
+    {
+      "id": 2,
+      "nombre": "María Gómez",
+      "telefono": "+34 677 889 001",
+      "email": "maria.gomez@mail.com"
+    },
+    {
+      "id": 3,
+      "nombre": "Juan Pérez",
+      "telefono": "+34 600 111 222",
+      "email": "juan.perez@mail.com"
+    }
+  ],
+  "pacientes": [
+    {
+      "id": 1001,
+      "duenoId": 1,
+      "nombre": "Luna",
+      "especie": "PERRO",
+      "raza": "Golden Retriever",
+      "sexo": "Hembra",
+      "edadAproximada": "4 años",
+      "estado": "EN_CLINICA",
+      "ultimaVisita": "Hoy, 10:30"
+    },
+    {
+      "id": 1002,
+      "duenoId": 2,
+      "nombre": "Simba",
+      "especie": "GATO",
+      "raza": "Siamés",
+      "sexo": "Macho",
+      "edadAproximada": "2 años",
+      "estado": "ALTA",
+      "ultimaVisita": "15/06/2026, 16:45"
+    },
+    {
+      "id": 1003,
+      "duenoId": 3,
+      "nombre": "Paco",
+      "especie": "EXOTICO",
+      "raza": "Loro",
+      "sexo": "Macho",
+      "edadAproximada": "1 año",
+      "estado": "SEGUIMIENTO",
+      "ultimaVisita": "08/07/2026, 09:15"
+    },
+    {
+      "id": 1004,
+      "duenoId": 1,
+      "nombre": "jod",
+      "especie": "PERRO",
+      "raza": "Mestizo",
+      "sexo": "Macho",
+      "edadAproximada": "Desconocida",
+      "estado": "PENDIENTE",
+      "ultimaVisita": ""
+    }
+  ],
+  "personal": [
+    {
+      "id": 101,
+      "nombre": "Dr. Elena Mendez",
+      "cargo": "Veterinario",
+      "departamento": "Clínico",
+      "estado": "● En Turno",
+      "email": "e.mendez@hpaws.vet",
+      "telefono": "+34 612 345 678",
+      "dni": "12345678A",
+      "fechaNacimiento": "12 / 05 / 1985",
+      "genero": "Femenino",
+      "direccion": "Calle Falsa 123",
+      "especialidad": "Cirugía",
+      "colegiado": "COL-5551",
+      "fechaContratacion": "01 / 02 / 2018",
+      "username": "emendez",
+      "rolSistema": "Clínico"
+    },
+    {
+      "id": 102,
+      "nombre": "Carlos Ruiz",
+      "cargo": "Veterinario",
+      "departamento": "Administrador",
+      "estado": "● Libre",
+      "email": "c.ruiz@hpaws.vet",
+      "telefono": "+34 622 987 654",
+      "dni": "87654321B",
+      "fechaNacimiento": "24 / 09 / 1990",
+      "genero": "Masculino",
+      "direccion": "Avenida Siempre Viva 742",
+      "especialidad": "Cuidados Intensivos",
+      "colegiado": "",
+      "fechaContratacion": "15 / 06 / 2020",
+      "username": "cruiz",
+      "rolSistema": "Administrador"
+    },
+    {
+      "id": 103,
+      "nombre": "Lucia Gomez",
+      "cargo": "Recepción",
+      "departamento": "Administración",
+      "estado": "● En Turno",
+      "email": "l.gomez@hpaws.vet",
+      "telefono": "+34 633 456 123",
+      "dni": "11223344C",
+      "fechaNacimiento": "05 / 11 / 1995",
+      "genero": "Femenino",
+      "direccion": "Plaza Mayor 1",
+      "especialidad": "",
+      "colegiado": "",
+      "fechaContratacion": "10 / 01 / 2023",
+      "username": "lgomez",
+      "rolSistema": "Recepción"
+    },
+    {
+      "id": 297,
+      "nombre": "jeyson",
+      "cargo": "Veterinario",
+      "departamento": "Clínico",
+      "estado": "● Activo",
+      "email": "ko@gmail.com",
+      "telefono": "9494961",
+      "dni": "61616",
+      "fechaNacimiento": "12 / 10 / 2000",
+      "genero": "Masculino",
+      "direccion": "av grau",
+      "especialidad": "manos",
+      "colegiado": "84949",
+      "fechaContratacion": "10 / 02 / 2024",
+      "username": "jhex",
+      "rolSistema": "Clínico"
+    }
+  ],
+  "citas": [
+    {
+      "id": 317,
+      "fechaHora": "2026-07-10T10:31:00",
+      "estado": "PENDIENTE",
+      "motivo": "pulgas",
+      "pacienteId": 1004,
+      "veterinarioId": 101,
+      "pacienteNombre": "jod",
+      "veterinarioNombre": "lucas"
+    }
+  ],
+  "historias_clinicas": [],
+  "inventario": [],
+  "facturas": []
+}

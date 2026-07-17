@@ -1,4 +1,5 @@
 package society.modell.areamedica;
+import society.modell.Entity;
 
 import society.modell.recepcion.Paciente;
 import java.time.LocalDateTime;
@@ -71,3 +72,5 @@ public class Hospitalizacion {
     public String getFrecRespiratoriaIngreso() { return frecRespiratoriaIngreso; }
     public void setFrecRespiratoriaIngreso(String frecRespiratoriaIngreso) { this.frecRespiratoriaIngreso = frecRespiratoriaIngreso; }
 }
+
+
