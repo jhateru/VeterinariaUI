@@ -45,7 +45,7 @@ public class RegistroInventarioBasic extends JDialog {
         mainPanel.add(createFieldPanel("NOMBRE DEL PRODUCTO", txtProducto));
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        cbCategoria = new JComboBox<>(new String[]{"Antibiótico", "Quirúrgico", "Anestésico", "Dietas Especiales", "Biológicos", "Medicamentos", "Suministro Médico"});
+        cbCategoria = new JComboBox<>(new String[]{"Antibiótico", "Quirúrgico", "Anestésico", "Dietas Especiales", "Medicamentos", "Suministro Médico"});
         mainPanel.add(createFieldPanel("CATEGORÍA", cbCategoria));
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 

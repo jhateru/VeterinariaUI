@@ -6,9 +6,12 @@ import society.view.components.CardMetrica;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InventarioViewBasic extends JPanel {
     
@@ -21,6 +24,9 @@ public class InventarioViewBasic extends JPanel {
     private JTable tablaInventario;
     private DefaultTableModel tableModel;
     private JPanel summaryCardsPanel;
+    
+    private JTextField txtSearch;
+    private JComboBox<String> cmbCategorias;
 
     public InventarioViewBasic() {
         inventarioDao = new InventarioDao();
@@ -76,15 +82,31 @@ public class InventarioViewBasic extends JPanel {
         
         JPanel filters = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         filters.setOpaque(false);
-        JLabel lblDetalle = new JLabel("Detalle de Existencias");
-        lblDetalle.setFont(new Font("SansSerif", Font.BOLD, 16));
-        lblDetalle.setForeground(Color.DARK_GRAY);
-        filters.add(lblDetalle);
-        filters.add(Box.createRigidArea(new Dimension(10, 0)));
-        filters.add(createFilterBadge("Todos", true));
-        filters.add(createFilterBadge("Medicamentos", false));
-        filters.add(createFilterBadge("Quirúrgico", false));
-        filters.add(createFilterBadge("Dietas", false));
+        
+
+        
+        JLabel lblSearch = new JLabel("Buscar:");
+        lblSearch.setFont(new Font("SansSerif", Font.BOLD, 12));
+        filters.add(lblSearch);
+        
+        txtSearch = new JTextField(20);
+        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { filtrarDatos(); }
+            public void removeUpdate(DocumentEvent e) { filtrarDatos(); }
+            public void changedUpdate(DocumentEvent e) { filtrarDatos(); }
+        });
+        filters.add(txtSearch);
+        
+        filters.add(Box.createRigidArea(new Dimension(5, 0)));
+        
+        JLabel lblCat = new JLabel("Categoría:");
+        lblCat.setFont(new Font("SansSerif", Font.BOLD, 12));
+        filters.add(lblCat);
+        
+        cmbCategorias = new JComboBox<>();
+        cmbCategorias.setBackground(Color.WHITE);
+        cmbCategorias.addActionListener(e -> filtrarDatos());
+        filters.add(cmbCategorias);
         
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         actions.setOpaque(false);
@@ -96,7 +118,7 @@ public class InventarioViewBasic extends JPanel {
         btnEditar.addActionListener(e -> {
             int selected = tablaInventario.getSelectedRow();
             if (selected >= 0) {
-                abrirRegistro(inventarioList.get(selected));
+                abrirRegistro(getFilteredCache().get(selected));
             } else {
                 JOptionPane.showMessageDialog(this, "Seleccione un producto para editar.");
             }
@@ -109,7 +131,7 @@ public class InventarioViewBasic extends JPanel {
         btnEliminar.addActionListener(e -> {
             int selected = tablaInventario.getSelectedRow();
             if (selected >= 0) {
-                Inventario inv = inventarioList.get(selected);
+                Inventario inv = getFilteredCache().get(selected);
                 int conf = JOptionPane.showConfirmDialog(this, "¿Eliminar " + inv.getProducto() + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (conf == JOptionPane.YES_OPTION) {
                     inventarioDao.delete(inv.getId());
@@ -135,7 +157,7 @@ public class InventarioViewBasic extends JPanel {
         };
         
         tablaInventario = new JTable(tableModel);
-        tablaInventario.setRowHeight(60); // Mas alto para acomodar subtitulos
+        tablaInventario.setRowHeight(60);
         tablaInventario.setShowGrid(false);
         tablaInventario.setIntercellSpacing(new Dimension(0, 0));
         tablaInventario.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 12));
@@ -159,7 +181,10 @@ public class InventarioViewBasic extends JPanel {
         mainContent.add(tableContainer, BorderLayout.CENTER);
         
         add(mainContent, BorderLayout.CENTER);
-        actualizarTabla();
+        
+        // Iniciar categorias y datos
+        actualizarComboboxCategorias();
+        filtrarDatos();
     }
     
     private void cargarDatos() {
@@ -172,7 +197,7 @@ public class InventarioViewBasic extends JPanel {
         
         int totalSku = inventarioList.size();
         int bajoStock = (int) inventarioList.stream().filter(i -> i.getStock() < i.getPuntoReorden()).count();
-        int vencidos = 8; // Simulado o calculado
+        int vencidos = 8; // Simulado
         double valorTotal = inventarioList.stream().mapToDouble(i -> i.getStock() * i.getPrecio()).sum();
         
         CardMetrica card1 = new CardMetrica("TOTAL ARTÍCULOS", String.valueOf(totalSku), null, null, "📋", brandBlue(), new Color(240, 240, 240), null);
@@ -188,29 +213,57 @@ public class InventarioViewBasic extends JPanel {
         return panel;
     }
     
-    private JLabel createFilterBadge(String text, boolean active) {
-        JLabel badge = new JLabel(text);
-        badge.setFont(new Font("SansSerif", active ? Font.BOLD : Font.PLAIN, 12));
-        badge.setForeground(active ? brandBlue() : Color.GRAY);
-        badge.setOpaque(true);
-        badge.setBackground(active ? new Color(220, 240, 245) : new Color(240, 240, 240));
-        badge.setBorder(BorderFactory.createEmptyBorder(5, 12, 5, 12));
-        return badge;
-    }
-    
     private Color brandBlue() { return new Color(0, 80, 100); }
     
-    private void actualizarTabla() {
+    private void actualizarComboboxCategorias() {
+        if (cmbCategorias == null) return;
+        
+        String selectedCat = (String) cmbCategorias.getSelectedItem();
+        cmbCategorias.removeAllItems();
+        cmbCategorias.addItem("Todas");
+        
+        List<String> categorias = inventarioList.stream()
+                .map(i -> i.getCategoria() != null ? i.getCategoria() : "Sin Categoría")
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+                
+        for (String cat : categorias) {
+            cmbCategorias.addItem(cat);
+        }
+        
+        if (selectedCat != null && categorias.contains(selectedCat)) {
+            cmbCategorias.setSelectedItem(selectedCat);
+        } else {
+            cmbCategorias.setSelectedIndex(0);
+        }
+    }
+    
+    private List<Inventario> getFilteredCache() {
+        String query = txtSearch.getText().trim().toLowerCase();
+        String selectedCat = (String) cmbCategorias.getSelectedItem();
+        boolean filterByCat = selectedCat != null && !selectedCat.equals("Todas");
+        
+        return inventarioList.stream()
+                .filter(i -> i.getProducto().toLowerCase().contains(query))
+                .filter(i -> !filterByCat || (i.getCategoria() != null ? i.getCategoria() : "Sin Categoría").equals(selectedCat))
+                .collect(Collectors.toList());
+    }
+    
+    private void filtrarDatos() {
+        if (inventarioList == null) return;
+        
+        List<Inventario> filtrados = getFilteredCache();
         tableModel.setRowCount(0);
-        for (Inventario inv : inventarioList) {
-            // Pasamos el objeto Inventario a todas las columnas
+        for (Inventario inv : filtrados) {
             tableModel.addRow(new Object[]{inv, inv, inv, inv, inv, inv});
         }
     }
     
     private void actualizarUICompleta() {
         cargarDatos();
-        actualizarTabla();
+        actualizarComboboxCategorias();
+        filtrarDatos();
         tablaInventario.repaint();
         
         Container parent = summaryCardsPanel.getParent();

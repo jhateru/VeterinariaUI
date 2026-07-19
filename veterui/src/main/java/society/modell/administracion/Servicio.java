@@ -1,5 +1,7 @@
 package society.modell.administracion;
 import society.modell.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Servicio {
     private int id;
@@ -9,8 +11,11 @@ public class Servicio {
     private double precioBase;
     private int duracionEstimadaMinutos;
     private String estado;
+    private List<Consumible> materialesUsados;
 
-    public Servicio() {}
+    public Servicio() {
+        this.materialesUsados = new ArrayList<>();
+    }
 
     public Servicio(int id, String nombre, String descripcion, String categoria, double precioBase, int duracionEstimadaMinutos, String estado) {
         this.id = id;
@@ -20,6 +25,7 @@ public class Servicio {
         this.precioBase = precioBase;
         this.duracionEstimadaMinutos = duracionEstimadaMinutos;
         this.estado = estado;
+        this.materialesUsados = new ArrayList<>();
     }
 
     public int getId() { return id; }
@@ -36,6 +42,6 @@ public class Servicio {
     public void setDuracionEstimadaMinutos(int duracionEstimadaMinutos) { this.duracionEstimadaMinutos = duracionEstimadaMinutos; }
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+    public List<Consumible> getMaterialesUsados() { return materialesUsados; }
+    public void setMaterialesUsados(List<Consumible> materialesUsados) { this.materialesUsados = materialesUsados; }
 }
-
-

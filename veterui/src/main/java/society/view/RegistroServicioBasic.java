@@ -1,9 +1,15 @@
 package society.view;
 
+import society.dao.InventarioDao;
+import society.modell.administracion.Consumible;
 import society.modell.administracion.Servicio;
+import society.modell.inventario.Inventario;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class RegistroServicioBasic extends JDialog {
@@ -18,11 +24,21 @@ public class RegistroServicioBasic extends JDialog {
     private JTextField txtDuracion;
     private JComboBox<String> cbEstado;
 
+    private JTable tablaMateriales;
+    private DefaultTableModel modeloMateriales;
+    private List<Consumible> materialesList;
+    private List<Inventario> inventarioCache;
+    private InventarioDao inventarioDao;
+
     public RegistroServicioBasic(Frame parent) {
         super(parent, "Registro de Servicio", true);
-        setSize(400, 500);
+        setSize(700, 550);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(15, 15));
+
+        inventarioDao = new InventarioDao();
+        inventarioCache = inventarioDao.getAll();
+        materialesList = new ArrayList<>();
 
         // --- HEADER ---
         JPanel headerPanel = new JPanel(new BorderLayout());
@@ -34,35 +50,72 @@ public class RegistroServicioBasic extends JDialog {
         add(headerPanel, BorderLayout.NORTH);
 
         // --- MAIN CONTENT ---
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 20, 0));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
 
-        mainPanel.add(createFieldPanel("NOMBRE DEL SERVICIO", txtNombre = new JTextField()));
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        // LEFT: Maestro (Master)
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+
+        leftPanel.add(createFieldPanel("NOMBRE DEL SERVICIO", txtNombre = new JTextField()));
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         txtDescripcion = new JTextArea(3, 20);
         txtDescripcion.setLineWrap(true);
         txtDescripcion.setWrapStyleWord(true);
         JScrollPane scrollDesc = new JScrollPane(txtDescripcion);
-        mainPanel.add(createFieldPanel("DESCRIPCIÓN", scrollDesc));
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        leftPanel.add(createFieldPanel("DESCRIPCIÓN", scrollDesc));
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         cbCategoria = new JComboBox<>(new String[]{"Consulta", "Vacunación", "Cirugía", "Estética", "Examen", "Otro"});
-        mainPanel.add(createFieldPanel("CATEGORÍA", cbCategoria));
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        leftPanel.add(createFieldPanel("CATEGORÍA", cbCategoria));
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         txtPrecioBase = new JTextField();
-        mainPanel.add(createFieldPanel("PRECIO BASE ($)", txtPrecioBase));
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        leftPanel.add(createFieldPanel("PRECIO BASE ($)", txtPrecioBase));
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         txtDuracion = new JTextField();
-        mainPanel.add(createFieldPanel("DURACIÓN ESTIMADA (Minutos)", txtDuracion));
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        leftPanel.add(createFieldPanel("DURACIÓN ESTIMADA (Minutos)", txtDuracion));
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         cbEstado = new JComboBox<>(new String[]{"Activo", "Inactivo"});
-        mainPanel.add(createFieldPanel("ESTADO", cbEstado));
+        leftPanel.add(createFieldPanel("ESTADO", cbEstado));
 
+        // RIGHT: Detalle (Detail) - Materiales
+        JPanel rightPanel = new JPanel(new BorderLayout(0, 10));
+        
+        JLabel lblMatTitle = new JLabel("Materiales / Insumos Utilizados");
+        lblMatTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
+        rightPanel.add(lblMatTitle, BorderLayout.NORTH);
+
+        modeloMateriales = new DefaultTableModel(new String[]{"Producto", "Cant.", "Subtotal"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) { return false; }
+        };
+        tablaMateriales = new JTable(modeloMateriales);
+        tablaMateriales.setRowHeight(25);
+        JScrollPane scrollMat = new JScrollPane(tablaMateriales);
+        rightPanel.add(scrollMat, BorderLayout.CENTER);
+
+        JPanel matActions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnAddMat = new JButton("+ Añadir");
+        JButton btnRemoveMat = new JButton("- Quitar");
+        
+        btnAddMat.addActionListener(e -> agregarMaterial());
+        btnRemoveMat.addActionListener(e -> {
+            int row = tablaMateriales.getSelectedRow();
+            if (row >= 0) {
+                materialesList.remove(row);
+                actualizarTablaMateriales();
+            }
+        });
+        matActions.add(btnAddMat);
+        matActions.add(btnRemoveMat);
+        rightPanel.add(matActions, BorderLayout.SOUTH);
+
+        mainPanel.add(leftPanel);
+        mainPanel.add(rightPanel);
         add(mainPanel, BorderLayout.CENTER);
 
         // --- FOOTER ---
@@ -85,6 +138,58 @@ public class RegistroServicioBasic extends JDialog {
         p.add(l, BorderLayout.NORTH);
         p.add(comp, BorderLayout.CENTER);
         return p;
+    }
+
+    private void agregarMaterial() {
+        if (inventarioCache.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay productos en el inventario.");
+            return;
+        }
+
+        JComboBox<String> comboInv = new JComboBox<>();
+        for (Inventario inv : inventarioCache) {
+            comboInv.addItem(inv.getId() + " - " + inv.getProducto());
+        }
+
+        JTextField txtCant = new JTextField("1");
+        
+        JPanel p = new JPanel(new GridLayout(2, 2, 5, 5));
+        p.add(new JLabel("Producto:"));
+        p.add(comboInv);
+        p.add(new JLabel("Cantidad:"));
+        p.add(txtCant);
+
+        int result = JOptionPane.showConfirmDialog(this, p, "Seleccionar Material", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                int index = comboInv.getSelectedIndex();
+                Inventario invSeleccionado = inventarioCache.get(index);
+                int cantidad = Integer.parseInt(txtCant.getText().trim());
+                
+                materialesList.add(new Consumible(invSeleccionado.getId(), cantidad));
+                actualizarTablaMateriales();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Cantidad inválida.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void actualizarTablaMateriales() {
+        modeloMateriales.setRowCount(0);
+        for (Consumible c : materialesList) {
+            String nombre = c.getInventarioId();
+            double subtotal = 0;
+            for (Inventario inv : inventarioCache) {
+                if (inv.getId().equals(c.getInventarioId())) {
+                    nombre = inv.getProducto();
+                    subtotal = inv.getPrecio() * c.getCantidad();
+                    break;
+                }
+            }
+            modeloMateriales.addRow(new Object[]{
+                nombre, c.getCantidad(), String.format("$%.2f", subtotal)
+            });
+        }
     }
 
     private void guardar() {
@@ -114,6 +219,9 @@ public class RegistroServicioBasic extends JDialog {
         servicio.setPrecioBase(precio);
         servicio.setDuracionEstimadaMinutos(duracion);
         servicio.setEstado(cbEstado.getSelectedItem().toString());
+        
+        // Asignar los materiales
+        servicio.setMaterialesUsados(new ArrayList<>(materialesList));
 
         saved = true;
         dispose();
@@ -129,6 +237,11 @@ public class RegistroServicioBasic extends JDialog {
         txtPrecioBase.setText(String.valueOf(s.getPrecioBase()));
         txtDuracion.setText(String.valueOf(s.getDuracionEstimadaMinutos()));
         cbEstado.setSelectedItem(s.getEstado());
+        
+        if (s.getMaterialesUsados() != null) {
+            this.materialesList = new ArrayList<>(s.getMaterialesUsados());
+            actualizarTablaMateriales();
+        }
     }
 
     public boolean isSaved() {

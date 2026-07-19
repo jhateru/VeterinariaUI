@@ -2,12 +2,26 @@
   {
     "id": 1,
     "idProveedorStr": "PRV-001",
+    "ruc": "",
     "nombre": "PharmaVet Solutions",
     "categoria": "Medicamentos",
     "contactoNombre": "ventas@pharmavet.com",
     "contactoTelefono": "+1 555-0123",
+    "direccion": "",
+    "email": "",
+    "sitioWeb": "",
     "estado": "Activo",
-    "ultimaOrdenFecha": "24 Oct, 2023"
+    "ultimaOrdenFecha": "24 Oct, 2023",
+    "inventariosSuministrados": [
+      {
+        "inventarioId": "INV-007",
+        "cantidad": 30
+      },
+      {
+        "inventarioId": "INV-011",
+        "cantidad": 25
+      }
+    ]
   },
   {
     "id": 42,

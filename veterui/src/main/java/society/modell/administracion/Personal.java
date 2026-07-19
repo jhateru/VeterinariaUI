@@ -22,6 +22,9 @@ public class Personal implements Entity {
     private String fechaContratacion;
     private String username;
     private String rolSistema;
+    private String turno;
+    private String diasLaborales;
+
 
     public Personal() {}
 
@@ -83,4 +86,10 @@ public class Personal implements Entity {
 
     public String getRolSistema() { return rolSistema; }
     public void setRolSistema(String rolSistema) { this.rolSistema = rolSistema; }
+
+    public String getTurno() { return turno; }
+    public void setTurno(String turno) { this.turno = turno; }
+
+    public String getDiasLaborales() { return diasLaborales; }
+    public void setDiasLaborales(String diasLaborales) { this.diasLaborales = diasLaborales; }
 }

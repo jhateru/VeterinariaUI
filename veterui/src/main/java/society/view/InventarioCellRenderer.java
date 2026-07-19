@@ -157,7 +157,7 @@ public class InventarioCellRenderer implements TableCellRenderer {
         if (cat.contains("antibiótico") || cat.contains("medicamento") || cat.contains("anestésico")) return "💊";
         if (cat.contains("quirúrgico")) return "✂️";
         if (cat.contains("dietas")) return "🥫";
-        if (cat.contains("biológicos") || cat.contains("vacuna")) return "💉";
+        if (cat.contains("vacuna")) return "💉";
         return "📦";
     }
 }

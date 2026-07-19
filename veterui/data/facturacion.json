@@ -130,5 +130,85 @@
     "descuentoPorcentaje": 10.0,
     "ivaPorcentaje": 15.0,
     "estado": "PAGADA"
+  },
+  {
+    "id": "POS-57059",
+    "fechaHora": "18/07/2026 07:23",
+    "clienteInfo": "Max, Golden Retriever, Dueño: Carlos R.",
+    "detalles": [
+      {
+        "item": {
+          "id": "1003",
+          "titulo": "Limpieza Dental (Profilaxis)",
+          "descripcion": "Eliminación de sarro y plac...",
+          "precio": 85.0,
+          "categoria": "Estética",
+          "iconoSVG": "🩺",
+          "colorFondoSVG": "#008080",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 1,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "INV-001",
+          "titulo": "Amoxicilina 500mg",
+          "descripcion": "Stock: 45",
+          "precio": 25.5,
+          "categoria": "Antibiótico",
+          "iconoSVG": "📦",
+          "colorFondoSVG": "#b49678",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 2,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "INV-004",
+          "titulo": "Bisturí #15",
+          "descripcion": "Stock: 120",
+          "precio": 35.0,
+          "categoria": "Quirúrgico",
+          "iconoSVG": "📦",
+          "colorFondoSVG": "#b49678",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 1,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "INV-005",
+          "titulo": "Ketamina 50ml",
+          "descripcion": "Stock: 5",
+          "precio": 45.2,
+          "categoria": "Anestésico",
+          "iconoSVG": "📦",
+          "colorFondoSVG": "#b49678",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 1,
+        "descuentoFijo": 0.0
+      },
+      {
+        "item": {
+          "id": "INV-003",
+          "titulo": "Vacuna Antirrábica",
+          "descripcion": "Stock: 3",
+          "precio": 18.75,
+          "categoria": "Vacuna",
+          "iconoSVG": "📦",
+          "colorFondoSVG": "#b49678",
+          "colorIconoSVG": "white"
+        },
+        "cantidad": 1,
+        "descuentoFijo": 0.0
+      }
+    ],
+    "descuentoPorcentaje": 10.0,
+    "ivaPorcentaje": 15.0,
+    "estado": "PROFORMA"
   }
 ]

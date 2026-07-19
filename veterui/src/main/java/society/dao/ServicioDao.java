@@ -5,10 +5,10 @@ import com.google.gson.reflect.TypeToken;
 
 import society.modell.administracion.Servicio;
 
-public class ServicioDao extends JsonDao<Servicio> {
+public class ServicioDao extends MasterJsonDao<Servicio> {
     
     public ServicioDao() {
-        super("servicios.json", new TypeToken<List<Servicio>>(){}.getType());
+        super("servicios", new TypeToken<List<Servicio>>(){}.getType());
     }
 
     public void create(Servicio s) {

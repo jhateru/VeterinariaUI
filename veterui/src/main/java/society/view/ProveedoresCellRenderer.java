@@ -138,6 +138,33 @@ public class ProveedoresCellRenderer implements TableCellRenderer {
                     pnlOrden.add(lblOrdId);
                     panel.add(pnlOrden, BorderLayout.WEST);
                     break;
+                    
+                case 5: // ITEMS
+                    JPanel pnlItems = new JPanel();
+                    pnlItems.setLayout(new BoxLayout(pnlItems, BoxLayout.Y_AXIS));
+                    pnlItems.setOpaque(false);
+                    pnlItems.setBorder(new EmptyBorder(5, 0, 0, 0));
+                    
+                    int totalItems = 0;
+                    if (prov.getInventariosSuministrados() != null) {
+                        for (society.modell.administracion.Consumible c : prov.getInventariosSuministrados()) {
+                            totalItems += c.getCantidad();
+                        }
+                    }
+                    
+                    JLabel lblItems = new JLabel(String.valueOf(totalItems));
+                    lblItems.setFont(new Font("SansSerif", Font.BOLD, 14));
+                    lblItems.setForeground(brandBlue);
+                    
+                    JLabel lblUnidades = new JLabel("unidades");
+                    lblUnidades.setFont(new Font("SansSerif", Font.PLAIN, 11));
+                    lblUnidades.setForeground(Color.GRAY);
+                    
+                    pnlItems.add(lblItems);
+                    pnlItems.add(Box.createRigidArea(new Dimension(0, 3)));
+                    pnlItems.add(lblUnidades);
+                    panel.add(pnlItems, BorderLayout.WEST);
+                    break;
             }
         }
         

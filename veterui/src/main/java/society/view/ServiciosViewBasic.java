@@ -1,23 +1,33 @@
 package society.view;
 
+import society.dao.InventarioDao;
 import society.dao.ServicioDao;
 import society.modell.administracion.Servicio;
 import society.view.components.CardAlerta;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ServiciosViewBasic extends JPanel {
 
     private ServicioDao servicioDao;
+    private InventarioDao inventarioDao;
     private JTable table;
     private DefaultTableModel tableModel;
     private List<Servicio> serviciosCache;
+    private List<society.modell.inventario.Inventario> inventarioList;
+    
+    private JTextField txtSearch;
+    private JComboBox<String> cmbCategorias;
 
     public ServiciosViewBasic() {
         servicioDao = new ServicioDao();
+        inventarioDao = new InventarioDao();
         
         setLayout(new BorderLayout(15, 15));
         setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
@@ -72,11 +82,19 @@ public class ServiciosViewBasic extends JPanel {
         JLabel lblSearch = new JLabel("Buscar:");
         lblSearch.setFont(new Font("SansSerif", Font.BOLD, 12));
         
-        JTextField txtSearch = new JTextField(30);
+        txtSearch = new JTextField(25);
+        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { filtrarDatos(); }
+            public void removeUpdate(DocumentEvent e) { filtrarDatos(); }
+            public void changedUpdate(DocumentEvent e) { filtrarDatos(); }
+        });
         
-        JButton btnBuscar = new JButton("Buscar");
-        btnBuscar.setBackground(Color.LIGHT_GRAY);
-        btnBuscar.setFocusPainted(false);
+        JLabel lblCat = new JLabel("Categoría:");
+        lblCat.setFont(new Font("SansSerif", Font.BOLD, 12));
+        
+        cmbCategorias = new JComboBox<>();
+        cmbCategorias.setBackground(Color.WHITE);
+        cmbCategorias.addActionListener(e -> filtrarDatos());
         
         JButton btnEditar = new JButton("✏️ Editar");
         btnEditar.setBackground(new Color(240, 173, 78));
@@ -84,8 +102,8 @@ public class ServiciosViewBasic extends JPanel {
         btnEditar.setFocusPainted(false);
         btnEditar.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
-            if (selectedRow >= 0 && selectedRow < serviciosCache.size()) {
-                Servicio s = serviciosCache.get(selectedRow);
+            if (selectedRow >= 0 && selectedRow < getFilteredCache().size()) {
+                Servicio s = getFilteredCache().get(selectedRow);
                 abrirRegistroServicio(s);
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, selecciona un servicio de la tabla para editar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -98,8 +116,8 @@ public class ServiciosViewBasic extends JPanel {
         btnEliminar.setFocusPainted(false);
         btnEliminar.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
-            if (selectedRow >= 0 && selectedRow < serviciosCache.size()) {
-                Servicio s = serviciosCache.get(selectedRow);
+            if (selectedRow >= 0 && selectedRow < getFilteredCache().size()) {
+                Servicio s = getFilteredCache().get(selectedRow);
                 int confirm = JOptionPane.showConfirmDialog(this, "¿Estás seguro de eliminar el servicio: " + s.getNombre() + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     servicioDao.delete(s.getId());
@@ -112,7 +130,9 @@ public class ServiciosViewBasic extends JPanel {
 
         searchPanel.add(lblSearch);
         searchPanel.add(txtSearch);
-        searchPanel.add(btnBuscar);
+        searchPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+        searchPanel.add(lblCat);
+        searchPanel.add(cmbCategorias);
         searchPanel.add(Box.createRigidArea(new Dimension(20, 0)));
         searchPanel.add(btnEditar);
         searchPanel.add(btnEliminar);
@@ -132,7 +152,7 @@ public class ServiciosViewBasic extends JPanel {
         add(topContainer, BorderLayout.NORTH);
 
         // --- TABLA ---
-        String[] columns = {"NOMBRE DEL SERVICIO", "CATEGORÍA", "DURACIÓN", "PRECIO BASE", "ESTADO"};
+        String[] columns = {"NOMBRE DEL SERVICIO", "DETALLE / CAT.", "DURACIÓN", "PRECIO TOTAL", "ESTADO"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) { return false; }
@@ -157,16 +177,76 @@ public class ServiciosViewBasic extends JPanel {
     
     private void cargarDatos() {
         serviciosCache = servicioDao.getAll();
+        inventarioList = inventarioDao.getAll();
+        
+        // Actualizar categorias en el combobox
+        String selectedCat = (String) cmbCategorias.getSelectedItem();
+        cmbCategorias.removeAllItems();
+        cmbCategorias.addItem("Todas");
+        
+        List<String> categorias = serviciosCache.stream()
+                .map(s -> s.getCategoria() != null ? s.getCategoria() : "General")
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+                
+        for (String cat : categorias) {
+            cmbCategorias.addItem(cat);
+        }
+        
+        if (selectedCat != null && categorias.contains(selectedCat)) {
+            cmbCategorias.setSelectedItem(selectedCat);
+        } else {
+            cmbCategorias.setSelectedIndex(0);
+        }
+        
+        filtrarDatos();
+    }
+    
+    private List<Servicio> getFilteredCache() {
+        String query = txtSearch.getText().trim().toLowerCase();
+        String selectedCat = (String) cmbCategorias.getSelectedItem();
+        boolean filterByCat = selectedCat != null && !selectedCat.equals("Todas");
+        
+        return serviciosCache.stream()
+                .filter(s -> s.getNombre().toLowerCase().contains(query))
+                .filter(s -> !filterByCat || (s.getCategoria() != null ? s.getCategoria() : "General").equals(selectedCat))
+                .collect(Collectors.toList());
+    }
+    
+    private void filtrarDatos() {
+        if (serviciosCache == null) return;
+        
+        List<Servicio> filtrados = getFilteredCache();
         
         tableModel.setRowCount(0);
-        for (Servicio s : serviciosCache) {
+        for (Servicio s : filtrados) {
             String duracionStr = s.getDuracionEstimadaMinutos() + " min";
-            String precioStr = String.format("$%.2f", s.getPrecioBase());
+            
+            double costoMateriales = 0.0;
+            int numMateriales = 0;
+            
+            if (s.getMaterialesUsados() != null) {
+                numMateriales = s.getMaterialesUsados().size();
+                for (society.modell.administracion.Consumible c : s.getMaterialesUsados()) {
+                    for (society.modell.inventario.Inventario inv : inventarioList) {
+                        if (inv.getId().equals(c.getInventarioId())) {
+                            costoMateriales += (inv.getPrecio() * c.getCantidad());
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            double costoTotal = s.getPrecioBase() + costoMateriales;
+            String descStr = numMateriales > 0 ? s.getCategoria() + " (+ " + numMateriales + " insumos)" : (s.getCategoria() != null ? s.getCategoria() : "General");
+            
+            String precioStr = String.format("$%.2f", costoTotal);
             String estadoStr = (s.getEstado() != null && s.getEstado().equalsIgnoreCase("Activo")) ? "Activo" : "Inactivo";
             
             tableModel.addRow(new Object[]{
                 s.getNombre(),
-                s.getCategoria() != null ? s.getCategoria() : "General",
+                descStr,
                 duracionStr,
                 precioStr,
                 estadoStr

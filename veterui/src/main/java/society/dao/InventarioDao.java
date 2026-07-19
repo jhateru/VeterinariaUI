@@ -5,10 +5,10 @@ import com.google.gson.reflect.TypeToken;
 
 import society.modell.inventario.Inventario;
 
-public class InventarioDao extends JsonDao<Inventario> {
+public class InventarioDao extends MasterJsonDao<Inventario> {
 
     public InventarioDao() {
-        super("inventario.json", new TypeToken<List<Inventario>>(){}.getType());
+        super("inventario", new TypeToken<List<Inventario>>(){}.getType());
     }
 
     public void create(Inventario inv) {

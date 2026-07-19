@@ -2,6 +2,8 @@ package society.view;
 
 import society.dao.PersonalDao;
 import society.modell.administracion.Personal;
+import society.view.components.CardAlerta;
+import society.view.components.CardHorizontal;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -12,6 +14,14 @@ public class PersonalViewBasic extends JPanel {
     private JTable empleadosTable;
     private DefaultTableModel tableModel;
     private PersonalDao personalDao;
+
+    private CardAlerta cardTotalPersonal;
+    private CardAlerta cardActivos;
+    private CardAlerta cardReunion;
+
+    private CardHorizontal cardManana;
+    private CardHorizontal cardTarde;
+    private CardHorizontal cardNoche;
 
     public PersonalViewBasic() {
         personalDao = new PersonalDao();
@@ -68,9 +78,13 @@ public class PersonalViewBasic extends JPanel {
         JPanel leftPanel = new JPanel(new BorderLayout(0, 15));
         
         JPanel cardsPanel = new JPanel(new GridLayout(1, 3, 15, 0));
-        cardsPanel.add(createSummaryCard("👥 +2 este mes", "TOTAL PERSONAL", "24", ""));
-        cardsPanel.add(createSummaryCard("💼 +6", "EN TURNO AHORA", "8", "🕒 Turno Mañana: 08:00 - 14:00"));
-        cardsPanel.add(createSummaryCard("📅", "PRÓXIMA REUNIÓN", "Staff General", "⏰ 15:30 PM Today"));
+        cardTotalPersonal = new CardAlerta("TOTAL PERSONAL", "0", "👥", new Color(240, 248, 255), Color.DARK_GRAY);
+        cardActivos = new CardAlerta("PERSONAL ACTIVO", "0", "💼", new Color(240, 255, 240), new Color(0, 150, 0));
+        cardReunion = new CardAlerta("PRÓXIMA REUNIÓN", "Staff", "📅", new Color(255, 245, 230), Color.DARK_GRAY);
+
+        cardsPanel.add(cardTotalPersonal);
+        cardsPanel.add(cardActivos);
+        cardsPanel.add(cardReunion);
         leftPanel.add(cardsPanel, BorderLayout.NORTH);
         
         JPanel directoryPanel = new JPanel(new BorderLayout());
@@ -92,7 +106,7 @@ public class PersonalViewBasic extends JPanel {
         directoryPanel.add(dirHeader, BorderLayout.NORTH);
         
         // JTable Implementation
-        String[] columns = {"ID", "NOMBRE", "CARGO", "DNI", "DEPARTAMENTO", "ROL", "ESTADO", "EMAIL", "TELÉFONO", "CONTRATACIÓN"};
+        String[] columns = {"ID", "NOMBRE", "DEPARTAMENTO", "DNI", "ROL DE SISTEMA", "ESTADO", "EMAIL", "TELÉFONO", "CONTRATACIÓN"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -180,11 +194,15 @@ public class PersonalViewBasic extends JPanel {
         rightPadding.add(turnosHeader);
         rightPadding.add(Box.createRigidArea(new Dimension(0, 15)));
         
-        rightPadding.add(createTurnoItem("08:00 - 14:00", "Turno Mañana", "8 Veterinarios en turno"));
+        cardManana = new CardHorizontal("Turno Mañana", "08:00-15:00", "0 Programados", "Activo", "Ver Detalle", "Notificar");
+        cardTarde = new CardHorizontal("Turno Tarde", "15:00-22:00", "0 Programados", "Próximo", "Ver Detalle", "Notificar");
+        cardNoche = new CardHorizontal("Turno Noche", "22:00-08:00", "0 Programados", "Inactivo", "Ver Detalle", "Notificar");
+
+        rightPadding.add(cardManana);
         rightPadding.add(Box.createRigidArea(new Dimension(0, 15)));
-        rightPadding.add(createTurnoItem("14:00 - 20:00", "Turno Tarde", "6 Programados"));
+        rightPadding.add(cardTarde);
         rightPadding.add(Box.createRigidArea(new Dimension(0, 15)));
-        rightPadding.add(createTurnoItem("20:00 - 08:00", "Turno Noche / Urgencias", "2 Programados"));
+        rightPadding.add(cardNoche);
         
         rightPadding.add(Box.createVerticalGlue());
         
@@ -194,34 +212,7 @@ public class PersonalViewBasic extends JPanel {
         add(mainContent, BorderLayout.CENTER);
     }
     
-    private JPanel createSummaryCard(String topBadge, String title, String mainValue, String subText) {
-        JPanel card = new JPanel(new BorderLayout());
-        card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.LIGHT_GRAY),
-            BorderFactory.createEmptyBorder(15, 15, 15, 15)
-        ));
-        JLabel badge = new JLabel(topBadge);
-        badge.setFont(new Font("SansSerif", Font.PLAIN, 10));
-        card.add(badge, BorderLayout.NORTH);
-        
-        JPanel centerP = new JPanel();
-        centerP.setLayout(new BoxLayout(centerP, BoxLayout.Y_AXIS));
-        centerP.add(Box.createRigidArea(new Dimension(0, 10)));
-        JLabel tLbl = new JLabel(title);
-        tLbl.setFont(new Font("SansSerif", Font.BOLD, 10));
-        centerP.add(tLbl);
-        JLabel vLbl = new JLabel(mainValue);
-        vLbl.setFont(new Font("SansSerif", Font.BOLD, 28));
-        centerP.add(vLbl);
-        card.add(centerP, BorderLayout.CENTER);
-        
-        if (!subText.isEmpty()) {
-            JLabel sLbl = new JLabel(subText);
-            sLbl.setFont(new Font("SansSerif", Font.PLAIN, 10));
-            card.add(sLbl, BorderLayout.SOUTH);
-        }
-        return card;
-    }
+
     
     private JLabel createBoldLabel(String text) {
         JLabel l = new JLabel(text);
@@ -229,44 +220,55 @@ public class PersonalViewBasic extends JPanel {
         return l;
     }
     
-    private JPanel createTurnoItem(String time, String title, String desc) {
-        JPanel p = new JPanel(new BorderLayout());
-        p.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.LIGHT_GRAY)); 
-        
-        JPanel inner = new JPanel();
-        inner.setLayout(new BoxLayout(inner, BoxLayout.Y_AXIS));
-        inner.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
-        
-        JLabel tLbl = new JLabel(time);
-        tLbl.setFont(new Font("SansSerif", Font.PLAIN, 10));
-        JLabel mainLbl = new JLabel(title);
-        mainLbl.setFont(new Font("SansSerif", Font.BOLD, 12));
-        JLabel dLbl = new JLabel(desc);
-        dLbl.setFont(new Font("SansSerif", Font.PLAIN, 10));
-        
-        inner.add(tLbl);
-        inner.add(mainLbl);
-        inner.add(dLbl);
-        p.add(inner, BorderLayout.CENTER);
-        return p;
-    }
+
     
     private void loadTableData() {
         tableModel.setRowCount(0);
         List<Personal> empleados = personalDao.getAll();
+        
+        updateDashboard(empleados);
+
         for (Personal p : empleados) {
             tableModel.addRow(new Object[]{
                 p.getId(),
                 p.getNombre() != null ? p.getNombre() : "",
-                p.getCargo() != null ? p.getCargo() : "",
-                p.getDni() != null ? p.getDni() : "",
                 p.getDepartamento() != null ? p.getDepartamento() : "",
-                p.getRolSistema() != null ? p.getRolSistema() : "",
+                p.getDni() != null ? p.getDni() : "",
+                p.getCargo() != null ? p.getCargo() : "",
                 p.getEstado() != null ? p.getEstado() : "● Activo",
                 p.getEmail() != null ? p.getEmail() : "",
                 p.getTelefono() != null ? p.getTelefono() : "",
                 p.getFechaContratacion() != null ? p.getFechaContratacion() : ""
             });
         }
+    }
+
+    private void updateDashboard(List<Personal> empleados) {
+        long total = empleados.size();
+        long activos = empleados.stream().filter(e -> e.getEstado() != null && e.getEstado().contains("Activo")).count();
+        
+        java.time.DayOfWeek dayOfWeek = java.time.LocalDate.now().getDayOfWeek();
+        String todayInitial = "";
+        switch (dayOfWeek) {
+            case MONDAY: todayInitial = "L"; break;
+            case TUESDAY: todayInitial = "M"; break;
+            case WEDNESDAY: todayInitial = "X"; break;
+            case THURSDAY: todayInitial = "J"; break;
+            case FRIDAY: todayInitial = "V"; break;
+            case SATURDAY: todayInitial = "S"; break;
+            case SUNDAY: todayInitial = "D"; break;
+        }
+        final String today = todayInitial;
+        
+        long manana = empleados.stream().filter(e -> "Mañana".equals(e.getTurno()) && e.getDiasLaborales() != null && e.getDiasLaborales().contains(today)).count();
+        long tarde = empleados.stream().filter(e -> "Tarde".equals(e.getTurno()) && e.getDiasLaborales() != null && e.getDiasLaborales().contains(today)).count();
+        long noche = empleados.stream().filter(e -> "Noche".equals(e.getTurno()) && e.getDiasLaborales() != null && e.getDiasLaborales().contains(today)).count();
+        
+        if (cardTotalPersonal != null) cardTotalPersonal.updateData(String.valueOf(total));
+        if (cardActivos != null) cardActivos.updateData(String.valueOf(activos));
+        
+        if (cardManana != null) cardManana.updateData("Turno Mañana", "08:00-15:00", manana + " Programados", manana > 0 ? "Activo" : "Sin Personal");
+        if (cardTarde != null) cardTarde.updateData("Turno Tarde", "15:00-22:00", tarde + " Programados", tarde > 0 ? "Activo" : "Sin Personal");
+        if (cardNoche != null) cardNoche.updateData("Turno Noche", "22:00-08:00", noche + " Programados", noche > 0 ? "Activo" : "Sin Personal");
     }
 }

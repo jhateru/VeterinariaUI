@@ -15,6 +15,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class FacturacionViewBasic extends JPanel {
 
@@ -38,13 +41,13 @@ public class FacturacionViewBasic extends JPanel {
     private DecimalFormat df = new DecimalFormat("#,##0.00");
     
     // Filtros UI
-    private JPanel[] btnFiltros = new JPanel[4];
-    private String[] filtrosStr = {"Todos", "Médico", "Estética", "Alimentos"};
-    private String currentFiltro = "Todos";
+    private JTextField txtSearch;
+    private JComboBox<String> cmbCategoriaServicio;
+    private JComboBox<String> cmbCategoriaInventario;
 
     public FacturacionViewBasic() {
         facturacionDao = new FacturacionDao();
-        cargarCatalogoDummy();
+        cargarCatalogoReal();
         
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
@@ -63,15 +66,80 @@ public class FacturacionViewBasic extends JPanel {
         renderCatalogo();
     }
     
-    private void cargarCatalogoDummy() {
+    private void cargarCatalogoReal() {
         catalogoCompleto = new ArrayList<>();
-        // Guardaremos el EMOJI dentro del campo iconoSVG para renderizado sencillo en Swing
-        catalogoCompleto.add(new CatalogoItem("S001", "Consulta General", "Evaluación veterinaria complet...", 35.00, "Médico", "🩺", "#008080", "white"));
-        catalogoCompleto.add(new CatalogoItem("S002", "Vacunación Anual", "Incluye Triple Felina o Sextuple...", 45.00, "Médico", "💉", "#8aaceb", "white"));
-        catalogoCompleto.add(new CatalogoItem("E001", "Limpieza Dental", "Profilaxis ultrasónica profunda...", 120.00, "Estética", "🪥", "#b49678", "white"));
-        catalogoCompleto.add(new CatalogoItem("A001", "Alimento Royal Canin", "Saco de 12kg para adultos...", 82.50, "Alimentos", "🥫", "#008080", "white"));
-        catalogoCompleto.add(new CatalogoItem("S003", "Desparasitación", "Tableta palatable para control...", 18.00, "Médico", "🐛", "#8aaceb", "white"));
-        catalogoCompleto.add(new CatalogoItem("E002", "Grooming Completo", "Baño, corte de pelo, uñas y...", 28.00, "Estética", "✂️", "#b49678", "white"));
+        
+        society.dao.ServicioDao servicioDao = new society.dao.ServicioDao();
+        List<society.modell.administracion.Servicio> servicios = servicioDao.getAll();
+        
+        society.dao.InventarioDao inventarioDao = new society.dao.InventarioDao();
+        List<society.modell.inventario.Inventario> inventarios = inventarioDao.getAll();
+
+        if (servicios != null) {
+            for (society.modell.administracion.Servicio s : servicios) {
+                String desc = s.getDescripcion() != null ? s.getDescripcion() : "Servicio";
+                if (desc.length() > 30) desc = desc.substring(0, 27) + "...";
+                String cat = s.getCategoria() != null ? s.getCategoria() : "Servicio";
+                
+                double costoMateriales = 0.0;
+                if (s.getMaterialesUsados() != null) {
+                    for (society.modell.administracion.Consumible c : s.getMaterialesUsados()) {
+                        for (society.modell.inventario.Inventario inv : inventarios) {
+                            if (inv.getId().equals(c.getInventarioId())) {
+                                costoMateriales += (inv.getPrecio() * c.getCantidad());
+                                break;
+                            }
+                        }
+                    }
+                }
+                double costoTotal = s.getPrecioBase() + costoMateriales;
+
+                catalogoCompleto.add(new CatalogoItem(
+                    String.valueOf(s.getId()),
+                    s.getNombre(),
+                    desc,
+                    costoTotal,
+                    cat,
+                    "🩺",
+                    "#008080",
+                    "white"
+                ));
+            }
+        }
+
+        if (inventarios != null) {
+            for (society.modell.inventario.Inventario inv : inventarios) {
+                String desc = "Stock: " + inv.getStock();
+                String cat = inv.getCategoria() != null ? inv.getCategoria() : "Producto";
+
+                catalogoCompleto.add(new CatalogoItem(
+                    inv.getId(),
+                    inv.getProducto(),
+                    desc,
+                    inv.getPrecio(),
+                    cat,
+                    "📦",
+                    "#b49678",
+                    "white"
+                ));
+            }
+        }
+    }
+    
+    private List<String> obtenerCategoriasPorTipo(String tipo) {
+        List<String> categorias = new ArrayList<>();
+        categorias.add("Todas");
+        
+        if (catalogoCompleto != null) {
+            List<String> cats = catalogoCompleto.stream()
+                .filter(item -> tipo.equals("SERVICIO") ? item.getIconoSVG().equals("🩺") : item.getIconoSVG().equals("📦"))
+                .map(CatalogoItem::getCategoria)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+            categorias.addAll(cats);
+        }
+        return categorias;
     }
     
     private void iniciarNuevaFactura() {
@@ -100,25 +168,51 @@ public class FacturacionViewBasic extends JPanel {
         title.setForeground(darkTeal);
         header.add(title, BorderLayout.WEST);
 
-        JPanel filters = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        filters.setBackground(Color.WHITE);
+        // Filtros Tool Panel
+        JPanel toolsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+        toolsPanel.setBackground(Color.WHITE);
         
-        for (int i = 0; i < filtrosStr.length; i++) {
-            boolean active = i == 0;
-            btnFiltros[i] = createPill(filtrosStr[i], active);
-            final int index = i;
-            btnFiltros[i].addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    currentFiltro = filtrosStr[index];
-                    actualizarFiltrosUI();
-                    renderCatalogo();
-                }
-            });
-            filters.add(btnFiltros[i]);
+        JLabel lblSearch = new JLabel("Buscar:");
+        lblSearch.setFont(new Font("SansSerif", Font.BOLD, 12));
+        toolsPanel.add(lblSearch);
+        
+        txtSearch = new JTextField(15);
+        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { renderCatalogo(); }
+            public void removeUpdate(DocumentEvent e) { renderCatalogo(); }
+            public void changedUpdate(DocumentEvent e) { renderCatalogo(); }
+        });
+        toolsPanel.add(txtSearch);
+        
+        toolsPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+        
+        JLabel lblCatServ = new JLabel("Categoría Servicio:");
+        lblCatServ.setFont(new Font("SansSerif", Font.BOLD, 12));
+        toolsPanel.add(lblCatServ);
+        
+        cmbCategoriaServicio = new JComboBox<>();
+        cmbCategoriaServicio.setBackground(Color.WHITE);
+        for (String cat : obtenerCategoriasPorTipo("SERVICIO")) {
+            cmbCategoriaServicio.addItem(cat);
         }
+        cmbCategoriaServicio.addActionListener(e -> renderCatalogo());
+        toolsPanel.add(cmbCategoriaServicio);
         
-        header.add(filters, BorderLayout.EAST);
+        toolsPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+        
+        JLabel lblCatInv = new JLabel("Categoría Inventario:");
+        lblCatInv.setFont(new Font("SansSerif", Font.BOLD, 12));
+        toolsPanel.add(lblCatInv);
+        
+        cmbCategoriaInventario = new JComboBox<>();
+        cmbCategoriaInventario.setBackground(Color.WHITE);
+        for (String cat : obtenerCategoriasPorTipo("PRODUCTO")) {
+            cmbCategoriaInventario.addItem(cat);
+        }
+        cmbCategoriaInventario.addActionListener(e -> renderCatalogo());
+        toolsPanel.add(cmbCategoriaInventario);
+        
+        header.add(toolsPanel, BorderLayout.SOUTH);
         panel.add(header, BorderLayout.NORTH);
 
         // Grid of products
@@ -134,41 +228,38 @@ public class FacturacionViewBasic extends JPanel {
         return panel;
     }
     
-    private void actualizarFiltrosUI() {
-        for (int i = 0; i < filtrosStr.length; i++) {
-            boolean active = filtrosStr[i].equals(currentFiltro);
-            btnFiltros[i].setBackground(active ? darkTeal : new Color(240, 240, 240));
-            Component c = btnFiltros[i].getComponent(0);
-            if (c instanceof JLabel) {
-                ((JLabel) c).setForeground(active ? Color.WHITE : Color.DARK_GRAY);
-            }
-        }
+    private List<CatalogoItem> getFilteredCatalog() {
+        if (catalogoCompleto == null) return new ArrayList<>();
+        
+        String query = txtSearch.getText().trim().toLowerCase();
+        String catServ = (String) cmbCategoriaServicio.getSelectedItem();
+        String catInv = (String) cmbCategoriaInventario.getSelectedItem();
+        
+        boolean filterServ = catServ != null && !catServ.equals("Todas");
+        boolean filterInv = catInv != null && !catInv.equals("Todas");
+        
+        return catalogoCompleto.stream()
+            .filter(item -> item.getTitulo().toLowerCase().contains(query))
+            .filter(item -> {
+                boolean isServicio = item.getIconoSVG().equals("🩺");
+                if (isServicio && filterServ) return item.getCategoria().equals(catServ);
+                if (!isServicio && filterInv) return item.getCategoria().equals(catInv);
+                return true;
+            })
+            .collect(Collectors.toList());
     }
-    
+
     private void renderCatalogo() {
         if (catalogoGrid == null) return;
         catalogoGrid.removeAll();
-        for (CatalogoItem item : catalogoCompleto) {
-            if (currentFiltro.equals("Todos") || currentFiltro.equalsIgnoreCase(item.getCategoria())) {
-                catalogoGrid.add(createProductCard(item));
-            }
+        
+        List<CatalogoItem> filtrados = getFilteredCatalog();
+        
+        for (CatalogoItem item : filtrados) {
+            catalogoGrid.add(createProductCard(item));
         }
         catalogoGrid.revalidate();
         catalogoGrid.repaint();
-    }
-
-    private JPanel createPill(String text, boolean active) {
-        JPanel pill = new JPanel();
-        pill.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
-        pill.setBackground(active ? darkTeal : new Color(240, 240, 240));
-        pill.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
-        pill.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        JLabel lbl = new JLabel(text);
-        lbl.setFont(new Font("SansSerif", Font.BOLD, 12));
-        lbl.setForeground(active ? Color.WHITE : Color.DARK_GRAY);
-        pill.add(lbl);
-        return pill;
     }
 
     private JPanel createProductCard(CatalogoItem item) {

@@ -2,6 +2,7 @@ package society.view;
 
 import society.dao.ProveedoresDao;
 import society.modell.administracion.Proveedores;
+import society.view.components.CardAlerta;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -25,6 +26,10 @@ public class ProveedoresViewBasic extends JPanel {
     private JTable tablaProveedores;
     private DefaultTableModel tableModel;
     private JPanel summaryCardsPanel;
+    
+    private CardAlerta cardTotalProveedores;
+    private CardAlerta cardProveedoresActivos;
+    private CardAlerta cardEnRevision;
     
     private JButton btnEditar;
     private JButton btnEliminar;
@@ -54,7 +59,7 @@ public class ProveedoresViewBasic extends JPanel {
         // Center section (Table + Toolbar)
         mainContent.add(buildTableSection(), BorderLayout.CENTER);
         
-        add(new JScrollPane(mainContent), BorderLayout.CENTER);
+        add(mainContent, BorderLayout.CENTER);
     }
     
     private void cargarDatos() {
@@ -108,56 +113,18 @@ public class ProveedoresViewBasic extends JPanel {
     }
     
     private JPanel buildSummaryCards() {
-        JPanel panel = new JPanel(new GridLayout(1, 3, 20, 0));
-        panel.setBackground(lightBg);
+        JPanel cardsPanel = new JPanel(new GridLayout(1, 3, 20, 0));
+        cardsPanel.setBackground(lightBg);
         
-        int total = proveedoresList.size();
-        panel.add(createStatCard("TOTAL PROVEEDORES", String.valueOf(total), "🏪", "+2 este mes"));
-        panel.add(createStatCard("ÓRDENES EN TRÁNSITO", "12", "🚚", "4 llegan hoy"));
-        panel.add(createStatCard("INVERSIÓN MENSUAL", "$14,250.00", "💵", "+5% vs mes"));
+        cardTotalProveedores = new CardAlerta("TOTAL PROVEEDORES", "0", "🏪", new Color(240, 248, 255), brandBlue);
+        cardProveedoresActivos = new CardAlerta("PROVEEDORES ACTIVOS", "0", "✅", new Color(240, 255, 240), new Color(0, 150, 0));
+        cardEnRevision = new CardAlerta("EN REVISIÓN", "0", "⚠️", new Color(255, 250, 240), new Color(200, 150, 0));
         
-        return panel;
-    }
-    
-    private JPanel createStatCard(String title, String value, String icon, String subtext) {
-        JPanel card = new JPanel(new BorderLayout());
-        card.setBackground(Color.WHITE);
-        card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(220, 220, 220), 1, true),
-            new EmptyBorder(15, 20, 15, 20)
-        ));
+        cardsPanel.add(cardTotalProveedores);
+        cardsPanel.add(cardProveedoresActivos);
+        cardsPanel.add(cardEnRevision);
         
-        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
-        top.setBackground(Color.WHITE);
-        JLabel lblIcon = new JLabel(icon);
-        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-        JLabel lblTitle = new JLabel(title);
-        lblTitle.setFont(new Font("SansSerif", Font.BOLD, 11));
-        lblTitle.setForeground(Color.GRAY);
-        top.add(lblIcon);
-        top.add(lblTitle);
-        
-        card.add(top, BorderLayout.NORTH);
-        
-        JPanel center = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
-        center.setBackground(Color.WHITE);
-        center.setBorder(new EmptyBorder(10, 0, 0, 0));
-        JLabel lblVal = new JLabel(value);
-        lblVal.setFont(new Font("SansSerif", Font.BOLD, 32));
-        
-        JLabel lblSub = new JLabel(subtext);
-        lblSub.setFont(new Font("SansSerif", Font.BOLD, 10));
-        lblSub.setForeground(brandBlue);
-        lblSub.setBackground(new Color(230, 245, 245));
-        lblSub.setOpaque(true);
-        lblSub.setBorder(new EmptyBorder(2, 5, 2, 5));
-        
-        center.add(lblVal);
-        center.add(lblSub);
-        
-        card.add(center, BorderLayout.CENTER);
-        
-        return card;
+        return cardsPanel;
     }
     
     private JPanel buildTableSection() {
@@ -194,20 +161,14 @@ public class ProveedoresViewBasic extends JPanel {
         btnEliminar.setForeground(new Color(200, 50, 50));
         btnEliminar.addActionListener(e -> eliminarProveedor());
         
-        JButton btnExportar = createToolButton("📥 Exportar");
-        btnExportar.addActionListener(e -> exportarCSV());
-        
         toolsRight.add(btnEditar);
         toolsRight.add(btnEliminar);
-        toolsRight.add(new JLabel(" | "));
-        toolsRight.add(createToolButton("≡ Filtros"));
-        toolsRight.add(btnExportar);
         
         toolbar.add(toolsRight, BorderLayout.EAST);
         section.add(toolbar, BorderLayout.NORTH);
         
         // Table
-        String[] columnas = {"PROVEEDOR", "CATEGORÍA", "CONTACTO", "ESTADO", "ÚLTIMA ORDEN"};
+        String[] columnas = {"PROVEEDOR", "CATEGORÍA", "CONTACTO", "ESTADO", "ÚLTIMA ORDEN", "ITEMS"};
         tableModel = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) { return false; }
@@ -266,86 +227,48 @@ public class ProveedoresViewBasic extends JPanel {
     
     private void actualizarTabla() {
         tableModel.setRowCount(0);
+        
+        long total = proveedoresList.size();
+        long activos = proveedoresList.stream().filter(p -> "Activo".equalsIgnoreCase(p.getEstado())).count();
+        long revision = proveedoresList.stream().filter(p -> "En Revisión".equalsIgnoreCase(p.getEstado()) || "En Revision".equalsIgnoreCase(p.getEstado())).count();
+        
+        if (cardTotalProveedores != null) cardTotalProveedores.updateData(String.valueOf(total));
+        if (cardProveedoresActivos != null) cardProveedoresActivos.updateData(String.valueOf(activos));
+        if (cardEnRevision != null) cardEnRevision.updateData(String.valueOf(revision));
+        
         for (Proveedores p : proveedoresList) {
-            tableModel.addRow(new Object[]{p, p, p, p, p});
+            tableModel.addRow(new Object[]{p, p, p, p, p, p});
         }
     }
     
     private void actualizarUI() {
         proveedoresList = dao.getAll();
         actualizarTabla();
-        
-        // Update summary cards
-        Container parent = summaryCardsPanel.getParent();
-        parent.remove(summaryCardsPanel);
-        summaryCardsPanel = buildSummaryCards();
-        parent.add(summaryCardsPanel, BorderLayout.CENTER);
-        parent.revalidate();
-        parent.repaint();
     }
     
     // --- Lógica CRUD ---
     
     private void mostrarFormulario(Proveedores proveedorAEditar) {
-        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Proveedor", true);
-        dialog.setSize(400, 350);
-        dialog.setLocationRelativeTo(this);
+        RegistroProveedorBasic form = new RegistroProveedorBasic((Frame) SwingUtilities.getWindowAncestor(this));
+        if (proveedorAEditar != null) {
+            form.setProveedorToEdit(proveedorAEditar);
+        }
+        form.setVisible(true);
         
-        JPanel pnl = new JPanel(new GridLayout(6, 2, 10, 10));
-        pnl.setBorder(new EmptyBorder(20, 20, 20, 20));
-        
-        JTextField txtId = new JTextField(proveedorAEditar != null ? proveedorAEditar.getIdProveedorStr() : "PRV-");
-        JTextField txtNombre = new JTextField(proveedorAEditar != null ? proveedorAEditar.getNombre() : "");
-        JComboBox<String> cmbCat = new JComboBox<>(new String[]{"Medicamentos", "Equipamiento", "Alimentos"});
-        if (proveedorAEditar != null) cmbCat.setSelectedItem(proveedorAEditar.getCategoria());
-        
-        JTextField txtEmail = new JTextField(proveedorAEditar != null ? proveedorAEditar.getContactoNombre() : "");
-        JTextField txtTel = new JTextField(proveedorAEditar != null ? proveedorAEditar.getContactoTelefono() : "");
-        JComboBox<String> cmbEstado = new JComboBox<>(new String[]{"Activo", "En Revisión", "Inactivo"});
-        if (proveedorAEditar != null) cmbEstado.setSelectedItem(proveedorAEditar.getEstado());
-        
-        pnl.add(new JLabel("ID Proveedor:")); pnl.add(txtId);
-        pnl.add(new JLabel("Razón Social:")); pnl.add(txtNombre);
-        pnl.add(new JLabel("Categoría:")); pnl.add(cmbCat);
-        pnl.add(new JLabel("Email/Contacto:")); pnl.add(txtEmail);
-        pnl.add(new JLabel("Teléfono:")); pnl.add(txtTel);
-        pnl.add(new JLabel("Estado:")); pnl.add(cmbEstado);
-        
-        JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.addActionListener(e -> {
-            if (txtNombre.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(dialog, "El nombre es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            Proveedores p = proveedorAEditar != null ? proveedorAEditar : new Proveedores();
-            if (proveedorAEditar == null) {
-                p.setId((int)(Math.random() * 1000));
-                p.setUltimaOrdenFecha("-");
-            }
-            
-            p.setIdProveedorStr(txtId.getText().trim());
-            p.setNombre(txtNombre.getText().trim());
-            p.setCategoria(cmbCat.getSelectedItem().toString());
-            p.setContactoNombre(txtEmail.getText().trim());
-            p.setContactoTelefono(txtTel.getText().trim());
-            p.setEstado(cmbEstado.getSelectedItem().toString());
-            
+        if (form.isSaved()) {
+            Proveedores p = form.getProveedor();
             if (proveedorAEditar == null) {
                 proveedoresList.add(p);
+            } else {
+                // Update properties in list
+                int idx = proveedoresList.indexOf(proveedorAEditar);
+                if (idx != -1) {
+                    proveedoresList.set(idx, p);
+                }
             }
-            
             dao.saveAll(proveedoresList);
             actualizarUI();
-            dialog.dispose();
-        });
-        
-        JPanel pnlBtn = new JPanel();
-        pnlBtn.add(btnGuardar);
-        
-        dialog.add(pnl, BorderLayout.CENTER);
-        dialog.add(pnlBtn, BorderLayout.SOUTH);
-        dialog.setVisible(true);
+        }
     }
     
     private void eliminarProveedor() {

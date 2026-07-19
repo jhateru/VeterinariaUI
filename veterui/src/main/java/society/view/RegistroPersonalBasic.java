@@ -20,13 +20,19 @@ public class RegistroPersonalBasic extends JDialog {
     private JTextField txtEmail;
     private JTextField txtDireccion;
 
-    private JComboBox<String> cbRolPrincipal;
+    private JComboBox<String> cbDepartamento;
     private JTextField txtEspecialidad;
     private JTextField txtColegiado;
     private JTextField txtFechaContratacion;
 
     private JTextField txtUsername;
-    private JComboBox<String> cbRolSistema;
+    private JComboBox<String> cbCargo;
+
+    private JToggleButton btnMan;
+    private JToggleButton btnTar;
+    private JToggleButton btnNoc;
+    
+    private JToggleButton[] btnDias;
 
     public RegistroPersonalBasic(Frame parent) {
         super(parent, "Registro de Nuevo Empleado", true);
@@ -81,10 +87,10 @@ public class RegistroPersonalBasic extends JDialog {
         JLabel lblRol = new JLabel("ROL DE SISTEMA");
         lblRol.setAlignmentX(Component.LEFT_ALIGNMENT);
         configPanel.add(lblRol);
-        cbRolSistema = new JComboBox<>(new String[]{"Seleccionar permiso...", "Administrador", "Clínico", "Recepción"});
-        cbRolSistema.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        cbRolSistema.setAlignmentX(Component.LEFT_ALIGNMENT);
-        configPanel.add(cbRolSistema);
+        cbCargo = new JComboBox<>(new String[]{"Seleccionar cargo...", "Administrador", "Veterinario", "Recepcionista", "Auxiliar veterinario"});
+        cbCargo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        cbCargo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        configPanel.add(cbCargo);
         
         leftCol.add(configPanel);
         leftCol.add(Box.createRigidArea(new Dimension(0, 15)));
@@ -99,9 +105,9 @@ public class RegistroPersonalBasic extends JDialog {
         turnos.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         turnos.setAlignmentX(Component.LEFT_ALIGNMENT);
         ButtonGroup bgTurnos = new ButtonGroup();
-        JToggleButton btnMan = createJornadaBtn("Mañana", "08:00-<br>15:00");
-        JToggleButton btnTar = createJornadaBtn("Tarde", "15:00-<br>22:00");
-        JToggleButton btnNoc = createJornadaBtn("Noche", "22:00-<br>08:00");
+        btnMan = createJornadaBtn("Mañana", "08:00-<br>15:00");
+        btnTar = createJornadaBtn("Tarde", "15:00-<br>22:00");
+        btnNoc = createJornadaBtn("Noche", "22:00-<br>08:00");
         bgTurnos.add(btnMan); bgTurnos.add(btnTar); bgTurnos.add(btnNoc);
         turnos.add(btnMan);
         turnos.add(btnTar);
@@ -117,9 +123,11 @@ public class RegistroPersonalBasic extends JDialog {
         dias.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         dias.setAlignmentX(Component.LEFT_ALIGNMENT);
         String[] nombresDias = {"L", "M", "X", "J", "V", "S", "D"};
-        for (String d : nombresDias) {
-            JToggleButton tb = new JToggleButton(d);
+        btnDias = new JToggleButton[7];
+        for (int i = 0; i < nombresDias.length; i++) {
+            JToggleButton tb = new JToggleButton(nombresDias[i]);
             tb.setMargin(new Insets(2, 2, 2, 2));
+            btnDias[i] = tb;
             dias.add(tb);
         }
         horPanel.add(dias);
@@ -187,9 +195,9 @@ public class RegistroPersonalBasic extends JDialog {
         JPanel rowIP1 = new JPanel(new GridLayout(1, 2, 15, 0));
         rowIP1.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
         rowIP1.setAlignmentX(Component.LEFT_ALIGNMENT);
-        JPanel pRol = createFieldPanel("ROL PRINCIPAL", cbRolPrincipal = new JComboBox<>(new String[]{"Seleccionar rol...", "Veterinario", "Asistente", "Recepción"}));
+        JPanel pDep = createFieldPanel("DEPARTAMENTO", cbDepartamento = new JComboBox<>(new String[]{"Seleccionar departamento...", "Personal medico", "Tecnico medico", "Personal estetico", "Personal de operaciones"}));
         JPanel pEsp = createFieldPanel("ESPECIALIDAD (OPCIONAL)", txtEspecialidad = new JTextField());
-        rowIP1.add(pRol); rowIP1.add(pEsp);
+        rowIP1.add(pDep); rowIP1.add(pEsp);
         ipPanel.add(rowIP1);
         ipPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         
@@ -263,15 +271,29 @@ public class RegistroPersonalBasic extends JDialog {
         nuevoPersonal.setEmail(txtEmail.getText());
         nuevoPersonal.setDireccion(txtDireccion.getText());
         
-        nuevoPersonal.setCargo(cbRolPrincipal.getSelectedItem() != null ? cbRolPrincipal.getSelectedItem().toString() : "");
+        nuevoPersonal.setDepartamento(cbDepartamento.getSelectedItem() != null ? cbDepartamento.getSelectedItem().toString() : "");
         nuevoPersonal.setEspecialidad(txtEspecialidad.getText());
         nuevoPersonal.setColegiado(txtColegiado.getText());
         nuevoPersonal.setFechaContratacion(txtFechaContratacion.getText());
         
         nuevoPersonal.setUsername(txtUsername.getText());
-        nuevoPersonal.setRolSistema(cbRolSistema.getSelectedItem() != null ? cbRolSistema.getSelectedItem().toString() : "");
-        nuevoPersonal.setDepartamento(nuevoPersonal.getRolSistema());
+        nuevoPersonal.setCargo(cbCargo.getSelectedItem() != null ? cbCargo.getSelectedItem().toString() : "");
+        nuevoPersonal.setRolSistema(nuevoPersonal.getCargo());
         if (nuevoPersonal.getEstado() == null) nuevoPersonal.setEstado("● Activo");
+
+        if (btnMan.isSelected()) nuevoPersonal.setTurno("Mañana");
+        else if (btnTar.isSelected()) nuevoPersonal.setTurno("Tarde");
+        else if (btnNoc.isSelected()) nuevoPersonal.setTurno("Noche");
+        else nuevoPersonal.setTurno("");
+
+        StringBuilder diasStr = new StringBuilder();
+        for (JToggleButton tb : btnDias) {
+            if (tb.isSelected()) {
+                if (diasStr.length() > 0) diasStr.append(",");
+                diasStr.append(tb.getText());
+            }
+        }
+        nuevoPersonal.setDiasLaborales(diasStr.toString());
 
         saved = true;
         dispose();
@@ -289,13 +311,30 @@ public class RegistroPersonalBasic extends JDialog {
         txtEmail.setText(p.getEmail());
         txtDireccion.setText(p.getDireccion());
         
-        if (p.getCargo() != null) cbRolPrincipal.setSelectedItem(p.getCargo());
+        if (p.getDepartamento() != null) cbDepartamento.setSelectedItem(p.getDepartamento());
         txtEspecialidad.setText(p.getEspecialidad());
         txtColegiado.setText(p.getColegiado());
         txtFechaContratacion.setText(p.getFechaContratacion());
         
         txtUsername.setText(p.getUsername());
-        if (p.getRolSistema() != null) cbRolSistema.setSelectedItem(p.getRolSistema());
+        if (p.getCargo() != null) cbCargo.setSelectedItem(p.getCargo());
+
+        if ("Mañana".equals(p.getTurno())) btnMan.setSelected(true);
+        else if ("Tarde".equals(p.getTurno())) btnTar.setSelected(true);
+        else if ("Noche".equals(p.getTurno())) btnNoc.setSelected(true);
+        
+        if (p.getDiasLaborales() != null && !p.getDiasLaborales().isEmpty()) {
+            String[] diasGuardados = p.getDiasLaborales().split(",");
+            for (JToggleButton tb : btnDias) {
+                tb.setSelected(false);
+                for (String ds : diasGuardados) {
+                    if (tb.getText().equals(ds.trim())) {
+                        tb.setSelected(true);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public boolean isSaved() {
