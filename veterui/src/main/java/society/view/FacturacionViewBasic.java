@@ -44,6 +44,7 @@ public class FacturacionViewBasic extends JPanel {
     private JTextField txtSearch;
     private JComboBox<String> cmbCategoriaServicio;
     private JComboBox<String> cmbCategoriaInventario;
+    private JComboBox<String> cmbDuenos;
 
     public FacturacionViewBasic() {
         facturacionDao = new FacturacionDao();
@@ -145,11 +146,15 @@ public class FacturacionViewBasic extends JPanel {
     private void iniciarNuevaFactura() {
         facturaActual = new Facturacion();
         facturaActual.setId("POS-" + (int)(Math.random() * 100000));
-        facturaActual.setClienteInfo("Max, Golden Retriever, Dueño: Carlos R.");
-        facturaActual.setDescuentoPorcentaje(10); // 10% por defecto (simulando "Cliente Frecuente")
+        facturaActual.setClienteInfo("");
+        facturaActual.setDescuentoPorcentaje(0); // 0% by default
         
         if (lblIdVenta != null) {
             lblIdVenta.setText("ID: #" + facturaActual.getId());
+        }
+        if (cmbDuenos != null) {
+            cmbDuenos.setSelectedIndex(0);
+            ((JTextField)cmbDuenos.getEditor().getEditorComponent()).setText("Seleccionar dueño...");
         }
         renderCart();
     }
@@ -368,33 +373,19 @@ public class FacturacionViewBasic extends JPanel {
         lblIdVenta.setForeground(darkTeal);
         header.add(lblIdVenta, BorderLayout.EAST);
         
-        // Patient Card
+        // Patient/Dueño Card
         JPanel patientCard = new JPanel(new BorderLayout(10, 0));
         patientCard.setBackground(Color.WHITE);
         patientCard.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(200, 220, 220), 1, true),
             new EmptyBorder(10, 10, 10, 10)
         ));
-        JLabel lblAvatar = new JLabel("🐶");
-        lblAvatar.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 28));
-        patientCard.add(lblAvatar, BorderLayout.WEST);
+        JLabel lblClientTitle = new JLabel("Cliente:");
+        lblClientTitle.setFont(new Font("SansSerif", Font.BOLD, 12));
+        patientCard.add(lblClientTitle, BorderLayout.WEST);
         
-        JPanel pCenter = new JPanel();
-        pCenter.setLayout(new BoxLayout(pCenter, BoxLayout.Y_AXIS));
-        pCenter.setBackground(Color.WHITE);
-        JLabel pName = new JLabel("Max");
-        pName.setFont(new Font("SansSerif", Font.BOLD, 14));
-        JLabel pDesc = new JLabel("Golden Retriever • Dueño: Carlos R.");
-        pDesc.setFont(new Font("SansSerif", Font.PLAIN, 11));
-        pDesc.setForeground(grayText);
-        pCenter.add(pName);
-        pCenter.add(pDesc);
-        patientCard.add(pCenter, BorderLayout.CENTER);
-        
-        JLabel lblEdit = new JLabel("✏️");
-        lblEdit.setForeground(Color.BLUE);
-        lblEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        patientCard.add(lblEdit, BorderLayout.EAST);
+        cmbDuenos = createSearchableDuenoComboBox();
+        patientCard.add(cmbDuenos, BorderLayout.CENTER);
 
         JPanel topSection = new JPanel(new BorderLayout(0, 15));
         topSection.setBackground(lightBg);
@@ -429,9 +420,77 @@ public class FacturacionViewBasic extends JPanel {
         JButton btnDesc = new JButton("% Descuento");
         btnDesc.setBackground(Color.WHITE);
         btnDesc.setFocusPainted(false);
-        JButton btnCup = new JButton("🎫 Cupón");
+        btnDesc.addActionListener(e -> {
+            if (facturaActual == null || facturaActual.getDetalles().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay productos en el carrito.", "Atención", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            String[] options = {"Compra Total", "Producto Específico"};
+            int choice = JOptionPane.showOptionDialog(this, "¿A qué desea aplicar el descuento?", "Tipo de Descuento",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                    
+            if (choice == 0) {
+                String input = JOptionPane.showInputDialog(this, "Ingrese el porcentaje de descuento global (0-100):", "Descuento Total", JOptionPane.QUESTION_MESSAGE);
+                if (input != null && !input.trim().isEmpty()) {
+                    try {
+                        double desc = Double.parseDouble(input);
+                        if (desc >= 0 && desc <= 100) {
+                            facturaActual.setDescuentoPorcentaje(desc);
+                            renderCart();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Por favor ingrese un valor entre 0 y 100", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(this, "Ingrese un número válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } else if (choice == 1) {
+                List<society.modell.facturacion.DetalleFacturacion> detalles = facturaActual.getDetalles();
+                String[] nombresProductos = new String[detalles.size()];
+                for (int i = 0; i < detalles.size(); i++) {
+                    nombresProductos[i] = detalles.get(i).getItem().getTitulo();
+                }
+                
+                String prodSeleccionado = (String) JOptionPane.showInputDialog(this, "Seleccione el producto:", "Descuento por Producto",
+                        JOptionPane.QUESTION_MESSAGE, null, nombresProductos, nombresProductos[0]);
+                        
+                if (prodSeleccionado != null) {
+                    String input = JOptionPane.showInputDialog(this, "Ingrese el porcentaje de descuento (0-100) para " + prodSeleccionado + ":", "Descuento", JOptionPane.QUESTION_MESSAGE);
+                    if (input != null && !input.trim().isEmpty()) {
+                        try {
+                            double descPorc = Double.parseDouble(input);
+                            if (descPorc >= 0 && descPorc <= 100) {
+                                for (society.modell.facturacion.DetalleFacturacion dfac : detalles) {
+                                    if (dfac.getItem().getTitulo().equals(prodSeleccionado)) {
+                                        double descFijo = (dfac.getItem().getPrecio() * dfac.getCantidad()) * (descPorc / 100.0);
+                                        dfac.setDescuentoFijo(descFijo);
+                                        break;
+                                    }
+                                }
+                                renderCart();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Por favor ingrese un valor entre 0 y 100", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(this, "Ingrese un número válido", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            }
+        });
+
+        JButton btnCup = new JButton("Restablecer");
         btnCup.setBackground(Color.WHITE);
         btnCup.setFocusPainted(false);
+        btnCup.addActionListener(e -> {
+            if (facturaActual != null) {
+                facturaActual.getDetalles().clear();
+                facturaActual.setDescuentoPorcentaje(0);
+                renderCart();
+            }
+        });
+        
         discBtns.add(btnDesc);
         discBtns.add(btnCup);
         footer.add(discBtns, BorderLayout.NORTH);
@@ -517,6 +576,61 @@ public class FacturacionViewBasic extends JPanel {
             l.setFont(new Font("SansSerif", Font.BOLD, 12));
         }
         return l;
+    }
+
+    private JComboBox<String> createSearchableDuenoComboBox() {
+        JComboBox<String> combo = new JComboBox<>();
+        combo.setEditable(true);
+        combo.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        
+        society.dao.DuenoDao duenoDao = new society.dao.DuenoDao();
+        List<society.modell.recepcion.Dueno> duenos = duenoDao.getAll();
+        
+        List<String> items = new ArrayList<>();
+        items.add("Seleccionar dueño...");
+        if (duenos != null) {
+            for (society.modell.recepcion.Dueno d : duenos) {
+                items.add("Dueño: " + d.getNombre() + " " + d.getApellidos() + " - DNI: " + d.getDni());
+            }
+        }
+        
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(items.toArray(new String[0]));
+        combo.setModel(model);
+        
+        JTextField tf = (JTextField) combo.getEditor().getEditorComponent();
+        tf.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_UP || 
+                    e.getKeyCode() == java.awt.event.KeyEvent.VK_DOWN || 
+                    e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                    return;
+                }
+                String text = tf.getText();
+                combo.hidePopup();
+                DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
+                for (String item : items) {
+                    if (item.toLowerCase().contains(text.toLowerCase())) {
+                        m.addElement(item);
+                    }
+                }
+                combo.setModel(m);
+                tf.setText(text);
+                combo.showPopup();
+            }
+        });
+        
+        combo.addActionListener(e -> {
+            if (combo.getSelectedItem() != null && !combo.getSelectedItem().toString().equals("Seleccionar dueño...") && facturaActual != null) {
+                String selected = (String) combo.getSelectedItem();
+                facturaActual.setClienteInfo(selected);
+                
+                // Remover descuento automático al cambiar dueño
+                renderCart();
+            }
+        });
+        
+        return combo;
     }
 
     // --- Lógica MVC con Modelos y DAOs ---

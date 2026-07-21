@@ -163,8 +163,8 @@ public class HistoriaClinicasViewBasic extends JPanel {
         sidebar.setBackground(lightBg);
         sidebar.setPreferredSize(new Dimension(280, 0));
         
-        // Pacientes Recientes
-        JPanel pacientesCard = createCardPanel("Pacientes Recientes");
+        // Pacientes
+        JPanel pacientesCard = createCardPanel("Pacientes");
         
         patientsListPanel = new JPanel();
         patientsListPanel.setLayout(new BoxLayout(patientsListPanel, BoxLayout.Y_AXIS));
@@ -174,13 +174,6 @@ public class HistoriaClinicasViewBasic extends JPanel {
         scroll.setBorder(null);
         scroll.getVerticalScrollBar().setUnitIncrement(16);
         pacientesCard.add(scroll, BorderLayout.CENTER);
-        
-        JButton btnVerTodos = new JButton("Ver todos los pacientes");
-        btnVerTodos.setContentAreaFilled(false);
-        btnVerTodos.setBorderPainted(false);
-        btnVerTodos.setForeground(tealColor);
-        btnVerTodos.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        pacientesCard.add(btnVerTodos, BorderLayout.SOUTH);
         
         // Acciones Rápidas
         JPanel accionesCard = createCardPanel("ACCIONES RÁPIDAS");
@@ -581,11 +574,17 @@ public class HistoriaClinicasViewBasic extends JPanel {
             // Separar registros: cada uno termina en "~V" — split simple y robusto
             String[] partsRaw = normalized.split("~V");
             String[] registros = java.util.Arrays.stream(partsRaw)
-                .map(s -> s.startsWith("|") ? s.substring(1) : s)
-                .filter(s -> !s.trim().isEmpty())
+                .map(s -> {
+                    String clean = s.trim();
+                    while (clean.startsWith("|")) {
+                        clean = clean.substring(1).trim();
+                    }
+                    return clean;
+                })
+                .filter(s -> !s.isEmpty())
                 .toArray(String[]::new);
             for (String reg : registros) {
-                String r = reg.trim();
+                String r = reg;
                 if (r.isEmpty()) continue;
                 String[] parts = r.split("~");
                 if (parts.length < 3) continue;
@@ -690,8 +689,11 @@ public class HistoriaClinicasViewBasic extends JPanel {
         String[] partsRaw = evoStr.trim().split("~V");
         java.util.List<String> registros = new java.util.ArrayList<>();
         for (String s : partsRaw) {
-            if (s.startsWith("|")) s = s.substring(1);
-            if (!s.trim().isEmpty()) registros.add(s.trim());
+            String clean = s.trim();
+            while (clean.startsWith("|")) {
+                clean = clean.substring(1).trim();
+            }
+            if (!clean.isEmpty()) registros.add(clean);
         }
         
         if (index >= 0 && index < registros.size()) {
@@ -791,8 +793,11 @@ public class HistoriaClinicasViewBasic extends JPanel {
         if (historiaSeleccionada != null && historiaSeleccionada.getEvoluciones() != null) {
             String[] partsRaw = historiaSeleccionada.getEvoluciones().trim().split("~V");
             for (String s : partsRaw) {
-                if (s.startsWith("|")) s = s.substring(1);
-                if (!s.trim().isEmpty()) currentRegistros.add(s.trim());
+                String clean = s.trim();
+                while (clean.startsWith("|")) {
+                    clean = clean.substring(1).trim();
+                }
+                if (!clean.isEmpty()) currentRegistros.add(clean);
             }
         }
         
