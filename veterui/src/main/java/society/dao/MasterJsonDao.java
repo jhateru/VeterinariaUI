@@ -12,7 +12,20 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class MasterJsonDao<T> implements Dao<T> {
-    protected static final String MASTER_FILE_PATH = "data/master.json";
+    // Absolute path: resolves at JVM startup from the working directory (always 'veterui/')
+    protected static final String MASTER_FILE_PATH;
+    static {
+        String base = System.getProperty("user.dir");
+        // When running via 'mvn javafx:run' from veterui/, user.dir == .../veterui
+        // The data file lives under src/main/java/society/data/
+        String candidate = base + "/src/main/java/society/data/master.json";
+        if (!new java.io.File(candidate).exists()) {
+            // Fallback: maybe launched from the parent VeterinariaUI/ dir
+            candidate = base + "/veterui/src/main/java/society/data/master.json";
+        }
+        MASTER_FILE_PATH = candidate;
+        System.out.println("[MasterJsonDao] MASTER_FILE_PATH = " + MASTER_FILE_PATH);
+    }
     protected static final ReentrantLock lock = new ReentrantLock();
     protected static final Gson gson;
     
@@ -74,10 +87,22 @@ public abstract class MasterJsonDao<T> implements Dao<T> {
     }
     
     private void writeMasterFile(Map<String, JsonElement> map) {
-        try (Writer writer = new FileWriter(MASTER_FILE_PATH)) {
+        File file = new File(MASTER_FILE_PATH);
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
+        try (Writer writer = new java.io.OutputStreamWriter(
+                new java.io.FileOutputStream(file), java.nio.charset.StandardCharsets.UTF_8)) {
             gson.toJson(map, writer);
         } catch (IOException e) {
+            System.err.println("[MasterJsonDao] ERROR writing to " + MASTER_FILE_PATH);
             e.printStackTrace();
+            // Show a user-visible Swing dialog if we are on EDT or after
+            String msg = "Error al guardar datos: " + e.getMessage() + "\nRuta: " + MASTER_FILE_PATH;
+            javax.swing.SwingUtilities.invokeLater(() ->
+                javax.swing.JOptionPane.showMessageDialog(null, msg, "Error de Guardado",
+                    javax.swing.JOptionPane.ERROR_MESSAGE));
         }
     }
 
@@ -101,9 +126,15 @@ public abstract class MasterJsonDao<T> implements Dao<T> {
     public void save(T entity) {
         lock.lock();
         try {
-            List<T> entities = getAll();
+            Map<String, JsonElement> map = readMasterFile();
+            List<T> entities = map.containsKey(collectionKey)
+                ? gson.fromJson(map.get(collectionKey), listType)
+                : new ArrayList<>();
+            if (entities == null) entities = new ArrayList<>();
             entities.add(entity);
-            saveAll(entities);
+            JsonElement newElem = gson.toJsonTree(entities, listType);
+            map.put(collectionKey, newElem);
+            writeMasterFile(map);
         } finally {
             lock.unlock();
         }
@@ -116,6 +147,38 @@ public abstract class MasterJsonDao<T> implements Dao<T> {
             Map<String, JsonElement> map = readMasterFile();
             JsonElement newCollectionElement = gson.toJsonTree(entities, listType);
             map.put(collectionKey, newCollectionElement);
+            writeMasterFile(map);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    /**
+     * Generic update: replaces the element where idExtractor.apply(element) equals the given id.
+     * If not found, appends as new. Thread-safe, single file-write.
+     */
+    public void update(T updated, java.util.function.ToIntFunction<T> idExtractor) {
+        lock.lock();
+        try {
+            Map<String, JsonElement> map = readMasterFile();
+            List<T> entities = map.containsKey(collectionKey)
+                ? gson.fromJson(map.get(collectionKey), listType)
+                : new ArrayList<>();
+            if (entities == null) entities = new ArrayList<>();
+            int targetId = idExtractor.applyAsInt(updated);
+            boolean found = false;
+            for (int i = 0; i < entities.size(); i++) {
+                if (idExtractor.applyAsInt(entities.get(i)) == targetId) {
+                    entities.set(i, updated);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                entities.add(updated);
+            }
+            JsonElement newElem = gson.toJsonTree(entities, listType);
+            map.put(collectionKey, newElem);
             writeMasterFile(map);
         } finally {
             lock.unlock();

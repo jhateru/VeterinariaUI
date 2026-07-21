@@ -13,24 +13,20 @@ public class Cita {
     private EstadoCita estado;
     private String motivo;
     
-    // String representations for simple UI/CSV without full complex joins
-    private String pacienteNombre;
-    private String veterinarioNombre;
-    
     // References for full DB relationships
-    private Paciente paciente;
-    // private Veterinario asignado; // We'll link this from administracion later
+    private int pacienteId;
+    private int veterinarioId;
 
     public Cita() {
         this.estado = EstadoCita.PENDIENTE;
     }
 
-    public Cita(int id, LocalDateTime fechaHora, EstadoCita estado, String pacienteNombre, String veterinarioNombre, String motivo) {
+    public Cita(int id, LocalDateTime fechaHora, EstadoCita estado, int pacienteId, int veterinarioId, String motivo) {
         this.id = id;
         this.fechaHora = fechaHora;
         this.estado = estado;
-        this.pacienteNombre = pacienteNombre;
-        this.veterinarioNombre = veterinarioNombre;
+        this.pacienteId = pacienteId;
+        this.veterinarioId = veterinarioId;
         this.motivo = motivo;
     }
 
@@ -42,12 +38,21 @@ public class Cita {
     public void setEstado(EstadoCita estado) { this.estado = estado; }
     public String getMotivo() { return motivo; }
     public void setMotivo(String motivo) { this.motivo = motivo; }
-    public String getPacienteNombre() { return pacienteNombre; }
-    public void setPacienteNombre(String pacienteNombre) { this.pacienteNombre = pacienteNombre; }
-    public String getVeterinarioNombre() { return veterinarioNombre; }
-    public void setVeterinarioNombre(String veterinarioNombre) { this.veterinarioNombre = veterinarioNombre; }
-    public Paciente getPaciente() { return paciente; }
-    public void setPaciente(Paciente paciente) { this.paciente = paciente; }
+    public int getPacienteId() { return pacienteId; }
+    public void setPacienteId(int pacienteId) { this.pacienteId = pacienteId; }
+    public int getVeterinarioId() { return veterinarioId; }
+    public void setVeterinarioId(int veterinarioId) { this.veterinarioId = veterinarioId; }
+    
+    // Dynamic lookup for FXML compatibility
+    public String getPacienteNombre() {
+        society.modell.recepcion.Paciente p = new society.dao.PacienteDao().getById(this.pacienteId);
+        return p != null ? p.getNombre() : "Desconocido";
+    }
+    
+    public String getVeterinarioNombre() {
+        society.modell.administracion.Personal per = new society.dao.PersonalDao().getById(this.veterinarioId);
+        return per != null ? per.getNombre() : "Desconocido";
+    }
 }
 
 

@@ -5,6 +5,9 @@ import society.modell.inventario.Inventario;
 import javax.swing.*;
 import java.awt.*;
 import java.util.UUID;
+import com.toedter.calendar.JDateChooser;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RegistroInventarioBasic extends JDialog {
 
@@ -14,7 +17,7 @@ public class RegistroInventarioBasic extends JDialog {
     private JTextField txtProducto;
     private JComboBox<String> cbCategoria;
     private JTextField txtLote;
-    private JTextField txtFefo;
+    private JDateChooser dcFefo;
     private JTextField txtStock;
     private JTextField txtUnidad;
     private JTextField txtPuntoReorden;
@@ -53,8 +56,9 @@ public class RegistroInventarioBasic extends JDialog {
         mainPanel.add(createFieldPanel("LOTE (Ej. AMX-2024-09)", txtLote));
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         
-        txtFefo = new JTextField();
-        mainPanel.add(createFieldPanel("FECHA DE VENCIMIENTO (FEFO Ej. 12/2025)", txtFefo));
+        dcFefo = new JDateChooser();
+        dcFefo.setDateFormatString("MM/yyyy");
+        mainPanel.add(createFieldPanel("FECHA DE VENCIMIENTO (FEFO Ej. 12/2025)", dcFefo));
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         JPanel rowPanel1 = new JPanel(new GridLayout(1, 2, 10, 0));
@@ -128,7 +132,10 @@ public class RegistroInventarioBasic extends JDialog {
         inventario.setProducto(txtProducto.getText().trim());
         inventario.setCategoria(cbCategoria.getSelectedItem().toString());
         inventario.setLote(txtLote.getText().trim());
-        inventario.setFefo(txtFefo.getText().trim());
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+        inventario.setFefo(dcFefo.getDate() != null ? sdf.format(dcFefo.getDate()) : "");
+        
         inventario.setStock(stock);
         inventario.setUnidad(txtUnidad.getText().trim());
         inventario.setPuntoReorden(pReorden);
@@ -148,7 +155,17 @@ public class RegistroInventarioBasic extends JDialog {
         txtProducto.setText(inv.getProducto());
         cbCategoria.setSelectedItem(inv.getCategoria());
         txtLote.setText(inv.getLote());
-        txtFefo.setText(inv.getFefo());
+        
+        try {
+            if (inv.getFefo() != null && !inv.getFefo().isEmpty()) {
+                if (inv.getFefo().contains("-")) {
+                    dcFefo.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(inv.getFefo()));
+                } else {
+                    dcFefo.setDate(new SimpleDateFormat("MM/yyyy").parse(inv.getFefo()));
+                }
+            }
+        } catch (Exception ex) {}
+        
         txtStock.setText(String.valueOf(inv.getStock()));
         txtUnidad.setText(inv.getUnidad());
         txtPuntoReorden.setText(String.valueOf(inv.getPuntoReorden()));

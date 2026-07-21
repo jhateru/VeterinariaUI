@@ -5,6 +5,9 @@ import society.modell.administracion.Personal;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
+import com.toedter.calendar.JDateChooser;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RegistroPersonalBasic extends JDialog {
 
@@ -14,7 +17,7 @@ public class RegistroPersonalBasic extends JDialog {
     // Fields
     private JTextField txtNombre;
     private JTextField txtDni;
-    private JTextField txtFechaNac;
+    private JDateChooser dcFechaNac;
     private JComboBox<String> cbGenero;
     private JTextField txtTelefono;
     private JTextField txtEmail;
@@ -23,7 +26,7 @@ public class RegistroPersonalBasic extends JDialog {
     private JComboBox<String> cbDepartamento;
     private JTextField txtEspecialidad;
     private JTextField txtColegiado;
-    private JTextField txtFechaContratacion;
+    private JDateChooser dcFechaContratacion;
 
     private JTextField txtUsername;
     private JComboBox<String> cbCargo;
@@ -155,7 +158,9 @@ public class RegistroPersonalBasic extends JDialog {
         row2.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
         row2.setAlignmentX(Component.LEFT_ALIGNMENT);
         JPanel pDni = createFieldPanel("DNI / ID IDENTIFICACIÓN", txtDni = new JTextField());
-        JPanel pFec = createFieldPanel("FECHA DE NACIMIENTO", txtFechaNac = new JTextField("dd / mm / aaaa"));
+        dcFechaNac = new JDateChooser();
+        dcFechaNac.setDateFormatString("dd/MM/yyyy");
+        JPanel pFec = createFieldPanel("FECHA DE NACIMIENTO", dcFechaNac);
         row2.add(pDni); row2.add(pFec);
         dpPanel.add(row2);
         dpPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -205,7 +210,9 @@ public class RegistroPersonalBasic extends JDialog {
         rowIP2.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
         rowIP2.setAlignmentX(Component.LEFT_ALIGNMENT);
         JPanel pCol = createFieldPanel("Nº DE COLEGIADO", txtColegiado = new JTextField());
-        JPanel pFecc = createFieldPanel("FECHA DE CONTRATACIÓN", txtFechaContratacion = new JTextField("dd / mm / aaaa"));
+        dcFechaContratacion = new JDateChooser();
+        dcFechaContratacion.setDateFormatString("dd/MM/yyyy");
+        JPanel pFecc = createFieldPanel("FECHA DE CONTRATACIÓN", dcFechaContratacion);
         rowIP2.add(pCol); rowIP2.add(pFecc);
         ipPanel.add(rowIP2);
         
@@ -265,7 +272,8 @@ public class RegistroPersonalBasic extends JDialog {
         
         nuevoPersonal.setNombre(txtNombre.getText());
         nuevoPersonal.setDni(txtDni.getText());
-        nuevoPersonal.setFechaNacimiento(txtFechaNac.getText());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        nuevoPersonal.setFechaNacimiento(dcFechaNac.getDate() != null ? sdf.format(dcFechaNac.getDate()) : "");
         nuevoPersonal.setGenero(cbGenero.getSelectedItem() != null ? cbGenero.getSelectedItem().toString() : "");
         nuevoPersonal.setTelefono(txtTelefono.getText());
         nuevoPersonal.setEmail(txtEmail.getText());
@@ -274,7 +282,7 @@ public class RegistroPersonalBasic extends JDialog {
         nuevoPersonal.setDepartamento(cbDepartamento.getSelectedItem() != null ? cbDepartamento.getSelectedItem().toString() : "");
         nuevoPersonal.setEspecialidad(txtEspecialidad.getText());
         nuevoPersonal.setColegiado(txtColegiado.getText());
-        nuevoPersonal.setFechaContratacion(txtFechaContratacion.getText());
+        nuevoPersonal.setFechaContratacion(dcFechaContratacion.getDate() != null ? sdf.format(dcFechaContratacion.getDate()) : "");
         
         nuevoPersonal.setUsername(txtUsername.getText());
         nuevoPersonal.setCargo(cbCargo.getSelectedItem() != null ? cbCargo.getSelectedItem().toString() : "");
@@ -305,7 +313,11 @@ public class RegistroPersonalBasic extends JDialog {
         
         txtNombre.setText(p.getNombre());
         txtDni.setText(p.getDni());
-        txtFechaNac.setText(p.getFechaNacimiento());
+        try {
+            if (p.getFechaNacimiento() != null && !p.getFechaNacimiento().isEmpty()) {
+                dcFechaNac.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(p.getFechaNacimiento()));
+            }
+        } catch (Exception ex) {}
         if (p.getGenero() != null) cbGenero.setSelectedItem(p.getGenero());
         txtTelefono.setText(p.getTelefono());
         txtEmail.setText(p.getEmail());
@@ -314,7 +326,11 @@ public class RegistroPersonalBasic extends JDialog {
         if (p.getDepartamento() != null) cbDepartamento.setSelectedItem(p.getDepartamento());
         txtEspecialidad.setText(p.getEspecialidad());
         txtColegiado.setText(p.getColegiado());
-        txtFechaContratacion.setText(p.getFechaContratacion());
+        try {
+            if (p.getFechaContratacion() != null && !p.getFechaContratacion().isEmpty()) {
+                dcFechaContratacion.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(p.getFechaContratacion()));
+            }
+        } catch (Exception ex) {}
         
         txtUsername.setText(p.getUsername());
         if (p.getCargo() != null) cbCargo.setSelectedItem(p.getCargo());

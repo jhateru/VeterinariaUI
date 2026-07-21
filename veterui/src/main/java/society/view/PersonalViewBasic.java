@@ -120,10 +120,21 @@ public class PersonalViewBasic extends JPanel {
         empleadosTable.getColumnModel().getColumn(0).setMaxWidth(0);
         empleadosTable.getColumnModel().getColumn(0).setWidth(0);
 
+        empleadosTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        empleadosTable.getColumnModel().getColumn(1).setPreferredWidth(180); // NOMBRE
+        empleadosTable.getColumnModel().getColumn(2).setPreferredWidth(150); // DEPARTAMENTO
+        empleadosTable.getColumnModel().getColumn(3).setPreferredWidth(100); // DNI
+        empleadosTable.getColumnModel().getColumn(4).setPreferredWidth(150); // ROL
+        empleadosTable.getColumnModel().getColumn(5).setPreferredWidth(100); // ESTADO
+        empleadosTable.getColumnModel().getColumn(6).setPreferredWidth(200); // EMAIL
+        empleadosTable.getColumnModel().getColumn(7).setPreferredWidth(120); // TELÉFONO
+        empleadosTable.getColumnModel().getColumn(8).setPreferredWidth(120); // CONTRATACIÓN
+
         loadTableData();
         
-        directoryPanel.add(new JScrollPane(empleadosTable), BorderLayout.CENTER);
-        
+        JScrollPane scrollPane = new JScrollPane(empleadosTable);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        directoryPanel.add(scrollPane, BorderLayout.CENTER);
         // Action Listeners for Edit and Delete
         btnEditar.addActionListener(e -> {
             int selectedRow = empleadosTable.getSelectedRow();

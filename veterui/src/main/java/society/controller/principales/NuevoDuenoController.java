@@ -41,7 +41,6 @@ public class NuevoDuenoController {
         d.setTelefono(txtTelefono.getText());
         d.setEmail(txtEmail.getText());
         d.setEstado(cmbEstado.getValue());
-        d.setMascotasNombres(txtMascotas.getText());
 
         duenoDao.save(d);
 

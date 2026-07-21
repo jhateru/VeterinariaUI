@@ -42,13 +42,13 @@ public class NuevaCitaController {
                 (int)(System.currentTimeMillis() % 100000), 
                 ldt, 
                 Cita.EstadoCita.PENDIENTE, 
-                pacienteField.getText(), 
-                veterinarioCombo.getValue(), 
+                0, // FXML doesn't have ID resolution yet 
+                0, 
                 motivoField.getText()
             );
             
             citaDao.save(nuevaCita);
-            System.out.println("Cita Guardada en CSV: " + nuevaCita.getPacienteNombre());
+            System.out.println("Cita Guardada en CSV: ID " + nuevaCita.getId());
         }
         cerrarModal();
     }

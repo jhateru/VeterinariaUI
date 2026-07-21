@@ -6,10 +6,10 @@ import com.google.gson.reflect.TypeToken;
 import society.modell.recepcion.Cita;
 import java.time.LocalDateTime;
 
-public class CitaDao extends JsonDao<Cita> {
+public class CitaDao extends MasterJsonDao<Cita> {
 
     public CitaDao() {
-        super("citas.json", new TypeToken<List<Cita>>(){}.getType());
+        super("citas", new TypeToken<List<Cita>>(){}.getType());
     }
     public void update(Cita entity) {
         List<Cita> entities = getAll();

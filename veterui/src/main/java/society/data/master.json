@@ -1,0 +1,2456 @@
+{
+  "servicios": [
+    {
+      "id": 1001,
+      "nombre": "Consulta General",
+      "descripcion": "Revisión física completa, toma de signos vitales y evaluación inicial del paciente.",
+      "categoria": "Consulta",
+      "precioBase": 35,
+      "duracionEstimadaMinutos": 30,
+      "estado": "Activo",
+      "materialesUsados": []
+    },
+    {
+      "id": 1002,
+      "nombre": "Vacuna Antirrábica",
+      "descripcion": "Aplicación de vacuna contra la rabia para perros y gatos. Incluye certificado.",
+      "categoria": "Vacunación",
+      "precioBase": 20,
+      "duracionEstimadaMinutos": 15,
+      "estado": "Activo",
+      "materialesUsados": []
+    },
+    {
+      "id": 1003,
+      "nombre": "Limpieza Dental (Profilaxis)",
+      "descripcion": "Eliminación de sarro y placa bacteriana bajo sedación superficial.",
+      "categoria": "Estética",
+      "precioBase": 85,
+      "duracionEstimadaMinutos": 60,
+      "estado": "Activo",
+      "materialesUsados": [
+        {
+          "inventarioId": "INV-005",
+          "cantidad": 6
+        },
+        {
+          "inventarioId": "INV-007",
+          "cantidad": 20
+        }
+      ]
+    },
+    {
+      "id": 1004,
+      "nombre": "Ecografía Abdominal",
+      "descripcion": "Estudio por imágenes del abdomen para detectar anomalías en órganos internos.",
+      "categoria": "Examen",
+      "precioBase": 120,
+      "duracionEstimadaMinutos": 45,
+      "estado": "Activo",
+      "materialesUsados": []
+    },
+    {
+      "id": 1005,
+      "nombre": "Castración (Gato Macho)",
+      "descripcion": "Procedimiento quirúrgico de orquiectomía bajo anestesia general.",
+      "categoria": "Cirugía",
+      "precioBase": 150,
+      "duracionEstimadaMinutos": 90,
+      "estado": "Activo",
+      "materialesUsados": []
+    },
+    {
+      "id": 1006,
+      "nombre": "Corte de Pelo y Baño",
+      "descripcion": "Servicio de peluquería que incluye baño medicado, corte de uñas y limpieza de oídos.",
+      "categoria": "Estética",
+      "precioBase": 45,
+      "duracionEstimadaMinutos": 120,
+      "estado": "Activo",
+      "materialesUsados": []
+    },
+    {
+      "id": 1007,
+      "nombre": "Consulta Especialidad (Cardiología)",
+      "descripcion": "Evaluación detallada por un cardiólogo veterinario.",
+      "categoria": "Consulta",
+      "precioBase": 75,
+      "duracionEstimadaMinutos": 45,
+      "estado": "Activo",
+      "materialesUsados": []
+    },
+    {
+      "id": 1008,
+      "nombre": "Prueba Rápida Parvovirus",
+      "descripcion": "Test rápido de antígenos para detección de parvovirus canino.",
+      "categoria": "Examen",
+      "precioBase": 30,
+      "duracionEstimadaMinutos": 15,
+      "estado": "Activo",
+      "materialesUsados": []
+    },
+    {
+      "id": 1009,
+      "nombre": "Terapia de Oxígeno",
+      "descripcion": "Administración de oxígeno suplementario en jaula especializada (por hora).",
+      "categoria": "Otro",
+      "precioBase": 25,
+      "duracionEstimadaMinutos": 60,
+      "estado": "Inactivo",
+      "materialesUsados": []
+    }
+  ],
+  "inventario": [
+    {
+      "id": "INV-001",
+      "producto": "Amoxicilina 500mg",
+      "descripcion": "Antibiótico de amplio espectro para perros y gatos. Caja x50 tabletas.",
+      "stock": 45,
+      "unidad": "Cajas",
+      "estado": "Óptimo",
+      "fefo": "2027-05-15",
+      "categoria": "Antibiótico",
+      "puntoReorden": 15,
+      "precio": 25.5
+    },
+    {
+      "id": "INV-002",
+      "producto": "Jeringas 5ml",
+      "descripcion": "Caja x100 unidades desechables con aguja.",
+      "stock": 8,
+      "unidad": "Cajas",
+      "estado": "Bajo",
+      "fefo": "2028-11-01",
+      "categoria": "Suministro Médico",
+      "puntoReorden": 10,
+      "precio": 12
+    },
+    {
+      "id": "INV-003",
+      "producto": "Vacuna Antirrábica",
+      "descripcion": "Dosis individual para caninos y felinos.",
+      "stock": 3,
+      "unidad": "Dosis",
+      "estado": "Crítico",
+      "fefo": "2026-08-20",
+      "categoria": "Vacuna",
+      "puntoReorden": 20,
+      "precio": 18.75
+    },
+    {
+      "id": "INV-004",
+      "producto": "Bisturí #15",
+      "descripcion": "Hojas de acero inoxidable descartables x100.",
+      "stock": 120,
+      "unidad": "Unidades",
+      "estado": "Óptimo",
+      "fefo": "2030-01-01",
+      "categoria": "Quirúrgico",
+      "puntoReorden": 50,
+      "precio": 35
+    },
+    {
+      "id": "INV-005",
+      "producto": "Ketamina 50ml",
+      "descripcion": "Anestésico general inyectable de uso veterinario.",
+      "stock": 5,
+      "unidad": "Frascos",
+      "estado": "Crítico",
+      "fefo": "2026-10-12",
+      "categoria": "Anestésico",
+      "puntoReorden": 10,
+      "precio": 45.2
+    },
+    {
+      "id": "INV-006",
+      "producto": "Hills Prescription Diet k/d",
+      "descripcion": "Alimento para cuidado renal felino, saco de 4lbs.",
+      "stock": 12,
+      "unidad": "Sacos",
+      "estado": "Bajo",
+      "fefo": "2027-02-18",
+      "categoria": "Dietas Especiales",
+      "puntoReorden": 15,
+      "precio": 52.99
+    },
+    {
+      "id": "INV-007",
+      "producto": "Meloxicam 1mg",
+      "descripcion": "Antiinflamatorio no esteroideo para perros. Suspensión oral.",
+      "stock": 30,
+      "unidad": "Frascos",
+      "estado": "Óptimo",
+      "fefo": "2027-08-30",
+      "categoria": "Medicamentos",
+      "puntoReorden": 10,
+      "precio": 22.15
+    },
+    {
+      "id": "INV-008",
+      "producto": "Guantes de Látex Talla M",
+      "descripcion": "Caja x100 guantes quirúrgicos esterilizados.",
+      "stock": 50,
+      "unidad": "Cajas",
+      "estado": "Óptimo",
+      "fefo": "2029-04-10",
+      "categoria": "Suministro Médico",
+      "puntoReorden": 20,
+      "precio": 14.5
+    },
+    {
+      "id": "INV-009",
+      "producto": "Royal Canin Gastrointestinal",
+      "descripcion": "Alimento en lata para perros con sensibilidad digestiva.",
+      "stock": 25,
+      "unidad": "Latas",
+      "estado": "Óptimo",
+      "fefo": "2026-12-05",
+      "categoria": "Dietas Especiales",
+      "puntoReorden": 12,
+      "precio": 4.5
+    },
+    {
+      "id": "INV-010",
+      "producto": "Vacuna Séxtuple Canina",
+      "descripcion": "Dosis inyectable. Prevención contra parvovirus, moquillo, hepatitis, etc.",
+      "stock": 42,
+      "unidad": "Dosis",
+      "estado": "Óptimo",
+      "fefo": "2027-11-20",
+      "categoria": "Vacuna",
+      "puntoReorden": 30,
+      "precio": 24
+    },
+    {
+      "id": "INV-011",
+      "producto": "Sutura Nylon 3-0",
+      "descripcion": "Hilo de sutura no absorbible con aguja curva.",
+      "stock": 18,
+      "unidad": "Sobres",
+      "estado": "Bajo",
+      "fefo": "2030-05-14",
+      "categoria": "Quirúrgico",
+      "puntoReorden": 25,
+      "precio": 8.75
+    },
+    {
+      "id": "INV-012",
+      "producto": "Propofol 1%",
+      "descripcion": "Agente anestésico intravenoso de acción corta.",
+      "stock": 8,
+      "unidad": "Ampollas",
+      "estado": "Crítico",
+      "fefo": "2026-06-30",
+      "categoria": "Anestésico",
+      "puntoReorden": 15,
+      "precio": 19.3
+    },
+    {
+      "id": "INV-65AF5",
+      "producto": "Zetalina",
+      "descripcion": "",
+      "stock": 40,
+      "unidad": "Pastillas",
+      "estado": "Estable",
+      "fefo": "07/2027",
+      "categoria": "Antibiótico",
+      "lote": "AMC-1984-05",
+      "puntoReorden": 10,
+      "precio": 2
+    }
+  ],
+  "citas": [
+    {
+      "id": 317,
+      "fechaHora": "2026-07-11T09:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1004,
+      "veterinarioId": 34993
+    },
+    {
+      "id": 7111,
+      "fechaHora": "2026-07-20T08:00:00",
+      "estado": "PENDIENTE",
+      "motivo": "Urgencia",
+      "pacienteId": 1009,
+      "veterinarioId": 80204
+    },
+    {
+      "id": 5604,
+      "fechaHora": "2026-07-19T08:00:00",
+      "estado": "PENDIENTE",
+      "motivo": "Cirugía",
+      "pacienteId": 1001,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8000,
+      "fechaHora": "2026-07-19T19:08:37.784352",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8001,
+      "fechaHora": "2026-07-19T22:08:37.784352",
+      "estado": "PENDIENTE",
+      "motivo": "Control",
+      "pacienteId": 2,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8002,
+      "fechaHora": "2026-07-20T00:08:37.784352",
+      "estado": "URGENCIA",
+      "motivo": "Urgencia",
+      "pacienteId": 3,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8003,
+      "fechaHora": "2026-07-20T23:08:37.784352",
+      "estado": "PENDIENTE",
+      "motivo": "Cirugía",
+      "pacienteId": 1,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8004,
+      "fechaHora": "2026-07-21T20:08:37.784352",
+      "estado": "PENDIENTE",
+      "motivo": "Peluquería",
+      "pacienteId": 2,
+      "veterinarioId": 3
+    },
+    {
+      "id": 2303,
+      "fechaHora": "2026-07-20T10:00:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control - tos",
+      "pacienteId": 1001,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8101,
+      "fechaHora": "2026-07-22T09:30:00",
+      "estado": "PENDIENTE",
+      "motivo": "Vacunación",
+      "pacienteId": 1001,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8102,
+      "fechaHora": "2026-07-23T11:00:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control",
+      "pacienteId": 1002,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8103,
+      "fechaHora": "2026-07-24T14:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Cirugía",
+      "pacienteId": 1004,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8104,
+      "fechaHora": "2026-07-25T16:00:00",
+      "estado": "PENDIENTE",
+      "motivo": "Peluquería",
+      "pacienteId": 1006,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8105,
+      "fechaHora": "2026-07-26T10:00:00",
+      "estado": "PENDIENTE",
+      "motivo": "Vacunación",
+      "pacienteId": 1008,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8106,
+      "fechaHora": "2026-07-27T12:30:00",
+      "estado": "PENDIENTE",
+      "motivo": "Urgencia",
+      "pacienteId": 1,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8107,
+      "fechaHora": "2026-07-28T09:00:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control",
+      "pacienteId": 2,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8108,
+      "fechaHora": "2026-07-30T15:45:00",
+      "estado": "PENDIENTE",
+      "motivo": "Peluquería",
+      "pacienteId": 3,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8109,
+      "fechaHora": "2026-07-21T09:00:00",
+      "estado": "PENDIENTE",
+      "motivo": "Consulta General",
+      "pacienteId": 1003,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8110,
+      "fechaHora": "2026-07-21T10:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Vacunación",
+      "pacienteId": 1007,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8111,
+      "fechaHora": "2026-07-21T11:30:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control",
+      "pacienteId": 1,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8112,
+      "fechaHora": "2026-07-21T14:00:00",
+      "estado": "PENDIENTE",
+      "motivo": "Cirugía",
+      "pacienteId": 1010,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8113,
+      "fechaHora": "2026-07-21T16:30:00",
+      "estado": "PENDIENTE",
+      "motivo": "Urgencia",
+      "pacienteId": 2,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8114,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1001,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8115,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1001,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8116,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1001,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8117,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1002,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8118,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1002,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8119,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1002,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8120,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1003,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8121,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1003,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8122,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1003,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8123,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1004,
+      "veterinarioId": 52822
+    },
+    {
+      "id": 8124,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1004,
+      "veterinarioId": 52822
+    },
+    {
+      "id": 8125,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1004,
+      "veterinarioId": 52822
+    },
+    {
+      "id": 8126,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1005,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8127,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1005,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8128,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1005,
+      "veterinarioId": 102
+    },
+    {
+      "id": 8129,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1006,
+      "veterinarioId": 52822
+    },
+    {
+      "id": 8130,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1006,
+      "veterinarioId": 52822
+    },
+    {
+      "id": 8131,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1006,
+      "veterinarioId": 52822
+    },
+    {
+      "id": 8132,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1007,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8133,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1007,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8134,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1007,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8135,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1008,
+      "veterinarioId": 297
+    },
+    {
+      "id": 8136,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1008,
+      "veterinarioId": 297
+    },
+    {
+      "id": 8137,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1008,
+      "veterinarioId": 297
+    },
+    {
+      "id": 8138,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1009,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8139,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1009,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8140,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1009,
+      "veterinarioId": 3
+    },
+    {
+      "id": 8141,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1010,
+      "veterinarioId": 80204
+    },
+    {
+      "id": 8142,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1010,
+      "veterinarioId": 80204
+    },
+    {
+      "id": 8143,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1010,
+      "veterinarioId": 80204
+    },
+    {
+      "id": 8144,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1011,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8145,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1011,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8146,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1011,
+      "veterinarioId": 4
+    },
+    {
+      "id": 8147,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 7818,
+      "veterinarioId": 80204
+    },
+    {
+      "id": 8148,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 7818,
+      "veterinarioId": 80204
+    },
+    {
+      "id": 8149,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 7818,
+      "veterinarioId": 80204
+    },
+    {
+      "id": 8150,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 2812,
+      "veterinarioId": 52822
+    },
+    {
+      "id": 8151,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 2812,
+      "veterinarioId": 52822
+    },
+    {
+      "id": 8152,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 2812,
+      "veterinarioId": 52822
+    },
+    {
+      "id": 8153,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 1,
+      "veterinarioId": 297
+    },
+    {
+      "id": 8154,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 1,
+      "veterinarioId": 297
+    },
+    {
+      "id": 8155,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 1,
+      "veterinarioId": 297
+    },
+    {
+      "id": 8156,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 2,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8157,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 2,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8158,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 2,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8159,
+      "fechaHora": "2025-10-15T10:00:00",
+      "estado": "COMPLETADA",
+      "motivo": "Consulta Inicial",
+      "pacienteId": 3,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8160,
+      "fechaHora": "2026-03-20T11:30:00",
+      "estado": "COMPLETADA",
+      "motivo": "Vacunación",
+      "pacienteId": 3,
+      "veterinarioId": 103
+    },
+    {
+      "id": 8161,
+      "fechaHora": "2026-08-05T09:15:00",
+      "estado": "PENDIENTE",
+      "motivo": "Control General",
+      "pacienteId": 3,
+      "veterinarioId": 103
+    }
+  ],
+  "facturacion": [
+    {
+      "id": "POS-75070",
+      "fechaHora": "09/07/2026 13:59",
+      "clienteInfo": "Max, Golden Retriever, Dueño: Carlos R.",
+      "detalles": [
+        {
+          "item": {
+            "id": "S001",
+            "titulo": "Consulta General",
+            "descripcion": "Evaluación veterinaria complet...",
+            "precio": 35,
+            "categoria": "Médico",
+            "iconoSVG": "🩺",
+            "colorFondoSVG": "#008080",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 5,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "E001",
+            "titulo": "Limpieza Dental",
+            "descripcion": "Profilaxis ultrasónica profunda...",
+            "precio": 120,
+            "categoria": "Estética",
+            "iconoSVG": "🪥",
+            "colorFondoSVG": "#b49678",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 8,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "S002",
+            "titulo": "Vacunación Anual",
+            "descripcion": "Incluye Triple Felina o Sextuple...",
+            "precio": 45,
+            "categoria": "Médico",
+            "iconoSVG": "💉",
+            "colorFondoSVG": "#8aaceb",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 1,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "S003",
+            "titulo": "Desparasitación",
+            "descripcion": "Tableta palatable para control...",
+            "precio": 18,
+            "categoria": "Médico",
+            "iconoSVG": "🐛",
+            "colorFondoSVG": "#8aaceb",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 4,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "E002",
+            "titulo": "Grooming Completo",
+            "descripcion": "Baño, corte de pelo, uñas y...",
+            "precio": 28,
+            "categoria": "Estética",
+            "iconoSVG": "✂️",
+            "colorFondoSVG": "#b49678",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 3,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "A001",
+            "titulo": "Alimento Royal Canin",
+            "descripcion": "Saco de 12kg para adultos...",
+            "precio": 82.5,
+            "categoria": "Alimentos",
+            "iconoSVG": "🥫",
+            "colorFondoSVG": "#008080",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 6,
+          "descuentoFijo": 0
+        }
+      ],
+      "descuentoPorcentaje": 10,
+      "ivaPorcentaje": 15,
+      "estado": "PAGADA"
+    },
+    {
+      "id": "POS-62606",
+      "fechaHora": "09/07/2026 20:45",
+      "clienteInfo": "Max, Golden Retriever, Dueño: Carlos R.",
+      "detalles": [
+        {
+          "item": {
+            "id": "S001",
+            "titulo": "Consulta General",
+            "descripcion": "Evaluación veterinaria complet...",
+            "precio": 35,
+            "categoria": "Médico",
+            "iconoSVG": "🩺",
+            "colorFondoSVG": "#008080",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 1,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "S003",
+            "titulo": "Desparasitación",
+            "descripcion": "Tableta palatable para control...",
+            "precio": 18,
+            "categoria": "Médico",
+            "iconoSVG": "🐛",
+            "colorFondoSVG": "#8aaceb",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 1,
+          "descuentoFijo": 0
+        }
+      ],
+      "descuentoPorcentaje": 10,
+      "ivaPorcentaje": 15,
+      "estado": "PAGADA"
+    },
+    {
+      "id": "POS-57059",
+      "fechaHora": "18/07/2026 07:23",
+      "clienteInfo": "Max, Golden Retriever, Dueño: Carlos R.",
+      "detalles": [
+        {
+          "item": {
+            "id": "1003",
+            "titulo": "Limpieza Dental (Profilaxis)",
+            "descripcion": "Eliminación de sarro y plac...",
+            "precio": 85,
+            "categoria": "Estética",
+            "iconoSVG": "🩺",
+            "colorFondoSVG": "#008080",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 1,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "INV-001",
+            "titulo": "Amoxicilina 500mg",
+            "descripcion": "Stock: 45",
+            "precio": 25.5,
+            "categoria": "Antibiótico",
+            "iconoSVG": "📦",
+            "colorFondoSVG": "#b49678",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 2,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "INV-004",
+            "titulo": "Bisturí #15",
+            "descripcion": "Stock: 120",
+            "precio": 35,
+            "categoria": "Quirúrgico",
+            "iconoSVG": "📦",
+            "colorFondoSVG": "#b49678",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 1,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "INV-005",
+            "titulo": "Ketamina 50ml",
+            "descripcion": "Stock: 5",
+            "precio": 45.2,
+            "categoria": "Anestésico",
+            "iconoSVG": "📦",
+            "colorFondoSVG": "#b49678",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 1,
+          "descuentoFijo": 0
+        },
+        {
+          "item": {
+            "id": "INV-003",
+            "titulo": "Vacuna Antirrábica",
+            "descripcion": "Stock: 3",
+            "precio": 18.75,
+            "categoria": "Vacuna",
+            "iconoSVG": "📦",
+            "colorFondoSVG": "#b49678",
+            "colorIconoSVG": "white"
+          },
+          "cantidad": 1,
+          "descuentoFijo": 0
+        }
+      ],
+      "descuentoPorcentaje": 10,
+      "ivaPorcentaje": 15,
+      "estado": "PROFORMA"
+    }
+  ],
+  "historias_clinicas": [
+    {
+      "id": 1,
+      "paciente": {
+        "id": 1002,
+        "nombre": "Simba",
+        "especie": "GATO",
+        "raza": "Siamés",
+        "sexo": "Macho",
+        "edadAproximada": "2 años",
+        "peso": 0,
+        "duenoId": 0,
+        "ultimaVisita": "15/06/2026, 16:45",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2026-07-09",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 0,
+      "evoluciones": "Seguimiento - jido;09/07/2026, 10:00 a.m.;owjdownm\t;ndiwnidnw;tos",
+      "tratamientos": ";;"
+    },
+    {
+      "id": 8271,
+      "paciente": {
+        "id": 1001,
+        "nombre": "Luna",
+        "especie": "PERRO",
+        "raza": "Golden Retriever",
+        "sexo": "Hembra",
+        "edadAproximada": "21/07/2024",
+        "peso": 0,
+        "duenoId": 28405,
+        "ultimaVisita": "Hoy, 10:30",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2026-07-21",
+      "alergias": "",
+      "antecedentes": "",
+      "pesoActual": 50,
+      "evoluciones": "21 jul. 2026~~Peso: 50kg, Temp: , FC: , FR:  | Obs: ~CIE:  | ~~V",
+      "tratamientos": "",
+      "historialPesos": "JUL.;50.0"
+    },
+    {
+      "id": 6017,
+      "paciente": {
+        "id": 1003,
+        "nombre": "Rex",
+        "especie": "PERRO",
+        "raza": "Pastor Alemán",
+        "sexo": "Macho",
+        "edadAproximada": "3 años",
+        "peso": 0,
+        "duenoId": 21279,
+        "ultimaVisita": "18/07/2026, 09:15",
+        "estado": "SEGUIMIENTO"
+      },
+      "fechaApertura": "2026-07-21",
+      "alergias": "",
+      "antecedentes": "",
+      "pesoActual": 0,
+      "evoluciones": "",
+      "tratamientos": ""
+    },
+    {
+      "id": 7973,
+      "paciente": {
+        "id": 1004,
+        "nombre": "Simba",
+        "especie": "GATO",
+        "raza": "Persa",
+        "sexo": "Macho",
+        "edadAproximada": "",
+        "peso": 0,
+        "duenoId": 18093,
+        "ultimaVisita": "19/07/2026, 11:00",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2026-07-21",
+      "alergias": "",
+      "antecedentes": "",
+      "pesoActual": 0,
+      "evoluciones": "",
+      "tratamientos": ""
+    },
+    {
+      "id": 8833,
+      "paciente": {
+        "id": 1007,
+        "nombre": "Mia",
+        "especie": "GATO",
+        "raza": "Poodle",
+        "sexo": "Hembra",
+        "edadAproximada": "",
+        "peso": 0,
+        "duenoId": 94850,
+        "ultimaVisita": "15/07/2026, 16:30",
+        "estado": "SEGUIMIENTO"
+      },
+      "fechaApertura": "2026-07-21",
+      "alergias": "",
+      "antecedentes": "",
+      "pesoActual": 0,
+      "evoluciones": "",
+      "tratamientos": ""
+    },
+    {
+      "id": 810,
+      "paciente": {
+        "id": 1,
+        "nombre": "Buddy",
+        "especie": "PERRO",
+        "raza": "Mestizo",
+        "sexo": "Macho",
+        "edadAproximada": "1 año",
+        "peso": 10,
+        "duenoId": 100,
+        "ultimaVisita": "Hoy",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2026-07-21",
+      "alergias": "",
+      "antecedentes": "",
+      "pesoActual": 10,
+      "evoluciones": "",
+      "tratamientos": ""
+    },
+    {
+      "id": 872,
+      "paciente": {
+        "id": 3,
+        "nombre": "Rocky",
+        "especie": "PERRO",
+        "raza": "Pitbull",
+        "sexo": "Macho",
+        "edadAproximada": "3 años",
+        "peso": 20,
+        "duenoId": 100,
+        "ultimaVisita": "Hoy",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2026-07-21",
+      "alergias": "",
+      "antecedentes": "",
+      "pesoActual": 20,
+      "evoluciones": "",
+      "tratamientos": ""
+    },
+    {
+      "id": 9000,
+      "paciente": {
+        "id": 1005,
+        "nombre": "Nala",
+        "especie": "GATO",
+        "raza": "Persa",
+        "sexo": "Hembra",
+        "edadAproximada": "4 años",
+        "peso": 0,
+        "duenoId": 18093,
+        "ultimaVisita": "10/05/2026, 14:20",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-15",
+      "alergias": "Ninguna",
+      "antecedentes": "Vacunación completa. Sin enfermedades previas graves.",
+      "pesoActual": 30,
+      "evoluciones": "21 jul. 2026~Patas verdes~Peso: 30kg, Temp: 45, FC: 120, FR: 60 | Obs: esta muy serio\t~Pintura | era manchas de pintura\t~24 / 07 / 2026~V|Revisión general;20 Ene 2026;El paciente se encuentra en buen estado general.|Control de peso;10 Mar 2026;Se recomienda ajustar la dieta para evitar sobrepeso.",
+      "tratamientos": "Desparasitante interno;Dosis única según peso",
+      "historialPesos": "JUL.;30.0"
+    },
+    {
+      "id": 9001,
+      "paciente": {
+        "id": 1006,
+        "nombre": "Max",
+        "especie": "PERRO",
+        "raza": "Bulldog",
+        "sexo": "Macho",
+        "edadAproximada": "2 años",
+        "peso": 0,
+        "duenoId": 44620,
+        "ultimaVisita": "01/07/2026, 10:00",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-15",
+      "alergias": "Penicilina",
+      "antecedentes": "Vacunación completa. Sin enfermedades previas graves.",
+      "pesoActual": 15,
+      "evoluciones": "Revisión general;20 Ene 2026;El paciente se encuentra en buen estado general.|Control de peso;10 Mar 2026;Se recomienda ajustar la dieta para evitar sobrepeso.",
+      "tratamientos": "Desparasitante interno;Dosis única según peso"
+    },
+    {
+      "id": 9002,
+      "paciente": {
+        "id": 1008,
+        "nombre": "Thor",
+        "especie": "PERRO",
+        "raza": "Husky",
+        "sexo": "Macho",
+        "edadAproximada": "3 años",
+        "peso": 0,
+        "duenoId": 71404,
+        "ultimaVisita": "19/07/2026, 08:45",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2025-01-15",
+      "alergias": "Penicilina",
+      "antecedentes": "Vacunación completa. Sin enfermedades previas graves.",
+      "pesoActual": 15,
+      "evoluciones": "Revisión general;20 Ene 2026;El paciente se encuentra en buen estado general.|Control de peso;10 Mar 2026;Se recomienda ajustar la dieta para evitar sobrepeso.",
+      "tratamientos": "Desparasitante interno;Dosis única según peso"
+    },
+    {
+      "id": 9003,
+      "paciente": {
+        "id": 1009,
+        "nombre": "Loki",
+        "especie": "GATO",
+        "raza": "Mestizo",
+        "sexo": "Macho",
+        "edadAproximada": "1 año",
+        "peso": 0,
+        "duenoId": 71404,
+        "ultimaVisita": "10/06/2026, 12:15",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-15",
+      "alergias": "Ninguna",
+      "antecedentes": "Vacunación completa. Sin enfermedades previas graves.",
+      "pesoActual": 15,
+      "evoluciones": "Revisión general;20 Ene 2026;El paciente se encuentra en buen estado general.|Control de peso;10 Mar 2026;Se recomienda ajustar la dieta para evitar sobrepeso.",
+      "tratamientos": "Desparasitante interno;Dosis única según peso"
+    },
+    {
+      "id": 9004,
+      "paciente": {
+        "id": 1010,
+        "nombre": "Bella",
+        "especie": "PERRO",
+        "raza": "Labrador",
+        "sexo": "Hembra",
+        "edadAproximada": "6 años",
+        "peso": 0,
+        "duenoId": 5074,
+        "ultimaVisita": "20/05/2026, 09:30",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-15",
+      "alergias": "Penicilina",
+      "antecedentes": "Vacunación completa. Sin enfermedades previas graves.",
+      "pesoActual": 15,
+      "evoluciones": "Revisión general;20 Ene 2026;El paciente se encuentra en buen estado general.|Control de peso;10 Mar 2026;Se recomienda ajustar la dieta para evitar sobrepeso.",
+      "tratamientos": "Apoquel 16mg;1 tableta cada 24 horas por 15 días"
+    },
+    {
+      "id": 9005,
+      "paciente": {
+        "id": 1011,
+        "nombre": "Rocky",
+        "especie": "PERRO",
+        "raza": "Boxer",
+        "sexo": "Macho",
+        "edadAproximada": "4 años",
+        "peso": 0,
+        "duenoId": 58709,
+        "ultimaVisita": "17/07/2026, 15:20",
+        "estado": "SEGUIMIENTO"
+      },
+      "fechaApertura": "2025-01-15",
+      "alergias": "Ninguna",
+      "antecedentes": "Vacunación completa. Sin enfermedades previas graves.",
+      "pesoActual": 15,
+      "evoluciones": "Revisión general;20 Ene 2026;El paciente se encuentra en buen estado general.|Control de peso;10 Mar 2026;Se recomienda ajustar la dieta para evitar sobrepeso.",
+      "tratamientos": "Desparasitante interno;Dosis única según peso"
+    },
+    {
+      "id": 9006,
+      "paciente": {
+        "id": 7818,
+        "nombre": "vodka",
+        "especie": "PERRO",
+        "raza": "Rusa",
+        "sexo": "Macho",
+        "edadAproximada": "09/07/2020",
+        "peso": 0,
+        "duenoId": 42930,
+        "ultimaVisita": "Hoy, 18:34",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2025-01-15",
+      "alergias": "Penicilina",
+      "antecedentes": "Vacunación completa. Sin enfermedades previas graves.",
+      "pesoActual": 15,
+      "evoluciones": "Revisión general;20 Ene 2026;El paciente se encuentra en buen estado general.|Control de peso;10 Mar 2026;Se recomienda ajustar la dieta para evitar sobrepeso.",
+      "tratamientos": "Desparasitante interno;Dosis única según peso"
+    },
+    {
+      "id": 9007,
+      "paciente": {
+        "id": 2812,
+        "nombre": "Zeus",
+        "especie": "GATO",
+        "raza": "morado",
+        "sexo": "Hembra",
+        "edadAproximada": "07/07/2022",
+        "peso": 12,
+        "duenoId": 44620,
+        "ultimaVisita": "Hoy, 23:58",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2025-01-15",
+      "alergias": "Ninguna",
+      "antecedentes": "Vacunación completa. Sin enfermedades previas graves.",
+      "pesoActual": 12,
+      "evoluciones": "Revisión general;20 Ene 2026;El paciente se encuentra en buen estado general.|Control de peso;10 Mar 2026;Se recomienda ajustar la dieta para evitar sobrepeso.",
+      "tratamientos": "Apoquel 16mg;1 tableta cada 24 horas por 15 días"
+    },
+    {
+      "id": 9008,
+      "paciente": {
+        "id": 2,
+        "nombre": "Michi",
+        "especie": "GATO",
+        "raza": "Mestizo",
+        "sexo": "Hembra",
+        "edadAproximada": "2 años",
+        "peso": 4,
+        "duenoId": 100,
+        "ultimaVisita": "Hoy",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-15",
+      "alergias": "Ninguna",
+      "antecedentes": "Vacunación completa. Sin enfermedades previas graves.",
+      "pesoActual": 4,
+      "evoluciones": "Revisión general;20 Ene 2026;El paciente se encuentra en buen estado general.|Control de peso;10 Mar 2026;Se recomienda ajustar la dieta para evitar sobrepeso.",
+      "tratamientos": "Desparasitante interno;Dosis única según peso"
+    }
+  ],
+  "pacientes": [
+    {
+      "id": 1001,
+      "nombre": "Luna",
+      "especie": "PERRO",
+      "raza": "Golden Retriever",
+      "sexo": "Hembra",
+      "edadAproximada": "21/07/2024",
+      "peso": 0,
+      "duenoId": 28405,
+      "ultimaVisita": "Hoy, 10:30",
+      "estado": "EN_CLINICA"
+    },
+    {
+      "id": 1002,
+      "nombre": "Milo",
+      "especie": "PERRO",
+      "raza": "Siamés",
+      "sexo": "Macho",
+      "edadAproximada": "",
+      "peso": 0,
+      "duenoId": 28405,
+      "ultimaVisita": "15/06/2026, 16:45",
+      "estado": "ALTA"
+    },
+    {
+      "id": 1003,
+      "nombre": "Rex",
+      "especie": "PERRO",
+      "raza": "Pastor Alemán",
+      "sexo": "Macho",
+      "edadAproximada": "3 años",
+      "peso": 0,
+      "duenoId": 21279,
+      "ultimaVisita": "18/07/2026, 09:15",
+      "estado": "SEGUIMIENTO"
+    },
+    {
+      "id": 1004,
+      "nombre": "Simba",
+      "especie": "GATO",
+      "raza": "Persa",
+      "sexo": "Macho",
+      "edadAproximada": "",
+      "peso": 0,
+      "duenoId": 18093,
+      "ultimaVisita": "19/07/2026, 11:00",
+      "estado": "EN_CLINICA"
+    },
+    {
+      "id": 1005,
+      "nombre": "Nala",
+      "especie": "GATO",
+      "raza": "Persa",
+      "sexo": "Hembra",
+      "edadAproximada": "4 años",
+      "peso": 0,
+      "duenoId": 18093,
+      "ultimaVisita": "10/05/2026, 14:20",
+      "estado": "ALTA"
+    },
+    {
+      "id": 1006,
+      "nombre": "Max",
+      "especie": "PERRO",
+      "raza": "Bulldog",
+      "sexo": "Macho",
+      "edadAproximada": "2 años",
+      "peso": 0,
+      "duenoId": 44620,
+      "ultimaVisita": "01/07/2026, 10:00",
+      "estado": "ALTA"
+    },
+    {
+      "id": 1007,
+      "nombre": "Mia",
+      "especie": "GATO",
+      "raza": "Poodle",
+      "sexo": "Hembra",
+      "edadAproximada": "",
+      "peso": 0,
+      "duenoId": 94850,
+      "ultimaVisita": "15/07/2026, 16:30",
+      "estado": "SEGUIMIENTO"
+    },
+    {
+      "id": 1008,
+      "nombre": "Thor",
+      "especie": "PERRO",
+      "raza": "Husky",
+      "sexo": "Macho",
+      "edadAproximada": "3 años",
+      "peso": 0,
+      "duenoId": 71404,
+      "ultimaVisita": "19/07/2026, 08:45",
+      "estado": "EN_CLINICA"
+    },
+    {
+      "id": 1009,
+      "nombre": "Loki",
+      "especie": "GATO",
+      "raza": "Mestizo",
+      "sexo": "Macho",
+      "edadAproximada": "1 año",
+      "peso": 0,
+      "duenoId": 71404,
+      "ultimaVisita": "10/06/2026, 12:15",
+      "estado": "ALTA"
+    },
+    {
+      "id": 1010,
+      "nombre": "Bella",
+      "especie": "PERRO",
+      "raza": "Labrador",
+      "sexo": "Hembra",
+      "edadAproximada": "6 años",
+      "peso": 0,
+      "duenoId": 5074,
+      "ultimaVisita": "20/05/2026, 09:30",
+      "estado": "ALTA"
+    },
+    {
+      "id": 1011,
+      "nombre": "Rocky",
+      "especie": "PERRO",
+      "raza": "Boxer",
+      "sexo": "Macho",
+      "edadAproximada": "4 años",
+      "peso": 0,
+      "duenoId": 58709,
+      "ultimaVisita": "17/07/2026, 15:20",
+      "estado": "SEGUIMIENTO"
+    },
+    {
+      "id": 7818,
+      "nombre": "vodka",
+      "especie": "PERRO",
+      "raza": "Rusa",
+      "sexo": "Macho",
+      "edadAproximada": "09/07/2020",
+      "peso": 0,
+      "duenoId": 42930,
+      "ultimaVisita": "Hoy, 18:34",
+      "estado": "EN_CLINICA"
+    },
+    {
+      "id": 2812,
+      "nombre": "Zeus",
+      "especie": "GATO",
+      "raza": "morado",
+      "sexo": "Hembra",
+      "edadAproximada": "07/07/2022",
+      "peso": 12,
+      "duenoId": 44620,
+      "ultimaVisita": "Hoy, 23:58",
+      "estado": "EN_CLINICA"
+    },
+    {
+      "id": 1,
+      "nombre": "Buddy",
+      "especie": "PERRO",
+      "raza": "Mestizo",
+      "sexo": "Macho",
+      "edadAproximada": "1 año",
+      "peso": 10,
+      "duenoId": 100,
+      "ultimaVisita": "Hoy",
+      "estado": "ALTA"
+    },
+    {
+      "id": 2,
+      "nombre": "Michi",
+      "especie": "GATO",
+      "raza": "Mestizo",
+      "sexo": "Hembra",
+      "edadAproximada": "2 años",
+      "peso": 4,
+      "duenoId": 100,
+      "ultimaVisita": "Hoy",
+      "estado": "ALTA"
+    },
+    {
+      "id": 3,
+      "nombre": "Rocky",
+      "especie": "PERRO",
+      "raza": "Pitbull",
+      "sexo": "Macho",
+      "edadAproximada": "3 años",
+      "peso": 20,
+      "duenoId": 100,
+      "ultimaVisita": "Hoy",
+      "estado": "ALTA"
+    }
+  ],
+  "personal": [
+    {
+      "id": 101,
+      "nombre": "Dr. Elena Mendez",
+      "cargo": "Recepcionista",
+      "departamento": "Personal medico",
+      "estado": "● En Turno",
+      "email": "e.mendez@hpaws.vet",
+      "telefono": "+34 612 345 678",
+      "dni": "12345678A",
+      "fechaNacimiento": "12 / 05 / 1985",
+      "genero": "Femenino",
+      "direccion": "Calle Falsa 123",
+      "especialidad": "Cirugía",
+      "colegiado": "COL-5551",
+      "fechaContratacion": "01 / 02 / 2019",
+      "username": "emendez",
+      "password": "vet123",
+      "rolSistema": "Recepcionista",
+      "turno": "Mañana",
+      "diasLaborales": "X,J,V,D"
+    },
+    {
+      "id": 102,
+      "nombre": "Carlos Ruiz",
+      "cargo": "Veterinario",
+      "departamento": "Personal medico",
+      "estado": "● Libre",
+      "email": "c.ruiz@hpaws.vet",
+      "telefono": "+34 622 987 654",
+      "dni": "87654321B",
+      "fechaNacimiento": "24 / 09 / 1990",
+      "genero": "Masculino",
+      "direccion": "Avenida Siempre Viva 742",
+      "especialidad": "Cuidados Intensivos",
+      "colegiado": "",
+      "fechaContratacion": "15 / 06 / 2020",
+      "username": "cruiz",
+      "password": "vet123",
+      "rolSistema": "Veterinario",
+      "turno": "Noche",
+      "diasLaborales": "J,V,S,D"
+    },
+    {
+      "id": 103,
+      "nombre": "Lucia Gomez",
+      "cargo": "Veterinario",
+      "departamento": "Seleccionar departamento...",
+      "estado": "● En Turno",
+      "email": "l.gomez@hpaws.vet",
+      "telefono": "+34 633 456 123",
+      "dni": "11223344C",
+      "fechaNacimiento": "05 / 11 / 1995",
+      "genero": "Femenino",
+      "direccion": "Plaza Mayor 1",
+      "especialidad": "",
+      "colegiado": "",
+      "fechaContratacion": "10 / 01 / 2023",
+      "username": "lgomez",
+      "password": "vet123",
+      "rolSistema": "Veterinario",
+      "turno": "Mañana",
+      "diasLaborales": "M,X,J,V,S,D"
+    },
+    {
+      "id": 297,
+      "nombre": "jeyson",
+      "cargo": "Veterinario",
+      "departamento": "Seleccionar departamento...",
+      "estado": "● Activo",
+      "email": "ko@gmail.com",
+      "telefono": "9494961",
+      "dni": "61616",
+      "fechaNacimiento": "12 / 10 / 2000",
+      "genero": "Masculino",
+      "direccion": "av grau",
+      "especialidad": "manos",
+      "colegiado": "84949",
+      "fechaContratacion": "10 / 02 / 2024",
+      "username": "jhex",
+      "password": "vet123",
+      "rolSistema": "Veterinario",
+      "turno": "Tarde",
+      "diasLaborales": "M,X,J,V,S,D"
+    },
+    {
+      "id": 80204,
+      "nombre": "Carlos Mendoza",
+      "cargo": "Veterinario",
+      "departamento": "Tecnico medico",
+      "estado": "● Activo",
+      "email": "empleado1@veterinaria.com",
+      "telefono": "987654321",
+      "dni": "87654321",
+      "fechaContratacion": "01/01/2023",
+      "username": "cmendoza",
+      "password": "vet123",
+      "rolSistema": "Veterinario",
+      "turno": "Tarde",
+      "diasLaborales": "L,X,V,S"
+    },
+    {
+      "id": 19720,
+      "nombre": "Laura Castillo",
+      "cargo": "Recepcionista",
+      "departamento": "Personal estetico",
+      "estado": "● Activo",
+      "email": "empleado2@veterinaria.com",
+      "telefono": "987654322",
+      "dni": "87654322",
+      "fechaNacimiento": "",
+      "genero": "Seleccionar...",
+      "direccion": "",
+      "especialidad": "",
+      "colegiado": "",
+      "fechaContratacion": "01/01/2023",
+      "username": "lcastillo",
+      "password": "vet123",
+      "rolSistema": "Recepcionista",
+      "turno": "Noche",
+      "diasLaborales": "M,J,S,D"
+    },
+    {
+      "id": 91846,
+      "nombre": "Jorge Ramirez",
+      "cargo": "Auxiliar veterinario",
+      "departamento": "Personal de operaciones",
+      "estado": "● Activo",
+      "email": "empleado3@veterinaria.com",
+      "telefono": "987654323",
+      "dni": "87654323",
+      "fechaNacimiento": "",
+      "genero": "Seleccionar...",
+      "direccion": "",
+      "especialidad": "",
+      "colegiado": "",
+      "fechaContratacion": "01/01/2023",
+      "username": "jramirez",
+      "password": "vet123",
+      "rolSistema": "Auxiliar veterinario",
+      "turno": "Mañana",
+      "diasLaborales": "L,M,X,J,V,S"
+    },
+    {
+      "id": 12926,
+      "nombre": "Sofia Vargas",
+      "cargo": "Administrador",
+      "departamento": "Personal medico",
+      "estado": "● Activo",
+      "email": "empleado4@veterinaria.com",
+      "telefono": "987654324",
+      "dni": "87654324",
+      "fechaContratacion": "01/01/2023",
+      "username": "svargas",
+      "password": "vet123",
+      "rolSistema": "Administrador",
+      "turno": "Tarde",
+      "diasLaborales": "L,M,X"
+    },
+    {
+      "id": 34993,
+      "nombre": "Miguel Salazar",
+      "cargo": "Veterinario",
+      "departamento": "Tecnico medico",
+      "estado": "● Activo",
+      "email": "empleado5@veterinaria.com",
+      "telefono": "987654325",
+      "dni": "87654325",
+      "fechaNacimiento": "",
+      "genero": "Seleccionar...",
+      "direccion": "",
+      "especialidad": "",
+      "colegiado": "",
+      "fechaContratacion": "01/01/2023",
+      "username": "msalazar",
+      "password": "vet123",
+      "rolSistema": "Veterinario",
+      "turno": "Noche",
+      "diasLaborales": "L,M,X,J,V,D"
+    },
+    {
+      "id": 91618,
+      "nombre": "Elena Gomez",
+      "cargo": "Recepcionista",
+      "departamento": "Personal estetico",
+      "estado": "● Activo",
+      "email": "empleado6@veterinaria.com",
+      "telefono": "987654326",
+      "dni": "87654326",
+      "fechaContratacion": "01/01/2023",
+      "username": "egomez",
+      "password": "vet123",
+      "rolSistema": "Recepcionista",
+      "turno": "Mañana",
+      "diasLaborales": "L,X,V,S"
+    },
+    {
+      "id": 38737,
+      "nombre": "Roberto Fernandez",
+      "cargo": "Auxiliar veterinario",
+      "departamento": "Personal de operaciones",
+      "estado": "● Activo",
+      "email": "empleado7@veterinaria.com",
+      "telefono": "987654327",
+      "dni": "87654327",
+      "fechaContratacion": "01/01/2023",
+      "username": "rfernandez",
+      "password": "vet123",
+      "rolSistema": "Auxiliar veterinario",
+      "turno": "Tarde",
+      "diasLaborales": "M,J,S,D"
+    },
+    {
+      "id": 94197,
+      "nombre": "Andrea Silva",
+      "cargo": "Administrador",
+      "departamento": "Personal medico",
+      "estado": "● Activo",
+      "email": "empleado8@veterinaria.com",
+      "telefono": "987654328",
+      "dni": "87654328",
+      "fechaContratacion": "01/01/2023",
+      "username": "asilva",
+      "password": "vet123",
+      "rolSistema": "Administrador",
+      "turno": "Noche",
+      "diasLaborales": "L,M,X,J,V,S"
+    },
+    {
+      "id": 52822,
+      "nombre": "Diego Torres",
+      "cargo": "Veterinario",
+      "departamento": "Tecnico medico",
+      "estado": "● Activo",
+      "email": "empleado9@veterinaria.com",
+      "telefono": "987654329",
+      "dni": "87654329",
+      "fechaContratacion": "01/01/2023",
+      "username": "dtorres",
+      "password": "vet123",
+      "rolSistema": "Veterinario",
+      "turno": "Mañana",
+      "diasLaborales": "L,M,X"
+    },
+    {
+      "id": 49884,
+      "nombre": "Valeria Rojas",
+      "cargo": "Recepcionista",
+      "departamento": "Personal estetico",
+      "estado": "● Activo",
+      "email": "empleado10@veterinaria.com",
+      "telefono": "987654320",
+      "dni": "87654320",
+      "fechaContratacion": "01/01/2023",
+      "username": "vrojas",
+      "password": "vet123",
+      "rolSistema": "Recepcionista",
+      "turno": "Tarde",
+      "diasLaborales": "L,M,X,J,V"
+    },
+    {
+      "id": 241,
+      "nombre": "jhex",
+      "cargo": "Administrador",
+      "departamento": "Personal de operaciones",
+      "estado": "● Activo",
+      "email": "kion@gmail.com",
+      "telefono": "952616065",
+      "dni": "94916194",
+      "fechaNacimiento": "11/07/2000",
+      "genero": "Masculino",
+      "direccion": "av alfonso",
+      "especialidad": "Sistemas",
+      "colegiado": "8481848",
+      "fechaContratacion": "08/07/2020",
+      "username": "admin",
+      "password": "vet123",
+      "rolSistema": "Administrador",
+      "turno": "",
+      "diasLaborales": ""
+    },
+    {
+      "id": 3,
+      "nombre": "Dr. John Smith",
+      "cargo": "Veterinario",
+      "departamento": "Personal medico",
+      "estado": "● Libre",
+      "email": "john@hpaws.vet",
+      "telefono": "123",
+      "dni": "123",
+      "fechaNacimiento": "01/01/1980",
+      "genero": "Masculino",
+      "direccion": "123",
+      "especialidad": "General",
+      "colegiado": "123",
+      "fechaContratacion": "01/01/2020",
+      "username": "@jsmith",
+      "password": "vet123",
+      "rolSistema": "Veterinario",
+      "turno": "Mañana",
+      "diasLaborales": "L,M,X,J,V"
+    },
+    {
+      "id": 4,
+      "nombre": "Dra. Jane Doe",
+      "cargo": "Veterinario",
+      "departamento": "Personal medico",
+      "estado": "● Libre",
+      "email": "jane@hpaws.vet",
+      "telefono": "123",
+      "dni": "123",
+      "fechaNacimiento": "01/01/1980",
+      "genero": "Femenino",
+      "direccion": "123",
+      "especialidad": "General",
+      "colegiado": "123",
+      "fechaContratacion": "01/01/2020",
+      "username": "@jdoe",
+      "password": "vet123",
+      "rolSistema": "Veterinario",
+      "turno": "Tarde",
+      "diasLaborales": "L,M,X,J,V"
+    }
+  ],
+  "proveedores": [
+    {
+      "id": 1,
+      "idProveedorStr": "PRV-001",
+      "ruc": "",
+      "nombre": "PharmaVet Solutions",
+      "categoria": "Medicamentos",
+      "contactoNombre": "ventas@pharmavet.com",
+      "contactoTelefono": "+1 555-0123",
+      "direccion": "",
+      "email": "",
+      "sitioWeb": "",
+      "estado": "Activo",
+      "ultimaOrdenFecha": "24 Oct, 2023",
+      "inventariosSuministrados": [
+        {
+          "inventarioId": "INV-007",
+          "cantidad": 30
+        },
+        {
+          "inventarioId": "INV-011",
+          "cantidad": 25
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "idProveedorStr": "PRV-042",
+      "nombre": "BioPet Supplies",
+      "categoria": "Equipamiento",
+      "contactoNombre": "soporte@biopet.io",
+      "contactoTelefono": "+1 555-8890",
+      "estado": "En Revisión",
+      "ultimaOrdenFecha": "15 Sep, 2023"
+    },
+    {
+      "id": 15,
+      "idProveedorStr": "PRV-015",
+      "nombre": "VetNutri Distribuidora",
+      "categoria": "Alimentos",
+      "contactoNombre": "pedidos@vetnutri.com",
+      "contactoTelefono": "+1 555-4321",
+      "estado": "Activo",
+      "ultimaOrdenFecha": "02 Nov, 2023"
+    }
+  ],
+  "reportes": [
+    {
+      "id": "1",
+      "veterinarioNombre": "Dr. Alejandro Pérez",
+      "consultas": 245,
+      "calificacion": 4.9,
+      "carga": "Alta"
+    },
+    {
+      "id": "2",
+      "veterinarioNombre": "Dra. Maria García",
+      "consultas": 198,
+      "calificacion": 4.8,
+      "carga": "Media"
+    },
+    {
+      "id": "3",
+      "veterinarioNombre": "Dr. Roberto Sánchez",
+      "consultas": 164,
+      "calificacion": 4.7,
+      "carga": "Baja"
+    }
+  ],
+  "duenos": [
+    {
+      "id": 42930,
+      "nombre": "Jose",
+      "dni": "5849819",
+      "telefono": "94944191",
+      "email": "jon@gmail.com",
+      "direccion": "av grau",
+      "estado": "NUEVO",
+      "mascotas": [],
+      "genero": "Masculino",
+      "fechaNacimiento": "20/03/2000",
+      "telefonoEmergencia": "19494194",
+      "ciudad": "lima",
+      "codigoPostal": "lima13"
+    },
+    {
+      "id": 28405,
+      "nombre": "Ana",
+      "apellidos": "García Martínez",
+      "dni": "12.345.678-K",
+      "telefono": "+56 9 1234 5678",
+      "email": "ana.garcia@correo.com",
+      "direccion": "Av. Principal #123, Depto 402",
+      "estado": "DEUDA_PENDIENTE",
+      "mascotas": [],
+      "genero": "Femenino",
+      "fechaNacimiento": "15/05/1985",
+      "ciudad": "Santiago",
+      "codigoPostal": "8320000"
+    },
+    {
+      "id": 21279,
+      "nombre": "Carlos",
+      "apellidos": "López Rivera",
+      "dni": "15.789.012-4",
+      "telefono": "+56 9 9876 5432",
+      "email": "carlos.lopez@correo.com",
+      "direccion": "Calle Los Pinos 45",
+      "estado": "ACTIVO",
+      "mascotas": [],
+      "genero": "Masculino",
+      "fechaNacimiento": "22/08/1990",
+      "ciudad": "Valparaíso",
+      "codigoPostal": "2340000"
+    },
+    {
+      "id": 18093,
+      "nombre": "María",
+      "apellidos": "Fernández Silva",
+      "dni": "18.456.789-1",
+      "telefono": "+56 9 4567 8901",
+      "email": "m.fernandez@correo.com",
+      "direccion": "Pasaje El Sol #789",
+      "estado": "FRECUENTE",
+      "mascotas": [],
+      "genero": "Femenino",
+      "fechaNacimiento": "10/11/1995",
+      "ciudad": "Concepción",
+      "codigoPostal": "4030000"
+    },
+    {
+      "id": 44620,
+      "nombre": "Roberto",
+      "apellidos": "Díaz Gómez",
+      "dni": "11.223.344-5",
+      "telefono": "+56 9 3333 4444",
+      "email": "roberto.diaz@correo.com",
+      "direccion": "Av. Libertad 555",
+      "estado": "DEUDA_PENDIENTE",
+      "mascotas": [],
+      "genero": "Masculino",
+      "fechaNacimiento": "05/03/1980",
+      "ciudad": "Viña del Mar",
+      "codigoPostal": "2520000"
+    },
+    {
+      "id": 94850,
+      "nombre": "Camila",
+      "apellidos": "Soto Morales",
+      "dni": "19.888.777-6",
+      "telefono": "+56 9 5555 6666",
+      "email": "cami.soto@correo.com",
+      "direccion": "Calle Las Rosas 234",
+      "estado": "DEUDA_PENDIENTE",
+      "mascotas": [],
+      "genero": "Femenino",
+      "fechaNacimiento": "30/01/2000",
+      "ciudad": "La Serena",
+      "codigoPostal": "1700000"
+    },
+    {
+      "id": 71404,
+      "nombre": "Javier",
+      "apellidos": "Ruiz Castro",
+      "dni": "14.555.666-7",
+      "telefono": "+56 9 7777 8888",
+      "email": "javier.ruiz@correo.com",
+      "direccion": "Av. Pedro de Valdivia 901",
+      "estado": "NUEVO",
+      "mascotas": [],
+      "genero": "Masculino",
+      "fechaNacimiento": "18/07/1988",
+      "ciudad": "Providencia",
+      "codigoPostal": "7500000"
+    },
+    {
+      "id": 5074,
+      "nombre": "Laura",
+      "apellidos": "Herrera Pinto",
+      "dni": "17.999.000-8",
+      "telefono": "+56 9 2222 1111",
+      "email": "laura.herrera@correo.com",
+      "direccion": "Pasaje Las Lomas 67",
+      "estado": "ACTIVO",
+      "mascotas": [],
+      "genero": "Femenino",
+      "fechaNacimiento": "12/12/1992",
+      "ciudad": "Maipú",
+      "codigoPostal": "9250000"
+    },
+    {
+      "id": 58709,
+      "nombre": "Diego",
+      "apellidos": "Vargas Torres",
+      "dni": "16.111.222-9",
+      "telefono": "+56 9 9999 0000",
+      "email": "diego.vargas@correo.com",
+      "direccion": "Av. Las Condes 10200",
+      "estado": "FRECUENTE",
+      "mascotas": [],
+      "genero": "Masculino",
+      "fechaNacimiento": "25/09/1991",
+      "ciudad": "Las Condes",
+      "codigoPostal": "7550000"
+    }
+  ],
+  "historiasClinicas": [
+    {
+      "id": 1001,
+      "paciente": {
+        "id": 1001,
+        "nombre": "Luna",
+        "especie": "PERRO",
+        "raza": "Golden Retriever",
+        "sexo": "Hembra",
+        "edadAproximada": "21/07/2024",
+        "peso": 0.0,
+        "duenoId": 28405,
+        "ultimaVisita": "Hoy, 10:30",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 18.3,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 17.9kg, Temp: 38.3, FC: 109, FR: 26 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V | | 20 JUN 2026~Desparasitación~Peso: 18.8kg, Temp: 38.1, FC: 119, FR: 28 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V | | 05 ABR 2026~Problema Dermatológico~Peso: 18.9kg, Temp: 38.2, FC: 116, FR: 28 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V | | 10 FEB 2026~Control de Rutina~Peso: 18.0kg, Temp: 38.6, FC: 92, FR: 20 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;18.8|FEB;18.8|MAR;18.4|ABR;17.6|MAY;17.7|JUN;17.4|JUL;19.1|AGO;18.7|SEP;18.1|OCT;19.1|NOV;18.8|DIC;18.0"
+    },
+    {
+      "id": 1002,
+      "paciente": {
+        "id": 1002,
+        "nombre": "Milo",
+        "especie": "PERRO",
+        "raza": "Siamés",
+        "sexo": "Macho",
+        "edadAproximada": "",
+        "peso": 0.0,
+        "duenoId": 28405,
+        "ultimaVisita": "15/06/2026, 16:45",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Penicilina",
+      "antecedentes": "Ninguno",
+      "pesoActual": 15.9,
+      "evoluciones": "pastilla para pulgas;21 jul. 2026;lavado|15 AGO 2026~Chequeo General~Peso: 16.8kg, Temp: 38.1, FC: 106, FR: 27 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V | | 20 JUN 2026~Desparasitación~Peso: 15.6kg, Temp: 38.2, FC: 109, FR: 28 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V | | 05 ABR 2026~Problema Dermatológico~Peso: 16.0kg, Temp: 38.7, FC: 101, FR: 23 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V | | 10 FEB 2026~Control de Rutina~Peso: 15.5kg, Temp: 38.7, FC: 104, FR: 23 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;15.6|FEB;16.5|MAR;14.9|ABR;15.3|MAY;16.6|JUN;15.3|JUL;16.4|AGO;15.1|SEP;15.1|OCT;15.1|NOV;15.7|DIC;15.8"
+    },
+    {
+      "id": 1003,
+      "paciente": {
+        "id": 1003,
+        "nombre": "Rex",
+        "especie": "PERRO",
+        "raza": "Pastor Alemán",
+        "sexo": "Macho",
+        "edadAproximada": "3 años",
+        "peso": 0.0,
+        "duenoId": 21279,
+        "ultimaVisita": "18/07/2026, 09:15",
+        "estado": "SEGUIMIENTO"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Penicilina",
+      "antecedentes": "Ninguno",
+      "pesoActual": 17.8,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 17.4kg, Temp: 38.1, FC: 114, FR: 21 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 17.0kg, Temp: 38.1, FC: 97, FR: 24 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 18.5kg, Temp: 38.8, FC: 119, FR: 23 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 18.3kg, Temp: 38.5, FC: 85, FR: 22 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 17.0kg, Temp: 38.9, FC: 83, FR: 25 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;17.4|FEB;17.9|MAR;17.9|ABR;17.2|MAY;17.9|JUN;18.2|JUL;18.1|AGO;18.5|SEP;17.6|OCT;17.8|NOV;18.3|DIC;18.0"
+    },
+    {
+      "id": 1004,
+      "paciente": {
+        "id": 1004,
+        "nombre": "Simba",
+        "especie": "GATO",
+        "raza": "Persa",
+        "sexo": "Macho",
+        "edadAproximada": "",
+        "peso": 0.0,
+        "duenoId": 18093,
+        "ultimaVisita": "19/07/2026, 11:00",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Penicilina",
+      "antecedentes": "Cirugía menor en 2024",
+      "pesoActual": 15.3,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 15.0kg, Temp: 38.9, FC: 92, FR: 28 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 14.8kg, Temp: 38.8, FC: 101, FR: 23 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 15.3kg, Temp: 38.8, FC: 108, FR: 27 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 14.4kg, Temp: 38.8, FC: 95, FR: 27 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 15.6kg, Temp: 38.7, FC: 84, FR: 24 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;15.8|FEB;15.0|MAR;15.9|ABR;14.4|MAY;16.1|JUN;15.8|JUL;16.0|AGO;14.7|SEP;15.0|OCT;14.7|NOV;14.9|DIC;15.2"
+    },
+    {
+      "id": 1005,
+      "paciente": {
+        "id": 1005,
+        "nombre": "Nala",
+        "especie": "GATO",
+        "raza": "Persa",
+        "sexo": "Hembra",
+        "edadAproximada": "4 años",
+        "peso": 0.0,
+        "duenoId": 18093,
+        "ultimaVisita": "10/05/2026, 14:20",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 6.9,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 6.3kg, Temp: 38.9, FC: 116, FR: 25 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 7.6kg, Temp: 38.2, FC: 106, FR: 22 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 6.1kg, Temp: 38.3, FC: 95, FR: 22 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 6.0kg, Temp: 38.4, FC: 92, FR: 20 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 6.6kg, Temp: 38.8, FC: 102, FR: 23 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;7.2|FEB;5.9|MAR;6.2|ABR;7.4|MAY;6.4|JUN;7.3|JUL;5.9|AGO;7.2|SEP;7.7|OCT;7.6|NOV;7.1|DIC;6.5"
+    },
+    {
+      "id": 1006,
+      "paciente": {
+        "id": 1006,
+        "nombre": "Max",
+        "especie": "PERRO",
+        "raza": "Bulldog",
+        "sexo": "Macho",
+        "edadAproximada": "2 años",
+        "peso": 0.0,
+        "duenoId": 44620,
+        "ultimaVisita": "01/07/2026, 10:00",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 14.1,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 13.4kg, Temp: 38.4, FC: 93, FR: 20 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 13.8kg, Temp: 38.3, FC: 101, FR: 28 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 13.9kg, Temp: 38.9, FC: 114, FR: 22 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 14.8kg, Temp: 38.8, FC: 94, FR: 27 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 13.9kg, Temp: 38.0, FC: 101, FR: 26 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;14.7|FEB;13.6|MAR;14.1|ABR;14.6|MAY;14.8|JUN;14.2|JUL;14.7|AGO;15.0|SEP;14.7|OCT;13.8|NOV;13.1|DIC;13.8"
+    },
+    {
+      "id": 1007,
+      "paciente": {
+        "id": 1007,
+        "nombre": "Mia",
+        "especie": "GATO",
+        "raza": "Poodle",
+        "sexo": "Hembra",
+        "edadAproximada": "",
+        "peso": 0.0,
+        "duenoId": 94850,
+        "ultimaVisita": "15/07/2026, 16:30",
+        "estado": "SEGUIMIENTO"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 6.8,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 6.9kg, Temp: 38.5, FC: 108, FR: 27 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 6.0kg, Temp: 38.4, FC: 105, FR: 24 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 7.2kg, Temp: 38.0, FC: 102, FR: 25 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 6.8kg, Temp: 39.0, FC: 92, FR: 27 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 6.1kg, Temp: 38.6, FC: 108, FR: 23 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;6.4|FEB;7.7|MAR;6.0|ABR;7.7|MAY;7.4|JUN;7.3|JUL;6.2|AGO;5.9|SEP;6.5|OCT;7.5|NOV;7.4|DIC;6.3"
+    },
+    {
+      "id": 1008,
+      "paciente": {
+        "id": 1008,
+        "nombre": "Thor",
+        "especie": "PERRO",
+        "raza": "Husky",
+        "sexo": "Macho",
+        "edadAproximada": "3 años",
+        "peso": 0.0,
+        "duenoId": 71404,
+        "ultimaVisita": "19/07/2026, 08:45",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 20.0,
+      "evoluciones": "21 jul. 2026~Tos ~Peso: 20kg, Temp: 120, FC: 90, FR: 60 | Obs: Boca blanca~Pintura blanca | Limpiar~23 / 07 / 2026~V | | 21 jul. 2026~Tos ~Peso: 20kg, Temp: 120, FC: 90, FR: 60 | Obs: Boca blanca~Pintura blanca | Limpiar~23 / 07 / 2026~V | | 21 jul. 2026~Tos ~Peso: 20kg, Temp: 120, FC: 90, FR: 60 | Obs: Boca blanca~Pintura blanca | Limpiar~23 / 07 / 2026~V | | 21 jul. 2026~Tos ~Peso: 20kg, Temp: 120, FC: 90, FR: 60 | Obs: Boca blanca~Pintura blanca | Limpiar~23 / 07 / 2026~V | | 21 jul. 2026~Tos ~Peso: 20kg, Temp: 120, FC: 90, FR: 60 | Obs: Boca blanca~Pintura blanca | Limpiar~23 / 07 / 2026~V | | 21 jul. 2026~Tos ~Peso: 20kg, Temp: 120, FC: 90, FR: 60 | Obs: Boca blanca~Pintura blanca | Limpiar~23 / 07 / 2026~V | | 21 jul. 2026~Tos ~Peso: 20kg, Temp: 120, FC: 90, FR: 60 | Obs: Boca blanca~Pintura blanca | Limpiar~23 / 07 / 2026~V | | 15 AGO 2026~Chequeo General~Peso: 17.7kg, Temp: 38.8, FC: 119, FR: 29 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V | | 20 JUN 2026~Desparasitación~Peso: 17.7kg, Temp: 38.3, FC: 116, FR: 21 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V | | 05 ABR 2026~Problema Dermatológico~Peso: 16.8kg, Temp: 38.4, FC: 98, FR: 21 | Obs: Paciente estable~L20.9 | Dermatitis atópica~22 / 07 / 2026~V | | 10 FEB 2026~Control de Rutina~Peso: 16.5kg, Temp: 38.4, FC: 80, FR: 21 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V | | 12 DIC 2025~V | | acunación Anual~Peso: 17.2kg, Temp: 38.6, FC: 97, FR: 24 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;17.9|FEB;16.6|MAR;17.0|ABR;17.7|MAY;17.6|JUN;16.4|JUL;16.3|AGO;16.5|SEP;17.4|OCT;16.8|NOV;17.8|DIC;17.0|JUL.;20.0|JUL.;20.0|JUL.;20.0|JUL.;20.0|JUL.;20.0|JUL.;20.0|JUL.;20.0|JUL.;16.8|JUL.;20.0"
+    },
+    {
+      "id": 1009,
+      "paciente": {
+        "id": 1009,
+        "nombre": "Loki",
+        "especie": "GATO",
+        "raza": "Mestizo",
+        "sexo": "Macho",
+        "edadAproximada": "1 año",
+        "peso": 0.0,
+        "duenoId": 71404,
+        "ultimaVisita": "10/06/2026, 12:15",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 23.5,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 24.0kg, Temp: 38.3, FC: 108, FR: 23 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 24.5kg, Temp: 38.2, FC: 109, FR: 27 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 22.6kg, Temp: 38.3, FC: 101, FR: 29 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 24.5kg, Temp: 38.4, FC: 82, FR: 27 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 24.0kg, Temp: 38.6, FC: 98, FR: 22 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;24.4|FEB;24.1|MAR;24.4|ABR;24.3|MAY;23.0|JUN;22.8|JUL;22.8|AGO;22.7|SEP;23.9|OCT;23.7|NOV;23.7|DIC;24.0"
+    },
+    {
+      "id": 1010,
+      "paciente": {
+        "id": 1010,
+        "nombre": "Bella",
+        "especie": "PERRO",
+        "raza": "Labrador",
+        "sexo": "Hembra",
+        "edadAproximada": "6 años",
+        "peso": 0.0,
+        "duenoId": 5074,
+        "ultimaVisita": "20/05/2026, 09:30",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 15.8,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 14.8kg, Temp: 38.6, FC: 94, FR: 23 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 16.5kg, Temp: 38.8, FC: 111, FR: 22 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 16.3kg, Temp: 38.1, FC: 87, FR: 25 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 14.9kg, Temp: 38.5, FC: 99, FR: 27 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 16.6kg, Temp: 38.7, FC: 95, FR: 29 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;15.5|FEB;15.1|MAR;15.3|ABR;16.0|MAY;15.7|JUN;15.5|JUL;15.7|AGO;14.9|SEP;14.8|OCT;15.8|NOV;16.5|DIC;16.5"
+    },
+    {
+      "id": 1011,
+      "paciente": {
+        "id": 1011,
+        "nombre": "Rocky",
+        "especie": "PERRO",
+        "raza": "Boxer",
+        "sexo": "Macho",
+        "edadAproximada": "4 años",
+        "peso": 0.0,
+        "duenoId": 58709,
+        "ultimaVisita": "17/07/2026, 15:20",
+        "estado": "SEGUIMIENTO"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 15.5,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 14.6kg, Temp: 38.3, FC: 98, FR: 29 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 16.2kg, Temp: 38.5, FC: 105, FR: 26 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 15.6kg, Temp: 38.5, FC: 106, FR: 22 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 16.3kg, Temp: 38.4, FC: 85, FR: 23 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 15.5kg, Temp: 38.7, FC: 112, FR: 28 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;14.5|FEB;14.6|MAR;16.2|ABR;14.8|MAY;15.3|JUN;14.9|JUL;15.7|AGO;16.3|SEP;16.0|OCT;15.5|NOV;15.5|DIC;14.8"
+    },
+    {
+      "id": 7818,
+      "paciente": {
+        "id": 7818,
+        "nombre": "vodka",
+        "especie": "PERRO",
+        "raza": "Rusa",
+        "sexo": "Macho",
+        "edadAproximada": "09/07/2020",
+        "peso": 0.0,
+        "duenoId": 42930,
+        "ultimaVisita": "Hoy, 18:34",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 16.2,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 15.7kg, Temp: 38.9, FC: 115, FR: 24 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 15.9kg, Temp: 38.3, FC: 89, FR: 21 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 17.1kg, Temp: 38.7, FC: 93, FR: 20 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 16.3kg, Temp: 38.7, FC: 115, FR: 22 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 15.5kg, Temp: 39.0, FC: 97, FR: 28 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;15.3|FEB;16.2|MAR;15.6|ABR;16.1|MAY;16.2|JUN;15.6|JUL;17.1|AGO;15.8|SEP;15.4|OCT;15.7|NOV;15.9|DIC;16.6"
+    },
+    {
+      "id": 2812,
+      "paciente": {
+        "id": 2812,
+        "nombre": "Zeus",
+        "especie": "GATO",
+        "raza": "morado",
+        "sexo": "Hembra",
+        "edadAproximada": "07/07/2022",
+        "peso": 12.0,
+        "duenoId": 44620,
+        "ultimaVisita": "Hoy, 23:58",
+        "estado": "EN_CLINICA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Cirugía menor en 2024",
+      "pesoActual": 12.0,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 12.6kg, Temp: 38.4, FC: 94, FR: 23 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 11.1kg, Temp: 38.8, FC: 97, FR: 24 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 12.2kg, Temp: 38.1, FC: 85, FR: 29 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 11.5kg, Temp: 38.5, FC: 87, FR: 26 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 12.3kg, Temp: 38.5, FC: 81, FR: 29 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;11.8|FEB;12.2|MAR;12.9|ABR;11.5|MAY;12.2|JUN;11.9|JUL;12.6|AGO;12.2|SEP;11.6|OCT;12.9|NOV;12.2|DIC;11.5"
+    },
+    {
+      "id": 1,
+      "paciente": {
+        "id": 1,
+        "nombre": "Buddy",
+        "especie": "PERRO",
+        "raza": "Mestizo",
+        "sexo": "Macho",
+        "edadAproximada": "1 año",
+        "peso": 10.0,
+        "duenoId": 100,
+        "ultimaVisita": "Hoy",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Cirugía menor en 2024",
+      "pesoActual": 10.0,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 10.6kg, Temp: 38.0, FC: 101, FR: 25 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 10.6kg, Temp: 38.5, FC: 114, FR: 26 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 9.4kg, Temp: 38.8, FC: 100, FR: 21 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 10.3kg, Temp: 39.0, FC: 96, FR: 21 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 9.4kg, Temp: 38.3, FC: 96, FR: 23 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;10.5|FEB;10.4|MAR;9.8|ABR;9.6|MAY;10.8|JUN;9.0|JUL;10.7|AGO;10.6|SEP;10.9|OCT;9.8|NOV;10.1|DIC;10.9"
+    },
+    {
+      "id": 2,
+      "paciente": {
+        "id": 2,
+        "nombre": "Michi",
+        "especie": "GATO",
+        "raza": "Mestizo",
+        "sexo": "Hembra",
+        "edadAproximada": "2 años",
+        "peso": 4.0,
+        "duenoId": 100,
+        "ultimaVisita": "Hoy",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Ninguna",
+      "antecedentes": "Ninguno",
+      "pesoActual": 4.0,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 4.8kg, Temp: 38.5, FC: 82, FR: 25 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 4.0kg, Temp: 38.0, FC: 114, FR: 27 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 3.7kg, Temp: 38.9, FC: 98, FR: 25 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 3.8kg, Temp: 38.7, FC: 109, FR: 27 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 3.9kg, Temp: 38.8, FC: 109, FR: 24 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;4.2|FEB;4.7|MAR;4.1|ABR;3.1|MAY;3.8|JUN;3.3|JUL;3.1|AGO;3.2|SEP;3.9|OCT;4.2|NOV;4.5|DIC;4.2"
+    },
+    {
+      "id": 3,
+      "paciente": {
+        "id": 3,
+        "nombre": "Rocky",
+        "especie": "PERRO",
+        "raza": "Pitbull",
+        "sexo": "Macho",
+        "edadAproximada": "3 años",
+        "peso": 20.0,
+        "duenoId": 100,
+        "ultimaVisita": "Hoy",
+        "estado": "ALTA"
+      },
+      "fechaApertura": "2025-01-10",
+      "alergias": "Penicilina",
+      "antecedentes": "Cirugía menor en 2024",
+      "pesoActual": 20.0,
+      "evoluciones": "15 AGO 2026~Chequeo General~Peso: 19.9kg, Temp: 38.3, FC: 89, FR: 22 | Obs: Paciente estable~Z00.8 | Otro examen general~15 ENE 2027~V|20 JUN 2026~Desparasitación~Peso: 19.9kg, Temp: 38.7, FC: 85, FR: 21 | Obs: Paciente estable~Z29.2 | Profilaxis farmacológica~15 ENE 2027~V|05 ABR 2026~Problema Dermatológico~Peso: 20.2kg, Temp: 38.9, FC: 108, FR: 20 | Obs: Paciente estable~L20.9 | Dermatitis atópica~15 ENE 2027~V|10 FEB 2026~Control de Rutina~Peso: 20.3kg, Temp: 38.5, FC: 84, FR: 25 | Obs: Paciente estable~Z00.0 | Examen médico general~15 ENE 2027~V|12 DIC 2025~Vacunación Anual~Peso: 19.9kg, Temp: 38.7, FC: 94, FR: 27 | Obs: Paciente estable~Z00.1 | Profilaxis y prevención~15 ENE 2027~V",
+      "tratamientos": "Antiparasitario;1 dosis|Antibiótico;7 días|Crema tópica;14 días|Vacuna múltiple;1 dosis|Vitaminas;1 mes",
+      "historialPesos": "ENE;20.6|FEB;19.4|MAR;19.6|ABR;20.1|MAY;19.7|JUN;21.0|JUL;19.4|AGO;20.5|SEP;21.0|OCT;20.1|NOV;20.9|DIC;20.3"
+    }
+  ]
+}

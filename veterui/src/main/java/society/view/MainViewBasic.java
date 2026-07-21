@@ -45,4 +45,8 @@ public class MainViewBasic extends JPanel {
         centerPanel.revalidate();
         centerPanel.repaint();
     }
+    
+    public JPanel getView(String vistaClassName) {
+        return viewCache.get(vistaClassName);
+    }
 }

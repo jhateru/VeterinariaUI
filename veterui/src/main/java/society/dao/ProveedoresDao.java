@@ -5,10 +5,10 @@ import com.google.gson.reflect.TypeToken;
 
 import society.modell.administracion.Proveedores;
 
-public class ProveedoresDao extends JsonDao<Proveedores> {
+public class ProveedoresDao extends MasterJsonDao<Proveedores> {
 
     public ProveedoresDao() {
-        super("proveedores.json", new TypeToken<List<Proveedores>>(){}.getType());
+        super("proveedores", new TypeToken<List<Proveedores>>(){}.getType());
     }
 
     

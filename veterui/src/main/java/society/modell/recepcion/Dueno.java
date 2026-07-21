@@ -17,15 +17,20 @@ public class Dueno {
     private String email;
     private String direccion;
     private EstadoDueno estado;
-    private String mascotasNombres; // String temporal "Luna,Milo" para renderizar
     private List<Paciente> mascotas;
+    
+    private String genero;
+    private String fechaNacimiento;
+    private String telefonoEmergencia;
+    private String ciudad;
+    private String codigoPostal;
 
     public Dueno() {
         this.mascotas = new ArrayList<>();
         this.estado = EstadoDueno.NUEVO;
     }
 
-    public Dueno(int id, String nombre, String apellidos, String dni, String telefono, String email, String direccion, EstadoDueno estado, String mascotasNombres) {
+    public Dueno(int id, String nombre, String apellidos, String dni, String telefono, String email, String direccion, EstadoDueno estado) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -34,7 +39,6 @@ public class Dueno {
         this.email = email;
         this.direccion = direccion;
         this.estado = estado;
-        this.mascotasNombres = mascotasNombres;
         this.mascotas = new ArrayList<>();
     }
 
@@ -54,10 +58,19 @@ public class Dueno {
     public void setDireccion(String direccion) { this.direccion = direccion; }
     public EstadoDueno getEstado() { return estado; }
     public void setEstado(EstadoDueno estado) { this.estado = estado; }
-    public String getMascotasNombres() { return mascotasNombres; }
-    public void setMascotasNombres(String mascotasNombres) { this.mascotasNombres = mascotasNombres; }
     public List<Paciente> getMascotas() { return mascotas; }
     public void setMascotas(List<Paciente> mascotas) { this.mascotas = mascotas; }
+    
+    public String getGenero() { return genero; }
+    public void setGenero(String genero) { this.genero = genero; }
+    public String getFechaNacimiento() { return fechaNacimiento; }
+    public void setFechaNacimiento(String fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }
+    public String getTelefonoEmergencia() { return telefonoEmergencia; }
+    public void setTelefonoEmergencia(String telefonoEmergencia) { this.telefonoEmergencia = telefonoEmergencia; }
+    public String getCiudad() { return ciudad; }
+    public void setCiudad(String ciudad) { this.ciudad = ciudad; }
+    public String getCodigoPostal() { return codigoPostal; }
+    public void setCodigoPostal(String codigoPostal) { this.codigoPostal = codigoPostal; }
 }
 
 

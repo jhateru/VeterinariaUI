@@ -21,6 +21,7 @@ public class Personal implements Entity {
     private String colegiado;
     private String fechaContratacion;
     private String username;
+    private String password;
     private String rolSistema;
     private String turno;
     private String diasLaborales;
@@ -83,6 +84,9 @@ public class Personal implements Entity {
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
     public String getRolSistema() { return rolSistema; }
     public void setRolSistema(String rolSistema) { this.rolSistema = rolSistema; }

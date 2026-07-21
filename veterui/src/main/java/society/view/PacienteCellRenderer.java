@@ -66,10 +66,15 @@ public class PacienteCellRenderer implements TableCellRenderer {
             case 2: // DUEÑO
                 cell.setLayout(new GridLayout(2, 1));
                 cell.setBorder(BorderFactory.createCompoundBorder(cell.getBorder(), BorderFactory.createEmptyBorder(15, 10, 10, 10)));
-                JLabel lblDueno = new JLabel(p.getNombreDueno());
+                
+                society.modell.recepcion.Dueno d = new society.dao.DuenoDao().getById(p.getDuenoId());
+                String nombreDueno = d != null ? (d.getNombre() + " " + (d.getApellidos() != null ? d.getApellidos() : "")).trim() : "Desconocido";
+                String telDueno = d != null && d.getTelefono() != null ? d.getTelefono() : "";
+                
+                JLabel lblDueno = new JLabel(nombreDueno);
                 lblDueno.setFont(new Font("SansSerif", Font.PLAIN, 13));
                 lblDueno.setForeground(textColor);
-                JLabel lblTel = new JLabel(p.getTelefonoDueno());
+                JLabel lblTel = new JLabel(telDueno);
                 lblTel.setFont(new Font("SansSerif", Font.PLAIN, 11));
                 lblTel.setForeground(isSelected ? Color.WHITE : new Color(30, 100, 200));
                 cell.add(lblDueno);
@@ -109,14 +114,14 @@ public class PacienteCellRenderer implements TableCellRenderer {
 
             case 5: // ACCIONES
                 cell.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 20));
-                JLabel lblView = new JLabel("👁");
-                lblView.setFont(new Font("SansSerif", Font.PLAIN, 16));
-                lblView.setForeground(subTextColor);
                 JLabel lblEdit = new JLabel("✎");
                 lblEdit.setFont(new Font("SansSerif", Font.PLAIN, 16));
                 lblEdit.setForeground(subTextColor);
-                cell.add(lblView);
+                JLabel lblDelete = new JLabel("🗑");
+                lblDelete.setFont(new Font("SansSerif", Font.PLAIN, 16));
+                lblDelete.setForeground(new Color(200, 50, 50));
                 cell.add(lblEdit);
+                cell.add(lblDelete);
                 return cell;
 
             default:

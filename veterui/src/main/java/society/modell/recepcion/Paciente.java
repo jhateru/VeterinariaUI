@@ -21,12 +21,8 @@ public class Paciente {
     private String edadAproximada; // For UI like "4 años", "6 meses"
     private double peso;
     
-    // Información del dueño simulada para facilitar la UI/CSV por ahora
-    private String nombreDueno;
-    private String telefonoDueno;
-    private String dniDueno;
-    private String emailDueno;
-    private String direccionDueno;
+    // Relación con el dueño
+    private int duenoId;
     
     // Detalles Médicos Iniciales
     private String alergias;
@@ -39,7 +35,7 @@ public class Paciente {
     }
 
     public Paciente(int id, String nombre, EspecieAnimal especie, String raza, String sexo, String edadAproximada, double peso, 
-                    String nombreDueno, String telefonoDueno, String dniDueno, String emailDueno, String direccionDueno,
+                    int duenoId,
                     String alergias, String motivoPrimeraConsulta, String ultimaVisita, EstadoPaciente estado) {
         this.id = id;
         this.nombre = nombre;
@@ -48,11 +44,7 @@ public class Paciente {
         this.sexo = sexo;
         this.edadAproximada = edadAproximada;
         this.peso = peso;
-        this.nombreDueno = nombreDueno;
-        this.telefonoDueno = telefonoDueno;
-        this.dniDueno = dniDueno;
-        this.emailDueno = emailDueno;
-        this.direccionDueno = direccionDueno;
+        this.duenoId = duenoId;
         this.alergias = alergias;
         this.motivoPrimeraConsulta = motivoPrimeraConsulta;
         this.ultimaVisita = ultimaVisita;
@@ -77,16 +69,8 @@ public class Paciente {
     public double getPeso() { return peso; }
     public void setPeso(double peso) { this.peso = peso; }
     
-    public String getNombreDueno() { return nombreDueno; }
-    public void setNombreDueno(String nombreDueno) { this.nombreDueno = nombreDueno; }
-    public String getTelefonoDueno() { return telefonoDueno; }
-    public void setTelefonoDueno(String telefonoDueno) { this.telefonoDueno = telefonoDueno; }
-    public String getDniDueno() { return dniDueno; }
-    public void setDniDueno(String dniDueno) { this.dniDueno = dniDueno; }
-    public String getEmailDueno() { return emailDueno; }
-    public void setEmailDueno(String emailDueno) { this.emailDueno = emailDueno; }
-    public String getDireccionDueno() { return direccionDueno; }
-    public void setDireccionDueno(String direccionDueno) { this.direccionDueno = direccionDueno; }
+    public int getDuenoId() { return duenoId; }
+    public void setDuenoId(int duenoId) { this.duenoId = duenoId; }
 
     public String getAlergias() { return alergias; }
     public void setAlergias(String alergias) { this.alergias = alergias; }

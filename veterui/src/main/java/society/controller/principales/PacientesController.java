@@ -145,9 +145,12 @@ public class PacientesController {
         VBox colDueno = new VBox(2);
         colDueno.setAlignment(Pos.CENTER_LEFT);
         colDueno.setPrefWidth(200);
-        Label ownName = new Label(p.getNombreDueno() != null ? p.getNombreDueno() : "Sin dueño");
+        society.modell.recepcion.Dueno d = new society.dao.DuenoDao().getById(p.getDuenoId());
+        String nDueno = d != null ? d.getNombre() : "Sin dueño";
+        String tDueno = d != null ? d.getTelefono() : "";
+        Label ownName = new Label(nDueno);
         ownName.setStyle("-fx-text-fill: #1b1c1c; -fx-font-size: 13px;");
-        Label ownPhone = new Label(p.getTelefonoDueno() != null ? p.getTelefonoDueno() : "");
+        Label ownPhone = new Label(tDueno);
         ownPhone.setStyle("-fx-text-fill: #315ea2; -fx-font-size: 11px;");
         colDueno.getChildren().addAll(ownName, ownPhone);
         

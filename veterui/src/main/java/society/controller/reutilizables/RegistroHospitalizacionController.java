@@ -88,15 +88,20 @@ public class RegistroHospitalizacionController {
         
         // Simular búsqueda encontrando el primero que coincida, o simplemente cargar uno de prueba
         Optional<Paciente> opt = pacienteDao.getAll().stream()
-                .filter(p -> p.getNombre().toLowerCase().contains(query.toLowerCase()) || 
-                             p.getNombreDueno().toLowerCase().contains(query.toLowerCase()))
+                .filter(p -> {
+                    society.modell.recepcion.Dueno d = new society.dao.DuenoDao().getById(p.getDuenoId());
+                    String duenoNombre = d != null ? d.getNombre() : "";
+                    return p.getNombre().toLowerCase().contains(query.toLowerCase()) || 
+                             duenoNombre.toLowerCase().contains(query.toLowerCase());
+                })
                 .findFirst();
 
         if (opt.isPresent()) {
             pacienteSeleccionado = opt.get();
             nombrePacienteLabel.setText(pacienteSeleccionado.getNombre());
             detallesPacienteLabel.setText(pacienteSeleccionado.getRaza() + " • " + pacienteSeleccionado.getSexo() + " • " + pacienteSeleccionado.getEdadAproximada());
-            propietarioLabel.setText("Propietario: " + pacienteSeleccionado.getNombreDueno());
+            society.modell.recepcion.Dueno d = new society.dao.DuenoDao().getById(pacienteSeleccionado.getDuenoId());
+            propietarioLabel.setText("Propietario: " + (d != null ? d.getNombre() : "Desconocido"));
             
             try {
                 String imgPath = pacienteSeleccionado.getEspecie() == Paciente.EspecieAnimal.GATO ? "/society/images/cat.png" : "/society/images/dog.png";

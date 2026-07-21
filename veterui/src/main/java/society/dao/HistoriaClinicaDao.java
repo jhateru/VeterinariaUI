@@ -1,30 +1,29 @@
 package society.dao;
 
 import java.util.List;
+import java.util.Optional;
 import com.google.gson.reflect.TypeToken;
 
 import society.modell.areamedica.HistoriaClinica;
-import society.modell.recepcion.Paciente;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
-public class HistoriaClinicaDao extends JsonDao<HistoriaClinica> {
-
-    private PacienteDao pacienteDao;
+public class HistoriaClinicaDao extends MasterJsonDao<HistoriaClinica> {
 
     public HistoriaClinicaDao() {
-        super("historias_clinicas.json", new TypeToken<List<HistoriaClinica>>(){}.getType());
-        this.pacienteDao = new PacienteDao();
+        super("historiasClinicas", new TypeToken<List<HistoriaClinica>>(){}.getType());
     }
 
-    
-
-    
-
+    /** Busca la historia clínica cuyo paciente.id coincide con pacienteId */
     public Optional<HistoriaClinica> findById(int pacienteId) {
         return getAll().stream()
                 .filter(hc -> hc.getPaciente() != null && hc.getPaciente().getId() == pacienteId)
                 .findFirst();
+    }
+
+    /**
+     * Persiste (crea o actualiza) la historia clínica dada.
+     * La clave de matching es el campo 'id' de la propia HistoriaClinica.
+     */
+    public void saveOrUpdate(HistoriaClinica historia) {
+        update(historia, HistoriaClinica::getId);
     }
 }

@@ -8,10 +8,10 @@ import society.modell.facturacion.Facturacion.EstadoFactura;
 import society.modell.facturacion.DetalleFacturacion;
 import society.modell.facturacion.CatalogoItem;
 
-public class FacturacionDao extends JsonDao<Facturacion> {
+public class FacturacionDao extends MasterJsonDao<Facturacion> {
 
     public FacturacionDao() {
-        super("facturacion.json", new TypeToken<List<Facturacion>>(){}.getType());
+        super("facturacion", new TypeToken<List<Facturacion>>(){}.getType());
     }
 
     private String safe(String val) {

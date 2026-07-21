@@ -7,6 +7,9 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import com.toedter.calendar.JDateChooser;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -14,18 +17,22 @@ import java.util.Random;
 public class RegistroPacienteBasic extends JDialog {
 
     private JTextField txtNombre;
-    private JComboBox<Paciente.EspecieAnimal> cbEspecie;
+    private JComboBox<String> cbEspecie;
     private JTextField txtRaza;
-    private JTextField txtFechaNac; // o edad
-    private JRadioButton rbMacho;
-    private JRadioButton rbHembra;
+    private JDateChooser dcFechaNac;
+    private JComboBox<String> cbSexo;
     private JTextField txtPeso;
     
-    private JTextField txtNombreDueno;
-    private JTextField txtDni;
-    private JTextField txtTelDueno;
-    private JTextField txtCorreo;
-    private JTextField txtDireccion;
+    private JComboBox<DuenoItem> cbDueno;
+    private java.util.List<society.modell.recepcion.Dueno> duenosList;
+    
+    class DuenoItem {
+        society.modell.recepcion.Dueno d;
+        DuenoItem(society.modell.recepcion.Dueno d) { this.d = d; }
+        @Override public String toString() { 
+            return d.getId() + " - " + d.getNombre() + " " + (d.getApellidos() != null ? d.getApellidos() : ""); 
+        }
+    }
     
     private JTextArea txtAlergias;
     private JTextArea txtMotivo;
@@ -58,60 +65,9 @@ public class RegistroPacienteBasic extends JDialog {
         contentPanel.setOpaque(false);
         contentPanel.setBorder(BorderFactory.createEmptyBorder(0, 30, 20, 30));
 
-        // -- SECCION 1: FOTO (izq) y MASCOTA (der) --
+        // -- SECCION 1: MASCOTA --
         JPanel topSection = new JPanel(new BorderLayout(20, 0));
         topSection.setOpaque(false);
-        
-        // Panel Foto
-        JPanel panelFoto = createCardPanel();
-        panelFoto.setPreferredSize(new Dimension(280, 280));
-        panelFoto.setLayout(new GridBagLayout());
-        
-        JPanel dropArea = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(200, 200, 200));
-                Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-                g2.setStroke(dashed);
-                g2.drawOval(10, 10, getWidth() - 20, getHeight() - 20);
-                g2.dispose();
-            }
-        };
-        dropArea.setPreferredSize(new Dimension(160, 160));
-        dropArea.setOpaque(false);
-        dropArea.setLayout(new GridBagLayout());
-        
-        JLabel lblIconFoto = new JLabel("📷"); // Placeholder de icono
-        lblIconFoto.setFont(new Font("SansSerif", Font.PLAIN, 40));
-        lblIconFoto.setForeground(Color.GRAY);
-        
-        JLabel lblSubir = new JLabel("Subir foto del paciente");
-        lblSubir.setFont(new Font("SansSerif", Font.PLAIN, 11));
-        lblSubir.setForeground(Color.GRAY);
-        
-        GridBagConstraints gbcFoto = new GridBagConstraints();
-        gbcFoto.gridy = 0; dropArea.add(lblIconFoto, gbcFoto);
-        gbcFoto.gridy = 1; dropArea.add(lblSubir, gbcFoto);
-        
-        GridBagConstraints gbcCard1 = new GridBagConstraints();
-        gbcCard1.gridy = 0; gbcCard1.insets = new Insets(0,0,10,0);
-        panelFoto.add(dropArea, gbcCard1);
-        
-        JLabel lblFormatos = new JLabel("Formatos: JPG, PNG (Max 5MB)");
-        lblFormatos.setFont(new Font("SansSerif", Font.BOLD, 10));
-        lblFormatos.setForeground(new Color(100, 120, 130));
-        gbcCard1.gridy = 1; panelFoto.add(lblFormatos, gbcCard1);
-        
-        JLabel lblEliminar = new JLabel("Eliminar imagen");
-        lblEliminar.setFont(new Font("SansSerif", Font.BOLD, 11));
-        lblEliminar.setForeground(new Color(0, 120, 140)); // Teal text
-        lblEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        gbcCard1.gridy = 2; panelFoto.add(lblEliminar, gbcCard1);
-        
-        topSection.add(panelFoto, BorderLayout.WEST);
         
         // Panel Mascota
         JPanel panelMascota = createCardPanel();
@@ -126,28 +82,23 @@ public class RegistroPacienteBasic extends JDialog {
         gridMascota.setOpaque(false);
         
         txtNombre = createUnderlineTextField();
-        cbEspecie = new JComboBox<>(Paciente.EspecieAnimal.values());
+        cbEspecie = new JComboBox<>(new String[]{"PERRO", "GATO", "EXOTICO"});
         cbEspecie.setBackground(Color.WHITE);
         
         txtRaza = createUnderlineTextField();
-        txtFechaNac = createUnderlineTextField();
+        dcFechaNac = new JDateChooser();
+        dcFechaNac.setDateFormatString("dd/MM/yyyy");
         
-        JPanel panelSexo = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
-        panelSexo.setOpaque(false);
-        rbMacho = new JRadioButton("Macho");
-        rbHembra = new JRadioButton("Hembra");
-        rbMacho.setOpaque(false); rbHembra.setOpaque(false);
-        ButtonGroup bgSexo = new ButtonGroup();
-        bgSexo.add(rbMacho); bgSexo.add(rbHembra);
-        panelSexo.add(rbMacho); panelSexo.add(rbHembra);
+        cbSexo = new JComboBox<>(new String[]{"Seleccionar...", "Macho", "Hembra", "Desconocido"});
+        cbSexo.setBackground(Color.WHITE);
         
         txtPeso = createUnderlineTextField();
         
         gridMascota.add(wrapField("NOMBRE DE LA MASCOTA", txtNombre));
         gridMascota.add(wrapField("ESPECIE", cbEspecie));
         gridMascota.add(wrapField("RAZA", txtRaza));
-        gridMascota.add(wrapField("FECHA DE NACIMIENTO / EDAD", txtFechaNac));
-        gridMascota.add(wrapField("SEXO", panelSexo));
+        gridMascota.add(wrapField("FECHA DE NACIMIENTO", dcFechaNac));
+        gridMascota.add(wrapField("SEXO", cbSexo));
         gridMascota.add(wrapField("PESO (KG)", txtPeso));
         
         panelMascota.add(titleMascota, BorderLayout.NORTH);
@@ -161,49 +112,28 @@ public class RegistroPacienteBasic extends JDialog {
         JPanel panelDueno = createCardPanel();
         panelDueno.setLayout(new BorderLayout());
         
-        JPanel headerDueno = new JPanel(new BorderLayout());
-        headerDueno.setOpaque(false);
-        JLabel titleDueno = new JLabel("👤 Información del Dueño");
+        JLabel titleDueno = new JLabel("👤 Selección del Dueño");
         titleDueno.setFont(new Font("SansSerif", Font.BOLD, 16));
         titleDueno.setForeground(new Color(0, 80, 100));
         titleDueno.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
-        headerDueno.add(titleDueno, BorderLayout.WEST);
         
-        // Search bar (simulada)
-        JTextField txtBuscar = new JTextField();
-        txtBuscar.setPreferredSize(new Dimension(250, 30));
-        txtBuscar.setBackground(new Color(240, 240, 240));
-        txtBuscar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        searchPanel.setOpaque(false);
-        searchPanel.add(txtBuscar);
-        headerDueno.add(searchPanel, BorderLayout.EAST);
-        
-        JPanel gridDueno = new JPanel(new GridLayout(2, 3, 20, 20));
+        JPanel gridDueno = new JPanel(new GridLayout(1, 1, 20, 20));
         gridDueno.setOpaque(false);
         
-        txtNombreDueno = createUnderlineTextField();
-        txtDni = createUnderlineTextField();
-        txtTelDueno = createUnderlineTextField();
-        txtCorreo = createUnderlineTextField();
-        txtDireccion = createUnderlineTextField();
+        cbDueno = new JComboBox<>();
+        cbDueno.setBackground(Color.WHITE);
         
-        gridDueno.add(wrapField("NOMBRE COMPLETO", txtNombreDueno));
-        gridDueno.add(wrapField("DNI / ID", txtDni));
-        gridDueno.add(wrapField("TELÉFONO", txtTelDueno));
-        gridDueno.add(wrapField("CORREO ELECTRÓNICO", txtCorreo));
+        society.dao.DuenoDao dDao = new society.dao.DuenoDao();
+        duenosList = dDao.getAll();
+        if (duenosList != null) {
+            for(society.modell.recepcion.Dueno d : duenosList) {
+                cbDueno.addItem(new DuenoItem(d));
+            }
+        }
         
-        // La dirección ocupa las dos columnas restantes
-        JPanel panelDir = wrapField("DIRECCIÓN", txtDireccion);
-        GridBagConstraints gbcDir = new GridBagConstraints();
-        gbcDir.gridwidth = 2; gbcDir.fill = GridBagConstraints.HORIZONTAL;
-        JPanel dirContainer = new JPanel(new GridBagLayout());
-        dirContainer.setOpaque(false);
-        gbcDir.weightx = 1.0;
-        dirContainer.add(panelDir, gbcDir);
-        gridDueno.add(dirContainer);
+        gridDueno.add(wrapField("SELECCIONAR DUEÑO", cbDueno));
         
-        panelDueno.add(headerDueno, BorderLayout.NORTH);
+        panelDueno.add(titleDueno, BorderLayout.NORTH);
         panelDueno.add(gridDueno, BorderLayout.CENTER);
         
         contentPanel.add(panelDueno);
@@ -350,17 +280,23 @@ public class RegistroPacienteBasic extends JDialog {
         }
 
         paciente.setNombre(txtNombre.getText().trim());
-        paciente.setEspecie((Paciente.EspecieAnimal) cbEspecie.getSelectedItem());
+        paciente.setEspecie(Paciente.EspecieAnimal.valueOf(cbEspecie.getSelectedItem().toString()));
+        try {
+            if (!txtPeso.getText().trim().isEmpty()) {
+                paciente.setPeso(Double.parseDouble(txtPeso.getText().trim()));
+            }
+        } catch(Exception ex) {}
         
         paciente.setRaza(txtRaza.getText().trim());
-        paciente.setEdadAproximada(txtFechaNac.getText().trim());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        paciente.setEdadAproximada(dcFechaNac.getDate() != null ? sdf.format(dcFechaNac.getDate()) : "");
         
-        if (rbMacho.isSelected()) paciente.setSexo("Macho");
-        else if (rbHembra.isSelected()) paciente.setSexo("Hembra");
-        else paciente.setSexo("Desconocido");
+        paciente.setSexo(cbSexo.getSelectedItem().toString());
         
-        paciente.setNombreDueno(txtNombreDueno.getText().trim());
-        paciente.setTelefonoDueno(txtTelDueno.getText().trim());
+        if (cbDueno.getSelectedItem() != null) {
+            DuenoItem sel = (DuenoItem) cbDueno.getSelectedItem();
+            paciente.setDuenoId(sel.d.getId());
+        }
 
         saved = true;
         dispose();
@@ -373,25 +309,39 @@ public class RegistroPacienteBasic extends JDialog {
         txtNombre.setText(p.getNombre());
         txtNombre.setForeground(Color.BLACK);
         
-        cbEspecie.setSelectedItem(p.getEspecie());
+        if (p.getEspecie() != null) {
+            cbEspecie.setSelectedItem(p.getEspecie().name());
+        }
+        if (p.getPeso() > 0) {
+            txtPeso.setText(String.valueOf(p.getPeso()));
+        }
         
         if (p.getRaza() != null) {
             txtRaza.setText(p.getRaza());
         }
         
-        if (p.getEdadAproximada() != null) {
-            txtFechaNac.setText(p.getEdadAproximada());
+        if (p.getSexo() != null) {
+            cbSexo.setSelectedItem(p.getSexo());
         }
         
-        if ("Macho".equals(p.getSexo())) rbMacho.setSelected(true);
-        else if ("Hembra".equals(p.getSexo())) rbHembra.setSelected(true);
-        
-        if (p.getNombreDueno() != null) {
-            txtNombreDueno.setText(p.getNombreDueno());
+        if (p.getDuenoId() > 0) {
+            for(int i = 0; i < cbDueno.getItemCount(); i++) {
+                if (cbDueno.getItemAt(i).d.getId() == p.getDuenoId()) {
+                    cbDueno.setSelectedIndex(i);
+                    break;
+                }
+            }
         }
-        
-        if (p.getTelefonoDueno() != null) {
-            txtTelDueno.setText(p.getTelefonoDueno());
+    }
+    
+    public void preseleccionarDueno(society.modell.recepcion.Dueno d) {
+        if (d != null) {
+            for(int i = 0; i < cbDueno.getItemCount(); i++) {
+                if (cbDueno.getItemAt(i).d.getId() == d.getId()) {
+                    cbDueno.setSelectedIndex(i);
+                    break;
+                }
+            }
         }
     }
 

@@ -20,8 +20,13 @@ public class PacientesViewBasic extends JPanel {
     private List<Paciente> pacientesCache;
     
     // Filtros
-    private Paciente.EspecieAnimal currentEspecieFilter = null; // null = Todos
-    private Paciente.EstadoPaciente currentEstadoFilter = null;
+    private JTextField txtSearch;
+    private JComboBox<String> cmbEspecie;
+    private JComboBox<String> cmbEstado;
+    
+    private CardAlerta cardTotalPacientes;
+    private CardAlerta cardEnClinica;
+    private CardAlerta cardSeguimiento;
 
     public PacientesViewBasic() {
         pacienteDao = new PacienteDao();
@@ -64,46 +69,39 @@ public class PacientesViewBasic extends JPanel {
         JPanel filtersPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
         filtersPanel.setOpaque(false);
         
-        // Panel Especie
-        JPanel especiePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        especiePanel.setBorder(BorderFactory.createTitledBorder("ESPECIE:"));
-        especiePanel.setOpaque(false);
-        String[] especies = {"Todo", "Perros", "Gatos", "Exóticos"};
-        for (String sp : especies) {
-            JButton b = new JButton(sp);
-            b.setFocusPainted(false);
-            b.setBackground(Color.WHITE);
-            b.addActionListener(e -> {
-                if (sp.equals("Todo")) currentEspecieFilter = null;
-                else if (sp.equals("Perros")) currentEspecieFilter = Paciente.EspecieAnimal.PERRO;
-                else if (sp.equals("Gatos")) currentEspecieFilter = Paciente.EspecieAnimal.GATO;
-                else currentEspecieFilter = Paciente.EspecieAnimal.EXOTICO;
-                cargarDatos();
-            });
-            especiePanel.add(b);
-        }
+        JLabel lblSearch = new JLabel("Buscar Paciente:");
+        lblSearch.setFont(new Font("SansSerif", Font.BOLD, 12));
+        filtersPanel.add(lblSearch);
         
-        // Panel Estado
-        JPanel estadoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        estadoPanel.setBorder(BorderFactory.createTitledBorder("ESTADO:"));
-        estadoPanel.setOpaque(false);
-        String[] estados = {"Todos", "En Clínica", "Alta", "Seguimiento"};
-        for (String est : estados) {
-            JButton b = new JButton(est);
-            b.setFocusPainted(false);
-            b.setBackground(Color.WHITE);
-            b.addActionListener(e -> {
-                if (est.equals("Todos")) currentEstadoFilter = null;
-                else if (est.equals("En Clínica")) currentEstadoFilter = Paciente.EstadoPaciente.EN_CLINICA;
-                else if (est.equals("Alta")) currentEstadoFilter = Paciente.EstadoPaciente.ALTA;
-                else currentEstadoFilter = Paciente.EstadoPaciente.SEGUIMIENTO;
-                cargarDatos();
-            });
-            estadoPanel.add(b);
-        }
+        txtSearch = new JTextField(15);
+        txtSearch.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) { cargarDatos(); }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) { cargarDatos(); }
+            public void changedUpdate(javax.swing.event.DocumentEvent e) { cargarDatos(); }
+        });
+        filtersPanel.add(txtSearch);
         
-        filtersPanel.add(especiePanel);
-        filtersPanel.add(estadoPanel);
+        filtersPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        
+        JLabel lblEspecie = new JLabel("Especie:");
+        lblEspecie.setFont(new Font("SansSerif", Font.BOLD, 12));
+        filtersPanel.add(lblEspecie);
+        
+        cmbEspecie = new JComboBox<>(new String[]{"Todas", "Perros", "Gatos", "Exóticos"});
+        cmbEspecie.setBackground(Color.WHITE);
+        cmbEspecie.addActionListener(e -> cargarDatos());
+        filtersPanel.add(cmbEspecie);
+        
+        filtersPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        
+        JLabel lblEstado = new JLabel("Estado:");
+        lblEstado.setFont(new Font("SansSerif", Font.BOLD, 12));
+        filtersPanel.add(lblEstado);
+        
+        cmbEstado = new JComboBox<>(new String[]{"Todos", "En Clínica", "Alta", "Seguimiento"});
+        cmbEstado.setBackground(Color.WHITE);
+        cmbEstado.addActionListener(e -> cargarDatos());
+        filtersPanel.add(cmbEstado);
         
         JPanel topContainer = new JPanel(new BorderLayout(0, 15));
         topContainer.setOpaque(false);
@@ -140,7 +138,19 @@ public class PacientesViewBasic extends JPanel {
                 int col = table.columnAtPoint(e.getPoint());
                 if (row >= 0 && col == 5) { // Columna ACCIONES
                     Paciente p = (Paciente) tableModel.getValueAt(row, 0);
-                    abrirRegistroPaciente(p); // Por ahora abrir edición al hacer clic en acciones
+                    Rectangle cellRect = table.getCellRect(row, col, false);
+                    int xInCell = e.getX() - cellRect.x;
+                    if (xInCell > cellRect.width / 2) {
+                        // Clic lado derecho = Eliminar
+                        int resp = JOptionPane.showConfirmDialog(PacientesViewBasic.this, "¿Eliminar paciente " + p.getNombre() + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                        if (resp == JOptionPane.YES_OPTION) {
+                            pacienteDao.delete(p.getId());
+                            cargarDatos();
+                        }
+                    } else {
+                        // Clic lado izquierdo = Editar
+                        abrirRegistroPaciente(p);
+                    }
                 }
             }
         });
@@ -154,13 +164,14 @@ public class PacientesViewBasic extends JPanel {
         JPanel footerPanel = new JPanel(new GridLayout(1, 3, 20, 0));
         footerPanel.setOpaque(false);
         
-        CardAlerta card1 = new CardAlerta("OCUPACIÓN ACTUAL", "18", "🏨", new Color(200, 240, 240), Color.BLACK);
-        CardAlerta card2 = new CardAlerta("CONSULTAS HOY", "32", "🩺", new Color(240, 240, 255), Color.BLACK);
-        CardAlerta card3 = new CardAlerta("PENDIENTES", "5", "📋", new Color(255, 240, 220), Color.BLACK);
+        Color brandBlue = new Color(0, 80, 100);
+        cardTotalPacientes = new CardAlerta("TOTAL PACIENTES", "0", "🐾", new Color(240, 248, 255), brandBlue);
+        cardEnClinica = new CardAlerta("EN CLÍNICA", "0", "🏨", new Color(240, 255, 240), new Color(0, 150, 0));
+        cardSeguimiento = new CardAlerta("SEGUIMIENTO", "0", "📋", new Color(255, 250, 240), new Color(200, 150, 0));
         
-        footerPanel.add(card1);
-        footerPanel.add(card2);
-        footerPanel.add(card3);
+        footerPanel.add(cardTotalPacientes);
+        footerPanel.add(cardEnClinica);
+        footerPanel.add(cardSeguimiento);
         
         add(footerPanel, BorderLayout.SOUTH);
         
@@ -170,11 +181,53 @@ public class PacientesViewBasic extends JPanel {
     private void cargarDatos() {
         pacientesCache = pacienteDao.getAll();
         
+        String query = "";
+        if (txtSearch != null) {
+            query = txtSearch.getText().trim().toLowerCase();
+        }
+        
+        String selEspecie = "Todas";
+        if (cmbEspecie != null) {
+            selEspecie = (String) cmbEspecie.getSelectedItem();
+        }
+        
+        String selEstado = "Todos";
+        if (cmbEstado != null) {
+            selEstado = (String) cmbEstado.getSelectedItem();
+        }
+        
+        final String fQuery = query;
+        final String fEspecie = selEspecie;
+        final String fEstado = selEstado;
+
         // Aplicar filtros
         List<Paciente> filtrados = pacientesCache.stream()
-                .filter(p -> currentEspecieFilter == null || p.getEspecie() == currentEspecieFilter)
-                .filter(p -> currentEstadoFilter == null || p.getEstado() == currentEstadoFilter)
+                .filter(p -> p.getNombre().toLowerCase().contains(fQuery))
+                .filter(p -> {
+                    if (fEspecie.equals("Todas")) return true;
+                    if (p.getEspecie() == null) return false;
+                    if (fEspecie.equals("Perros") && p.getEspecie() == Paciente.EspecieAnimal.PERRO) return true;
+                    if (fEspecie.equals("Gatos") && p.getEspecie() == Paciente.EspecieAnimal.GATO) return true;
+                    if (fEspecie.equals("Exóticos") && p.getEspecie() == Paciente.EspecieAnimal.EXOTICO) return true;
+                    return false;
+                })
+                .filter(p -> {
+                    if (fEstado.equals("Todos")) return true;
+                    if (p.getEstado() == null) return false;
+                    if (fEstado.equals("En Clínica") && p.getEstado() == Paciente.EstadoPaciente.EN_CLINICA) return true;
+                    if (fEstado.equals("Alta") && p.getEstado() == Paciente.EstadoPaciente.ALTA) return true;
+                    if (fEstado.equals("Seguimiento") && p.getEstado() == Paciente.EstadoPaciente.SEGUIMIENTO) return true;
+                    return false;
+                })
                 .collect(Collectors.toList());
+                
+        long total = filtrados.size();
+        long enClinica = filtrados.stream().filter(p -> p.getEstado() == Paciente.EstadoPaciente.EN_CLINICA).count();
+        long seguimiento = filtrados.stream().filter(p -> p.getEstado() == Paciente.EstadoPaciente.SEGUIMIENTO).count();
+        
+        if (cardTotalPacientes != null) cardTotalPacientes.updateData(String.valueOf(total));
+        if (cardEnClinica != null) cardEnClinica.updateData(String.valueOf(enClinica));
+        if (cardSeguimiento != null) cardSeguimiento.updateData(String.valueOf(seguimiento));
                 
         tableModel.setRowCount(0);
         for (Paciente p : filtrados) {
@@ -196,6 +249,19 @@ public class PacientesViewBasic extends JPanel {
             } else {
                 pacienteDao.update(dialog.getPaciente());
             }
+            cargarDatos();
+        }
+    }
+    
+    public void abrirRegistroParaDueno(society.modell.recepcion.Dueno d) {
+        RegistroPacienteBasic dialog = new RegistroPacienteBasic((Frame) SwingUtilities.getWindowAncestor(this));
+        if (d != null) {
+            dialog.preseleccionarDueno(d);
+        }
+        dialog.setVisible(true);
+        
+        if (dialog.isSaved()) {
+            pacienteDao.create(dialog.getPaciente());
             cargarDatos();
         }
     }

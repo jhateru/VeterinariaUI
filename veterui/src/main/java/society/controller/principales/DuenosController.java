@@ -162,13 +162,21 @@ public class DuenosController {
         mascotasLbl.setStyle("-fx-font-size: 11px; -fx-text-fill: #6e797a; -fx-font-weight: bold;");
         
         HBox mascotasPills = new HBox(8);
-        String mn = d.getMascotasNombres();
-        if (mn != null && !mn.isEmpty()) {
-            for (String m : mn.split(",")) {
-                Label pill = new Label("🐾 " + m.trim());
+        society.dao.PacienteDao pDao = new society.dao.PacienteDao();
+        java.util.List<society.modell.recepcion.Paciente> pacs = pDao.getAll();
+        boolean hasPets = false;
+        for (society.modell.recepcion.Paciente p : pacs) {
+            if (p.getDuenoId() == d.getId()) {
+                hasPets = true;
+                Label pill = new Label("🐾 " + p.getNombre().trim());
                 pill.setStyle("-fx-background-color: #f3f4f6; -fx-text-fill: #4b5563; -fx-padding: 4 10; -fx-background-radius: 4; -fx-font-size: 12px;");
                 mascotasPills.getChildren().add(pill);
             }
+        }
+        if (!hasPets) {
+            Label noPets = new Label("Ninguna");
+            noPets.setStyle("-fx-text-fill: #9ca3af; -fx-font-size: 12px;");
+            mascotasPills.getChildren().add(noPets);
         }
         mascotasInfo.getChildren().addAll(mascotasLbl, mascotasPills);
 

@@ -13,11 +13,12 @@ public class HistoriaClinica {
     private double pesoActual;
     private String evoluciones; // e.g., "Consulta General - Dermatología;14 Octubre 2023;Paciente presenta prurito...|Vacunación...;..."
     private String tratamientos; // e.g., "Apoquel 16mg;1 tableta cada 24 horas|Bravecto (Spot-on);Dosis única trimestral"
+    private String historialPesos; // e.g., "ENE;60|MAR;62|MAY;60"
 
     public HistoriaClinica() {
     }
 
-    public HistoriaClinica(int id, Paciente paciente, LocalDate fechaApertura, String alergias, String antecedentes, double pesoActual, String evoluciones, String tratamientos) {
+    public HistoriaClinica(int id, Paciente paciente, LocalDate fechaApertura, String alergias, String antecedentes, double pesoActual, String evoluciones, String tratamientos, String historialPesos) {
         this.id = id;
         this.paciente = paciente;
         this.fechaApertura = fechaApertura;
@@ -26,6 +27,11 @@ public class HistoriaClinica {
         this.pesoActual = pesoActual;
         this.evoluciones = evoluciones;
         this.tratamientos = tratamientos;
+        this.historialPesos = historialPesos;
+    }
+
+    public HistoriaClinica(int id, Paciente paciente, LocalDate fechaApertura, String alergias, String antecedentes, double pesoActual, String evoluciones, String tratamientos) {
+        this(id, paciente, fechaApertura, alergias, antecedentes, pesoActual, evoluciones, tratamientos, "");
     }
 
     public int getId() { return id; }
@@ -44,6 +50,8 @@ public class HistoriaClinica {
     public void setEvoluciones(String evoluciones) { this.evoluciones = evoluciones; }
     public String getTratamientos() { return tratamientos; }
     public void setTratamientos(String tratamientos) { this.tratamientos = tratamientos; }
+    public String getHistorialPesos() { return historialPesos; }
+    public void setHistorialPesos(String historialPesos) { this.historialPesos = historialPesos; }
 }
 
 

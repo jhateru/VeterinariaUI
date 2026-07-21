@@ -75,7 +75,8 @@ public class HospitalizacionController {
                     VBox pDetails = new VBox(2);
                     Label pName = new Label(p.getNombre());
                     pName.setStyle("-fx-font-weight: bold; -fx-text-fill: #333;");
-                    Label pInfo = new Label(p.getRaza() + " • " + p.getNombreDueno());
+                    society.modell.recepcion.Dueno d = new society.dao.DuenoDao().getById(p.getDuenoId());
+                    Label pInfo = new Label(p.getRaza() + " • " + (d != null ? d.getNombre() : "Desconocido"));
                     pInfo.setStyle("-fx-font-size: 10px; -fx-text-fill: #888;");
                     pInfo.setWrapText(true);
                     pDetails.getChildren().addAll(pName, pInfo);

@@ -6,18 +6,46 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import society.dao.CitaDao;
+import society.dao.PacienteDao;
+import society.dao.PersonalDao;
 import society.modell.recepcion.Cita;
+import society.modell.recepcion.Paciente;
+import society.modell.administracion.Personal;
 import society.view.components.CardAlerta;
 import society.view.components.CardHorizontal;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class CitasViewBasic extends JPanel {
     
-    private JTable calendarTable;
+    private JTable citasTable;
     private DefaultTableModel tableModel;
     private CitaDao citaDao;
+    private PacienteDao pacienteDao;
+    private PersonalDao personalDao;
+    private Map<Integer, String> pacienteNombres;
+    private Map<Integer, String> personalNombres;
+    private JComboBox<String> cmbVeterinario;
+    private JComboBox<String> cmbEstado;
+    private JComboBox<String> cmbServicio;
+    private Map<String, Integer> veterinarioIdsMap;
+    
+    private CardAlerta cardCitas;
+    private CardAlerta cardAtendidos;
+    private CardAlerta cardPend;
+    private List<Cita> displayedCitas;
 
     public CitasViewBasic() {
         citaDao = new CitaDao();
+        pacienteDao = new PacienteDao();
+        personalDao = new PersonalDao();
+        pacienteNombres = new HashMap<>();
+        personalNombres = new HashMap<>();
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
@@ -29,16 +57,24 @@ public class CitasViewBasic extends JPanel {
         title.setFont(new Font("SansSerif", Font.BOLD, 22));
         titleNavPanel.add(title);
         
-        titleNavPanel.add(Box.createRigidArea(new Dimension(20, 0)));
-        JButton prevBtn = new JButton("<");
-        JLabel dateRange = new JLabel(" Esta Semana ");
-        dateRange.setFont(new Font("SansSerif", Font.BOLD, 12));
-        JButton nextBtn = new JButton(">");
-        titleNavPanel.add(prevBtn);
-        titleNavPanel.add(dateRange);
-        titleNavPanel.add(nextBtn);
-        
         headerPanel.add(titleNavPanel, BorderLayout.WEST);
+        
+        // Stats Panel below title
+        JPanel statsContainer = new JPanel(new GridLayout(1, 3, 20, 0));
+        statsContainer.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        
+        Color brandBlue = new Color(0, 80, 100);
+        cardCitas = new CardAlerta("TOTAL CITAS", "0", "📅", new Color(240, 248, 255), brandBlue);
+        cardAtendidos = new CardAlerta("ATENDIDOS", "0", "✅", new Color(240, 255, 240), new Color(0, 150, 0));
+        cardPend = new CardAlerta("PENDIENTES", "0", "⏳", new Color(255, 250, 240), new Color(200, 150, 0));
+        
+        statsContainer.add(cardCitas);
+        statsContainer.add(cardAtendidos);
+        statsContainer.add(cardPend);
+        
+        JPanel headerNorth = new JPanel(new BorderLayout());
+        headerNorth.add(headerPanel, BorderLayout.NORTH);
+        headerNorth.add(statsContainer, BorderLayout.CENTER);
         
         JButton newCitaBtn = new JButton("+ Nueva Cita");
         newCitaBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -50,7 +86,7 @@ public class CitasViewBasic extends JPanel {
             if (dialog.isSaved()) {
                 Cita c = dialog.getNuevaCita();
                 citaDao.save(c);
-                loadCalendarData(); 
+                loadCitasData(); 
                 JOptionPane.showMessageDialog(this, "Cita creada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             }
         });
@@ -61,267 +97,235 @@ public class CitasViewBasic extends JPanel {
         filtersPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
         
         JPanel comboPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 0));
-        comboPanel.add(createFilter("VETERINARIO", "Todos los Doctores"));
-        comboPanel.add(createFilter("ESTADO", "Todos los Estados"));
-        comboPanel.add(createFilter("SERVICIO", "Todos los Servicios"));
+        
+        veterinarioIdsMap = new HashMap<>();
+        cmbVeterinario = new JComboBox<>();
+        cmbEstado = new JComboBox<>(new String[]{"Todos los Estados", "PENDIENTE", "COMPLETADA", "CANCELADA", "URGENCIA"});
+        cmbServicio = new JComboBox<>(new String[]{"Todos los Servicios", "Vacunación", "Control", "Cirugía", "Urgencia", "Peluquería", "Otro"});
+        
+        cmbVeterinario.addActionListener(e -> loadCitasData());
+        cmbEstado.addActionListener(e -> loadCitasData());
+        cmbServicio.addActionListener(e -> loadCitasData());
+        
+        comboPanel.add(createFilter("VETERINARIO", cmbVeterinario));
+        comboPanel.add(createFilter("ESTADO", cmbEstado));
+        comboPanel.add(createFilter("SERVICIO", cmbServicio));
         filtersPanel.add(comboPanel, BorderLayout.WEST);
         
-        JPanel viewModePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JToggleButton btnSemana = new JToggleButton("Semana", true);
-        JToggleButton btnMes = new JToggleButton("Mes");
-        JToggleButton btnDia = new JToggleButton("Día");
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(btnSemana); bg.add(btnMes); bg.add(btnDia);
-        viewModePanel.add(btnSemana);
-        viewModePanel.add(btnMes);
-        viewModePanel.add(btnDia);
-        filtersPanel.add(viewModePanel, BorderLayout.EAST);
+        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnEditar = new JButton("✏️ Editar");
+        JButton btnEliminar = new JButton("🗑️ Eliminar");
+        
+        btnEditar.addActionListener(e -> {
+            int row = citasTable.getSelectedRow();
+            if (row >= 0 && row < displayedCitas.size()) {
+                Cita c = displayedCitas.get(row);
+                abrirDialogoEdicion(c);
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione una cita primero.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+        
+        btnEliminar.addActionListener(e -> {
+            int row = citasTable.getSelectedRow();
+            if (row >= 0 && row < displayedCitas.size()) {
+                Cita c = displayedCitas.get(row);
+                eliminarCita(c);
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione una cita primero.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+        
+        actionPanel.add(btnEditar);
+        actionPanel.add(btnEliminar);
+        filtersPanel.add(actionPanel, BorderLayout.EAST);
 
         JPanel topSection = new JPanel(new BorderLayout());
-        topSection.add(headerPanel, BorderLayout.NORTH);
-        topSection.add(filtersPanel, BorderLayout.SOUTH);
-        topSection.add(new JSeparator(), BorderLayout.CENTER);
+        topSection.add(headerNorth, BorderLayout.NORTH);
+        topSection.add(filtersPanel, BorderLayout.CENTER);
+        topSection.add(new JSeparator(), BorderLayout.SOUTH);
         
         add(topSection, BorderLayout.NORTH);
 
         // 3. Main Content
         JPanel mainContent = new JPanel(new BorderLayout(15, 0));
         
-        // --- CALENDAR ---
-        JPanel calendarWrapper = new JPanel(new BorderLayout());
-        calendarWrapper.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        // --- CITAS TABLE ---
+        JPanel tableWrapper = new JPanel(new BorderLayout());
+        tableWrapper.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         
-        String[] columnNames = {"Hora", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
+        String[] columnNames = {"ID", "Fecha", "Hora", "Paciente", "Veterinario", "Motivo", "Estado"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Cell content should not be editable directly like text
+                return false;
             }
         };
-        calendarTable = new JTable(tableModel);
-        calendarTable.setRowHeight(50);
-        calendarTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // Disable auto-resize to allow horizontal scroll
+        citasTable = new JTable(tableModel);
+        citasTable.setRowHeight(40);
+        citasTable.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        citasTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+        citasTable.getTableHeader().setBackground(new Color(240, 240, 240));
+        citasTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        citasTable.setSelectionBackground(new Color(220, 235, 255));
         
-        // Set column widths
-        calendarTable.getColumnModel().getColumn(0).setMaxWidth(60);
-        calendarTable.getColumnModel().getColumn(0).setMinWidth(60);
-        calendarTable.getColumnModel().getColumn(0).setPreferredWidth(60);
-        
-        for (int i = 1; i < calendarTable.getColumnCount(); i++) {
-            calendarTable.getColumnModel().getColumn(i).setMinWidth(150);
-            calendarTable.getColumnModel().getColumn(i).setPreferredWidth(200);
-        }
-        
-        calendarTable.setDefaultRenderer(Object.class, new CitaCellRenderer());
+        // Custom renderer for Status column
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        citasTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        citasTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        citasTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        citasTable.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
 
-        calendarTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        citasTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
-                    int row = calendarTable.rowAtPoint(evt.getPoint());
-                    int col = calendarTable.columnAtPoint(evt.getPoint());
-                    if (row >= 0 && col > 0) {
-                        Object val = tableModel.getValueAt(row, col);
-                        if (val instanceof Cita) {
-                            editarEliminarCita((Cita) val);
-                        }
+                    int row = citasTable.getSelectedRow();
+                    if (row >= 0 && row < displayedCitas.size()) {
+                        Cita c = displayedCitas.get(row);
+                        abrirDialogoEdicion(c);
                     }
                 }
             }
         });
         
-        loadCalendarData();
+        populateVeterinariosCombo();
+        loadCitasData();
         
-        calendarWrapper.add(calendarTable.getTableHeader(), BorderLayout.NORTH);
-        calendarWrapper.add(new JScrollPane(calendarTable), BorderLayout.CENTER);
-        mainContent.add(calendarWrapper, BorderLayout.CENTER);
+        tableWrapper.add(citasTable.getTableHeader(), BorderLayout.NORTH);
+        tableWrapper.add(new JScrollPane(citasTable), BorderLayout.CENTER);
+        mainContent.add(tableWrapper, BorderLayout.CENTER);
 
-        // --- SIDEBAR RIGHT ---
-        JPanel rightSidebar = new JPanel();
-        rightSidebar.setLayout(new BoxLayout(rightSidebar, BoxLayout.Y_AXIS));
-        rightSidebar.setPreferredSize(new Dimension(300, 0));
-        rightSidebar.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         
-        JPanel rightPadding = new JPanel();
-        rightPadding.setLayout(new BoxLayout(rightPadding, BoxLayout.Y_AXIS));
-        rightPadding.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        
-        JLabel hoyTitle = new JLabel("Hoy: 17 Mayo");
-        hoyTitle.setFont(new Font("SansSerif", Font.BOLD, 16));
-        rightPadding.add(hoyTitle);
-        rightPadding.add(Box.createRigidArea(new Dimension(0, 15)));
-        
-        JPanel statsPanel = new JPanel(new GridLayout(1, 3, 10, 0));
-        statsPanel.setOpaque(false);
-        
-        CardAlerta cardCitas = new CardAlerta("CITAS", "12");
-        CardAlerta cardAtendidos = new CardAlerta("ATENDIDOS", "4");
-        CardAlerta cardPend = new CardAlerta("PEND.", "2");
-        
-        statsPanel.add(cardCitas);
-        statsPanel.add(cardAtendidos);
-        statsPanel.add(cardPend);
-        
-        rightPadding.add(statsPanel);
-        rightPadding.add(Box.createRigidArea(new Dimension(0, 15)));
-        rightPadding.add(new JSeparator());
-        rightPadding.add(Box.createRigidArea(new Dimension(0, 15)));
-        
-        JLabel proximasTitle = new JLabel("PRÓXIMAS CITAS");
-        proximasTitle.setFont(new Font("SansSerif", Font.BOLD, 10));
-        rightPadding.add(proximasTitle);
-        rightPadding.add(Box.createRigidArea(new Dimension(0, 10)));
-        
-        // Contenedor para las próximas citas (CardHorizontal) con Scroll
-        JPanel listProximas = new JPanel();
-        listProximas.setLayout(new BoxLayout(listProximas, BoxLayout.Y_AXIS));
-        listProximas.setOpaque(false);
-        
-        CardHorizontal card1 = new CardHorizontal("🐾 Buddy", "12:30", "Golden Retriever", "Confirmado - Consulta", "Detalles", "↪");
-        CardHorizontal card2 = new CardHorizontal("🐾 Mimi", "13:15", "Siamés", "Llegada - Vacunas", "Check-in", "↪");
-        CardHorizontal card3 = new CardHorizontal("🐾 Paco", "14:00", "Loro", "En sala de espera", "Detalles", "↪");
-        CardHorizontal card4 = new CardHorizontal("🐾 Max", "15:30", "Pastor Alemán", "Confirmado - Cirugía", "Detalles", "↪");
-        CardHorizontal card5 = new CardHorizontal("🐾 Luna", "16:45", "Gato Persa", "Llegada - Revisión", "Check-in", "↪");
-        
-        listProximas.add(card1);
-        listProximas.add(Box.createRigidArea(new Dimension(0, 10)));
-        listProximas.add(card2);
-        listProximas.add(Box.createRigidArea(new Dimension(0, 10)));
-        listProximas.add(card3);
-        listProximas.add(Box.createRigidArea(new Dimension(0, 10)));
-        listProximas.add(card4);
-        listProximas.add(Box.createRigidArea(new Dimension(0, 10)));
-        listProximas.add(card5);
-        
-        JScrollPane scrollProximas = new JScrollPane(listProximas);
-        scrollProximas.setBorder(null);
-        scrollProximas.getViewport().setOpaque(false);
-        scrollProximas.setOpaque(false);
-        scrollProximas.setPreferredSize(new Dimension(280, 400)); // Increased height
-        scrollProximas.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        
-        rightPadding.add(scrollProximas);
-        
-        rightPadding.add(Box.createVerticalGlue());
-        
-        JButton printBtn = new JButton("🖨️ Imprimir Agenda Diaria");
-        printBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        printBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        printBtn.addActionListener(e -> JOptionPane.showMessageDialog(this, "Imprimiendo Agenda..."));
-        rightPadding.add(printBtn);
-        
-        rightSidebar.add(rightPadding);
-        mainContent.add(rightSidebar, BorderLayout.EAST);
-        
+        // Remove empty right sidebar
         add(mainContent, BorderLayout.CENTER);
     }
     
-    private void loadCalendarData() {
+    private void loadCitasData() {
         tableModel.setRowCount(0);
-        java.util.List<Cita> citas = citaDao.getAll();
+        pacienteNombres.clear();
+        for (Paciente p : pacienteDao.getAll()) {
+            pacienteNombres.put(p.getId(), p.getNombre());
+        }
         
-        String[] hours = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
+        personalNombres.clear();
+        for (Personal p : personalDao.getAll()) {
+            personalNombres.put(p.getId(), p.getNombre());
+        }
         
-        for (String hour : hours) {
-            Object[] row = new Object[8];
-            row[0] = hour; 
-            
-            int hourInt = Integer.parseInt(hour.split(":")[0]);
-            
-            for (Cita c : citas) {
-                if (c.getFechaHora() != null && c.getFechaHora().getHour() == hourInt) {
-                    int dayOfWeek = c.getFechaHora().getDayOfWeek().getValue();
-                    if (row[dayOfWeek] == null) {
-                        row[dayOfWeek] = c;
+        List<Cita> allCitas = citaDao.getAll();
+        displayedCitas = new java.util.ArrayList<>();
+        
+        LocalDate today = LocalDate.now();
+        
+        String selVet = (String) cmbVeterinario.getSelectedItem();
+        String selEstado = (String) cmbEstado.getSelectedItem();
+        String selServ = (String) cmbServicio.getSelectedItem();
+        
+        int countCitas = 0;
+        int countAtendidos = 0;
+        int countPendientes = 0;
+        
+        for (Cita c : allCitas) {
+            if (c.getFechaHora() != null && !c.getFechaHora().toLocalDate().isBefore(today)) {
+                
+                // Aplicar filtros
+                boolean matchVet = selVet == null || selVet.equals("Todos los Doctores") || 
+                                   (veterinarioIdsMap.containsKey(selVet) && c.getVeterinarioId() == veterinarioIdsMap.get(selVet));
+                
+                boolean matchEstado = selEstado == null || selEstado.equals("Todos los Estados") || 
+                                      (c.getEstado() != null && c.getEstado().name().equals(selEstado));
+                
+                boolean matchServ = selServ == null || selServ.equals("Todos los Servicios") || 
+                                    (c.getMotivo() != null && c.getMotivo().equalsIgnoreCase(selServ));
+                
+                if (matchVet && matchEstado && matchServ) {
+                    displayedCitas.add(c);
+                    
+                    // Solo contamos para estadísticas las que pasan los filtros
+                    countCitas++;
+                    if (c.getEstado() == Cita.EstadoCita.COMPLETADA) {
+                        countAtendidos++;
+                    } else if (c.getEstado() == Cita.EstadoCita.PENDIENTE || c.getEstado() == Cita.EstadoCita.URGENCIA) {
+                        countPendientes++;
                     }
                 }
             }
+        }
+        
+        // Update stats UI
+        cardCitas.updateData(String.valueOf(countCitas));
+        cardAtendidos.updateData(String.valueOf(countAtendidos));
+        cardPend.updateData(String.valueOf(countPendientes));
+        
+        // Sort chronologically
+        Collections.sort(displayedCitas, new Comparator<Cita>() {
+            @Override
+            public int compare(Cita c1, Cita c2) {
+                if (c1.getFechaHora() == null || c2.getFechaHora() == null) return 0;
+                return c1.getFechaHora().compareTo(c2.getFechaHora());
+            }
+        });
+        
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        
+        for (Cita c : displayedCitas) {
+            Object[] row = new Object[7];
+            row[0] = c.getId();
+            row[1] = c.getFechaHora() != null ? c.getFechaHora().format(dateFormatter) : "";
+            row[2] = c.getFechaHora() != null ? c.getFechaHora().format(timeFormatter) : "";
+            row[3] = pacienteNombres.getOrDefault(c.getPacienteId(), "ID: " + c.getPacienteId());
+            row[4] = personalNombres.getOrDefault(c.getVeterinarioId(), "ID: " + c.getVeterinarioId());
+            row[5] = c.getMotivo();
+            row[6] = c.getEstado() != null ? c.getEstado().toString() : "";
             
             tableModel.addRow(row);
         }
     }
     
-    private void editarEliminarCita(Cita c) {
-        String[] options = {"Editar", "Eliminar", "Cancelar"};
-        int choice = JOptionPane.showOptionDialog(this,
-                "¿Qué desea hacer con la cita de " + c.getPacienteNombre() + "?",
-                "Gestionar Cita",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                null, options, options[0]);
-                
-        if (choice == 0) {
-            Window parentWindow = SwingUtilities.windowForComponent(this);
-            RegistroCitasBasic dialog = new RegistroCitasBasic((Frame) parentWindow);
-            dialog.setCitaToEdit(c);
-            dialog.setVisible(true);
-            
-            if (dialog.isSaved()) {
-                citaDao.update(dialog.getNuevaCita());
-                loadCalendarData();
-                JOptionPane.showMessageDialog(this, "Cita actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else if (choice == 1) {
-            int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar esta cita?", "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                citaDao.delete(c.getId());
-                loadCalendarData();
-            }
-        }
-    }
-
-    class CitaCellRenderer implements TableCellRenderer {
-        private final DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
-        
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (value instanceof Cita) {
-                Cita c = (Cita) value;
-                JPanel card = createAppointmentCard(c.getPacienteNombre(), c.getMotivo());
-                if (isSelected) {
-                    card.setBackground(table.getSelectionBackground());
-                } else {
-                    card.setBackground(Color.WHITE);
-                }
-                return card;
-            } else {
-                Component comp = defaultRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (column == 0) {
-                    ((JLabel) comp).setHorizontalAlignment(SwingConstants.CENTER);
-                    comp.setFont(new Font("SansSerif", Font.BOLD, 12));
-                    comp.setBackground(new Color(240, 240, 240));
-                } else {
-                    comp.setBackground(Color.WHITE);
-                }
-                return comp;
-            }
+    private void populateVeterinariosCombo() {
+        cmbVeterinario.removeAllItems();
+        cmbVeterinario.addItem("Todos los Doctores");
+        veterinarioIdsMap.clear();
+        for (Personal p : personalDao.getAll()) {
+            String name = p.getNombre();
+            cmbVeterinario.addItem(name);
+            veterinarioIdsMap.put(name, p.getId());
         }
     }
     
-    private JPanel createAppointmentCard(String name, String detail) {
-        JPanel card = new JPanel(new BorderLayout());
-        card.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(200, 200, 200)),
-                BorderFactory.createEmptyBorder(2, 5, 2, 5)
-        ));
+    private void abrirDialogoEdicion(Cita c) {
+        Window parentWindow = SwingUtilities.windowForComponent(this);
+        RegistroCitasBasic dialog = new RegistroCitasBasic((Frame) parentWindow);
+        dialog.setCitaToEdit(c);
+        dialog.setVisible(true);
         
-        JLabel nameL = new JLabel(name != null ? name : "");
-        nameL.setFont(new Font("SansSerif", Font.BOLD, 11));
-        
-        JLabel detL = new JLabel(detail != null ? detail : "");
-        detL.setFont(new Font("SansSerif", Font.PLAIN, 9));
-        
-        card.add(nameL, BorderLayout.NORTH);
-        card.add(detL, BorderLayout.CENTER);
-        
-        return card;
+        if (dialog.isSaved()) {
+            citaDao.update(dialog.getNuevaCita());
+            loadCitasData();
+            JOptionPane.showMessageDialog(this, "Cita actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    private void eliminarCita(Cita c) {
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar esta cita?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            citaDao.delete(c.getId());
+            loadCitasData();
+            JOptionPane.showMessageDialog(this, "Cita eliminada.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
-    private JPanel createFilter(String labelText, String comboText) {
+
+
+    private JPanel createFilter(String labelText, JComboBox<String> combo) {
         JPanel p = new JPanel(new GridLayout(2, 1));
         JLabel l = new JLabel(labelText);
         l.setFont(new Font("SansSerif", Font.BOLD, 10));
         p.add(l);
-        p.add(new JComboBox<>(new String[]{comboText}));
+        p.add(combo);
         return p;
     }
     

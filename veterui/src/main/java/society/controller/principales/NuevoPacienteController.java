@@ -71,11 +71,7 @@ public class NuevoPacienteController {
             p.setPeso(0.0);
         }
         
-        p.setNombreDueno(txtDuenoNombre.getText());
-        p.setDniDueno(txtDuenoDni.getText());
-        p.setTelefonoDueno(txtDuenoTelefono.getText());
-        p.setEmailDueno(txtDuenoEmail.getText());
-        p.setDireccionDueno(txtDuenoDireccion.getText());
+        p.setDuenoId(0); // FXML doesn't have Dueno lookup logic easily available here
         
         p.setAlergias(txtAlergias.getText());
         p.setMotivoPrimeraConsulta(txtMotivo.getText());

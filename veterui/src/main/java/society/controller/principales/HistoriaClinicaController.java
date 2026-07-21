@@ -130,7 +130,8 @@ public class HistoriaClinicaController {
                 } else {
                     nameLabel.setText(paciente.getNombre());
                     breedAgeLabel.setText(paciente.getRaza() + " • " + paciente.getEdadAproximada());
-                    ownerLabel.setText("Dueño: " + paciente.getNombreDueno());
+                    society.modell.recepcion.Dueno d = new society.dao.DuenoDao().getById(paciente.getDuenoId());
+                    ownerLabel.setText("Dueño: " + (d != null ? d.getNombre() : "Desconocido"));
                     
                     String ultVisita = paciente.getUltimaVisita();
                     if(ultVisita == null || ultVisita.isEmpty()) {

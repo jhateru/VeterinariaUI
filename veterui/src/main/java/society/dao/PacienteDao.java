@@ -7,16 +7,26 @@ import society.modell.recepcion.Paciente;
 import society.modell.recepcion.Paciente.EspecieAnimal;
 import society.modell.recepcion.Paciente.EstadoPaciente;
 
-public class PacienteDao extends JsonDao<Paciente> {
+public class PacienteDao extends MasterJsonDao<Paciente> {
 
     public PacienteDao() {
-        super("pacientes.json", new TypeToken<List<Paciente>>(){}.getType());
+        super("pacientes", new TypeToken<List<Paciente>>(){}.getType());
     }
 
     public void create(Paciente paciente) {
         List<Paciente> pacientes = getAll();
         pacientes.add(paciente);
         saveAll(pacientes);
+    }
+
+    public Paciente getById(int id) {
+        List<Paciente> pacientes = getAll();
+        for (Paciente paciente : pacientes) {
+            if (paciente.getId() == id) {
+                return paciente;
+            }
+        }
+        return null;
     }
 
     public void update(Paciente paciente) {

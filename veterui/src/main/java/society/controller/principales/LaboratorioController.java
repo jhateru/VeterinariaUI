@@ -98,7 +98,8 @@ public class LaboratorioController {
                     VBox pDetails = new VBox(2);
                     Label pName = new Label(p.getNombre());
                     pName.setStyle("-fx-font-weight: bold; -fx-text-fill: #333;");
-                    Label pOwner = new Label(p.getNombreDueno());
+                    society.modell.recepcion.Dueno d = new society.dao.DuenoDao().getById(p.getDuenoId());
+                    Label pOwner = new Label(d != null ? d.getNombre() : "Desconocido");
                     pOwner.setStyle("-fx-font-size: 10px; -fx-text-fill: #888;");
                     pDetails.getChildren().addAll(pName, pOwner);
                     patientCol.getChildren().addAll(initialBadge, pDetails);
