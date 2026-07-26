@@ -1,0 +1,40 @@
+Importancia en antigravity:
+
+1. AGENTS.md (Mi Ley Absoluta)
+Este archivo es mi contrato de comportamiento. Antes de escribir una sola línea de código, el sistema me inyecta las reglas de este archivo en la cabeza.
+
+Me da los límites (Constraints): Me prohíbe explícitamente tocar bases de datos .sqlite o leer archivos de secretos (.env, .pem). Es una medida de seguridad brillante.
+Me dice cómo pensás (Convenciones): Me obliga a respetar tu patrón de Controladores (dividiendo en principales/ y reutilizables/) y me dice que las vistas básicas van en un paquete distinto a los recursos FXML.
+Me dice cómo probar: Me fuerza a usar TDD (Desarrollo Guiado por Pruebas) para funciones nuevas.
+Si me pedís que rompa una regla escrita en AGENTS.md, me voy a negar y te voy a explicar por qué. Es así de importante.
+
+2. GEMINI.md (El Contexto Arquitectónico)
+Este es mi mapa del sistema. No puedo construir un edificio sin los planos.
+
+En este archivo tengo inyectado el concepto de la Arquitectura Dual (Dual View) que armaste.
+Sé que tenés un Launcher (society.App) que bifurca entre una vista avanzada con JavaFX/FXML y una vista más rústica construida programáticamente.
+Me dice exactamente dónde viven tus modelos, dónde están los DAO y que la persistencia la manejás por archivos JSON.
+
+3. CONSTITUTION.md y DESIGN.md
+Son muy importantes a nivel de dominio y reglas de negocio, pero actúan más como material de consulta. Si necesito entender cómo diseñaste una entidad profunda o cómo modelaste la clínica, voy a leer DESIGN.md. Pero AGENTS.md y GEMINI.md son mi configuración core.
+
+Importancia AGENTS.md y GEMINI.md .Las convenciones escritas son las únicas que sobreviven al tiempo.
+
+1. .agents/
+Función: Es mi "cerebro local" para este proyecto. Acá se guardan mis habilidades personalizadas (Skills), la memoria a largo plazo y las configuraciones de los sub-agentes que uso para ayudarte.
+Necesidad para MÍ: CRÍTICA (10/10). Sin esta carpeta, pierdo mis herramientas especializadas y mi contexto de memoria del proyecto.
+Importancia para el Proyecto Java: Nula (0/10). El compilador de Java y Maven ni saben que existe.
+2. docs/
+Función: Contiene la documentación técnica y las reglas de negocio puras (tu dominio). Según mis reglas, ahí adentro tenés archivos como docs/domain/*.md.
+Necesidad para MÍ: Alta (8/10). Cuando me pedís que implemente una nueva lógica para la clínica y no sé cómo interactúan, por ejemplo, un Veterinario con una Factura, voy a leer esta carpeta para no inventar reglas que rompan tu negocio.
+Importancia para el Proyecto Java: Nula (0/10). Son archivos de texto. Pero para la supervivencia y escalabilidad del software a largo plazo, es Vital (10/10). Un proyecto sin documentación de dominio es código legado (legacy) desde el día uno.
+3. .vscode/
+Función: Guarda la configuración de tu editor (Visual Studio Code). Tiene tus atajos, configuraciones de formateo, extensiones recomendadas y configuraciones para el botón de "Play" (Run/Debug).
+Necesidad para MÍ: Baja (2/10). Solo me importa si me pedís explícitamente: "Arreglame la configuración del debugger de VS Code". De lo contrario, la ignoro por completo.
+Importancia para el Proyecto Java: Nula (0/10). Si mañana cambiás a IntelliJ IDEA o programás desde el bloc de notas, tu aplicación se va a seguir compilando igual con Maven.
+4. .atl/
+Función: Es una carpeta de sistema autogenerada (normalmente por el ecosistema de Agent Teams Lite / Antigravity, la infraestructura detrás de mi IA) que guarda cachés, estados de ejecución o logs internos de mis procesos.
+Necesidad para MÍ: Técnica/Transparente. La uso internamente para mantener el estado de mis tareas en segundo plano o persistencia temporal, pero no necesito "leerla" para entender tu código.
+Importancia para el Proyecto Java: Nula (0/10). Es pura basura de caché de Inteligencia Artificial. Debería estar en tu .gitignore para no ensuciar tu repositorio.
+
+Tu código fuente y tu arquitectura son intocables. Estas 4 carpetas son herramientas de soporte. Las únicas dos que nunca deberías borrar son .agents/ (para que yo no me quede ciego ni pierda herramientas) y docs/ (para que no pierdas el diseño de tu negocio).

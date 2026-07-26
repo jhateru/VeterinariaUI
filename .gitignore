@@ -47,3 +47,13 @@ $RECYCLE.BIN/
 .LSOverride
 ._*
 .Trash-*
+
+# Caches y basura de agentes de IA
+.atl/
+.system_generated/
+*.log
+
+# Entornos IDE y compilación (por si no los tenías)
+.vscode/
+veterui/target/
+veterui/run.log
