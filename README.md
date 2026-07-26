@@ -1,7 +1,7 @@
 # VeterinariaUI
 Aplciacion de java
 
-## Comando de Ejecucion de MVP\ 
+## Comando de Ejecucion de MVP
 `cd "veterui" ; mvn javafx:run`  ^  `cd "veterui" && mvn javafx:run`
 
 ## Analisis de IA
@@ -15,7 +15,7 @@ Archivos .md Importantes:
 `CONSTITUTION.md`(Reglas de Negocio)\
 `DESIGN.md`(Estrctura de Diseño)
 
-## Carpetas Importantes\
+## Carpetas Importantes
 
 `.agents/(Cerebro)`>> uso de IA 10/10\
 `docs/(Documentacion)`>> uso de IA 8/10\
