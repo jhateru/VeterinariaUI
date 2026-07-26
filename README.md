@@ -6,10 +6,12 @@ cd "veterui" ; mvn javafx:run  ^  cd "veterui" && mvn javafx:run
 
 ## Analisis de IA
 **Archivos .md Importantes:**
-***--Importantes--***
+
+**--Importantes--**
 `AGENTS.md`(Ley absoluto)
 `GEMINI.md`(Contexto Arquetipo)
-***--Consulta--***
+
+**--Consulta--**
 `CONSTITUTION.md`(Reglas de Negocio)
 `DESIGN.md`(Estrctura de Diseño) 
 
