@@ -5,17 +5,17 @@ Aplciacion de java
 cd "veterui" ; mvn javafx:run  ^  cd "veterui" && mvn javafx:run
 
 ## Analisis de IA
-**Archivos .md Importantes:**
+Archivos .md Importantes:
 
-**--Importantes--**
+**--Importantes:**
 `AGENTS.md`(Ley absoluto)
 `GEMINI.md`(Contexto Arquetipo)
 
-**--Consulta--**
+**--Consulta:**
 `CONSTITUTION.md`(Reglas de Negocio)
 `DESIGN.md`(Estrctura de Diseño) 
 
-**Carpetas Importantes**
+## Carpetas Importantes
 `.agents/(Cerebro)`>> uso de IA 10/10
 `docs/(Documentacion)`>> uso de IA 8/10
 `.vscode/(Configuracion)`>> uso de IA 2/10
