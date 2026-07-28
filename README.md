@@ -22,3 +22,7 @@ Archivos .md Importantes:
 `.vscode/(Configuracion)`>> uso de IA 2/10 \
 `.atl/(Caché)`>> uso de IA 0/10 
 
+## Usuario y Pass
+
+user:admin\
+pass:vet123
